@@ -33,6 +33,10 @@
 <a href="{{ route('kehadiran.index') }}">Kehadiran</a>
 <br><br>
 
+<h3>Surat Keterangan</h3>
+<a href="{{ route('surat_keterangan.index') }}">Daftar Surat Keterangan</a>
+<br><br>
+
 <form method="POST" action="/logout">
 
     @csrf

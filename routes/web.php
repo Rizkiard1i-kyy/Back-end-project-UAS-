@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\KehadiranController;
+use App\Http\Controllers\SuratKeteranganController;
 
 Route::get('/', function () {
     return view('/login');
@@ -18,13 +19,14 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::resource('pengguna', PenggunaController::class)
     ->middleware('auth');
-    
-    Route::get('/dashboard', function () {
 
+Route::get('/dashboard', function () {
     return view('dashboard', [
         'user' => auth()->user()
     ]);
-
 })->middleware('auth');
 
-Route::resource('kehadiran', KehadiranController::class);
+Route::resource('kehadiran', KehadiranController::class)
+    ->middleware('auth');
+
+Route::resource('surat_keterangan', SuratKeteranganController::class);
