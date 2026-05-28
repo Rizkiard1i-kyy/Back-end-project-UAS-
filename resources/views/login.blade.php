@@ -43,5 +43,7 @@
 
 </form>
 
+<h4>Akun Demo: admin@untar.ac.id dengan password 12345678, lakukan php artisan migrate:fresh --seed untuk menginisialisasi.</h4>
+
 </body>
 </html>
