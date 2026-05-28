@@ -1,50 +1,58 @@
-<!DOCTYPE html>
-<html lang="id">
-    <h2>Tambah Jadwal Kuliah Baru</h2>
+<h1>Tambah Jadwal Kuliah Baru</h1>
 
-    <form action="{{ route('jadwal.store') }}" method="POST">
-        <div style="margin-bottom: 10px;">
-            <label>Kode MK:</label><br>
-            <input type="text" name="kodeMK" required>
-        </div>
+<form method="POST" action="{{ route('jadwal.store') }}">
+    @csrf
+    
+    Kode MK:
+    <br>
+    <input name="kodeMK" required>
+    <br>
+    <br>
+    
+    Nama MK:
+    <br>
+    <input name="namaMK" required>
+    <br>
+    <br>
+    
+    SKS:
+    <br>
+    <input type="number" name="sks" required>
+    <br>
+    <br>
+    
+    Kelas:
+    <br>
+    <input name="kelas" required>
+    <br>
+    <br>
+    
+    Dosen Pengajar:
+    <br>
+    <input name="dosenPengajar" required>
+    <br>
+    <br>
+    
+    Ruang & Waktu:
+    <br>
+    <input name="ruangDanWaktu" required>
+    <br>
+    <br>
+    
+    Kode Join Teams:
+    <br>
+    <input name="kodeMSteams">
+    <br>
+    <br>
+    
+    Email Dosen:
+    <br>
+    <input type="email" name="emailDosen" required>
+    <br>
+    <br>
+    
+    <button type="submit">Simpan</button>
+</form>
 
-        <div style="margin-bottom: 10px;">
-            <label>Nama MK:</label><br>
-            <input type="text" name="namaMK" required>
-        </div>
-
-        <div style="margin-bottom: 10px;">
-            <label>SKS:</label><br>
-            <input type="number" name="sks" required>
-        </div>
-
-        <div style="margin-bottom: 10px;">
-            <label>Kelas:</label><br>
-            <input type="text" name="kelas" required>
-        </div>
-
-        <div style="margin-bottom: 10px;">
-            <label>Dosen Pengajar:</label><br>
-            <input type="text" name="dosenPengajar" required>
-        </div>
-
-        <div style="margin-bottom: 10px;">
-            <label>Ruang & Waktu:</label><br>
-            <input type="text" name="ruangDanWaktu" required>
-        </div>
-
-        <div style="margin-bottom: 10px;">
-            <label>Kode Join Teams :</label><br>
-            <input type="text" name="kodeMSteams">
-        </div>
-
-        <div style="margin-bottom: 15px;">
-            <label>Email Dosen:</label><br>
-            <input type="email" name="emailDosen" required>
-        </div>
-
-        <button type="submit">Simpan Jadwal</button>
-        <button type="submit">Batal</button>
-    </form>
-</body>
-</html>
+<br><br>
+<a href="{{ route('jadwal.index') }}">Kembali</a>

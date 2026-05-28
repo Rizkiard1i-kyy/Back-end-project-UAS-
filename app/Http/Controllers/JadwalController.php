@@ -10,10 +10,10 @@ class JadwalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() 
+    public function index()
     {
         $jadwals = Jadwal::all();
-        return view('jadwalkuliah.jadwalkuliah', compact('jadwals'));
+        return view('jadwalkuliah.index', compact('jadwals'));
     }
 
     /**
@@ -29,7 +29,17 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kodeMK' => 'required',
+            'namaMK' => 'required',
+            'sks' => 'required|numeric',
+            'kelas' => 'required',
+            'dosenPengajar' => 'required',
+            'ruangDanWaktu' => 'required',
+            'emailDosen' => 'required|email'
+        ]);
+        Jadwal::create($request->only('kodeMK', 'namaMK', 'sks', 'kelas', 'dosenPengajar', 'ruangDanWaktu', 'kodeMSteams', 'emailDosen'));
+        return redirect()->route('jadwal.index')->with('success', 'Data Jadwal berhasil ditambahkan.');
     }
 
     /**
@@ -37,7 +47,7 @@ class JadwalController extends Controller
      */
     public function show(Jadwal $jadwal)
     {
-        //
+        return view('jadwalkuliah.show', compact('jadwal'));
     }
 
     /**
@@ -53,8 +63,18 @@ class JadwalController extends Controller
      */
     public function update(Request $request, Jadwal $jadwal)
     {
-        $jadwal->update($request->all());
-        return redirect()->route('jadwal.index');
+        $request->validate([
+            'kodeMK' => 'required',
+            'namaMK' => 'required',
+            'sks' => 'required|numeric',
+            'kelas' => 'required',
+            'dosenPengajar' => 'required',
+            'ruangDanWaktu' => 'required',
+            'emailDosen' => 'required|email'
+        ]);
+        $jadwal->update($request->only('kodeMK', 'namaMK', 'sks', 'kelas', 'dosenPengajar', 'ruangDanWaktu', 'kodeMSteams', 'emailDosen'));
+        
+        return redirect()->route('jadwal.index')->with('success', 'Data Jadwal berhasil diperbarui.');
     }
 
     /**
@@ -63,6 +83,6 @@ class JadwalController extends Controller
     public function destroy(Jadwal $jadwal)
     {
         $jadwal->delete();
-        return redirect()->route('jadwal.index');
+        return redirect()->route('jadwal.index')->with('success', 'Data Jadwal berhasil dihapus.');
     }
 }

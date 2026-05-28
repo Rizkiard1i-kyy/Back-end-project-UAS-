@@ -33,6 +33,13 @@
 <a href="{{ route('kehadiran.index') }}">Kehadiran</a>
 <br><br>
 
+<a href="{{ route('jadwal.index') }}">Jadwal Kuliah</a>
+<br><br>
+
+<h3>SKPI</h3>
+<a href="{{ route('skpi.index') }}">SKPI (Penalaran dan Keilmuan)</a>
+<br><br>
+
 <form method="POST" action="/logout">
 
     @csrf

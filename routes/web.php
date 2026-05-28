@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KehadiranController;
+use App\Http\Controllers\SkpiController;
 
 Route::get('/', function () {
     return view('/login');
@@ -29,3 +30,5 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 Route::resource('kehadiran', KehadiranController::class);
+
+Route::resource('skpi', SkpiController::class);
