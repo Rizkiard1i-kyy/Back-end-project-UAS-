@@ -37,4 +37,5 @@
     </tbody>
 </table>
 @endif
+<br><br>
 <a href="/dashboard">Kembali Ke Dashboard</a>
