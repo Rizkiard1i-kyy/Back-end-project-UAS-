@@ -10,9 +10,10 @@ class JadwalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() 
     {
-        //
+        $jadwals = Jadwal::all();
+        return view('jadwalkuliah.jadwalkuliah', compact('jadwals'));
     }
 
     /**
@@ -20,7 +21,7 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        //
+        return view('jadwalkuliah.create');
     }
 
     /**

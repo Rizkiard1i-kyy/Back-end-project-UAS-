@@ -3,10 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\JadwalController;
 
 Route::get('/', function () {
     return view('/login');
 });
+
+Route::resource('jadwal', JadwalController::class);
 
 Route::get('/login', [AuthController::class, 'showLogin'])
     ->name('login');
@@ -25,3 +28,4 @@ Route::resource('pengguna', PenggunaController::class)
     ]);
 
 })->middleware('auth');
+
