@@ -33,7 +33,7 @@ class KehadiranController extends Controller
         $request->validate([
             'kodeMatkul'=>'required|string|max:7',
             'namaMatkul'=>'required|string|max:255',
-            'semester'=>'required|string|in:gasal,genap',
+            'semester'=>'required|string|in:Gasal,Genap',
             'namaDosen'=>'required|string|max:255',
             'namaMahasiswa'=>'required|string|max:255',
             'kelas'=>'required|string|max:10',
