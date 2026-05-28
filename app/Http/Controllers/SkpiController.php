@@ -72,7 +72,6 @@ class SkpiController extends Controller
      */
     public function update(Request $request, Skpi $skpi)
     {
-        // 1. Validasi
         $request->validate([
             'kegiatan' => 'required',
             'jenis' => 'required',
@@ -80,17 +79,14 @@ class SkpiController extends Controller
             'bukti' => 'required|url',
         ]);
 
-        // 2. Hitung Ulang Poin Otomatis kalau klasifikasinya diubah
         $poinOtomatis = 0;
         if ($request->klasifikasi == 'Peserta') {
-            $poinOtomatis = 20;
+            $poinOtomatis = 15;
         } elseif ($request->klasifikasi == 'Panitia') {
-            $poinOtomatis = 35;
+            $poinOtomatis = 25;
         } elseif ($request->klasifikasi == 'Ketua Umum') {
             $poinOtomatis = 50;
         }
-
-        // 3. Update data
         $skpi->update([
             'kegiatan' => $request->kegiatan,
             'jenis' => $request->jenis,
