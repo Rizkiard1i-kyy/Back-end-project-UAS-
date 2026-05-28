@@ -34,6 +34,16 @@
 <br>
 <a href="{{ route('historiNilai.index') }}">Histori Nilai</a>
 <br><br>
+<a href="{{ route('jadwal.index') }}">Jadwal Kuliah</a>
+<br><br>
+
+<h3>Surat Keterangan</h3>
+<a href="{{ route('surat_keterangan.index') }}">Daftar Surat Keterangan</a>
+<br><br>
+
+<h3>SKPI</h3>
+<a href="{{ route('skpi.index') }}">SKPI (Penalaran dan Keilmuan)</a>
+<br><br>
 
 <form method="POST" action="/logout">
 
