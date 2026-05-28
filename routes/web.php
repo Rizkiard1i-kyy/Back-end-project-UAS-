@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\KehadiranController;
 
 Route::get('/', function () {
     return view('/login');
@@ -25,3 +26,5 @@ Route::resource('pengguna', PenggunaController::class)
     ]);
 
 })->middleware('auth');
+
+Route::resource('kehadiran', KehadiranController::class);
