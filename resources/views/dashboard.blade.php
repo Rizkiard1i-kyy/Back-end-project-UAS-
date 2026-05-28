@@ -29,6 +29,10 @@
     {{ $user->role }}
 </p>
 
+<h3>Akademik</h3>
+<a href="{{ route('kehadiran.index') }}">Kehadiran</a>
+<br><br>
+
 <form method="POST" action="/logout">
 
     @csrf
