@@ -5,7 +5,7 @@
 <p>Kelas: {{ $kehadiran->kelas }}</p>
 <p>Jumlah Pertemuan: {{ $kehadiran->jumlahPertemuan }}</p>
 <p>Jumlah Kehadiran: {{ $kehadiran->jumlahKehadiran }}</p>
-<p>Persentase: {{ $kehadiran->persentase }}</p>
+<p>Persentase: {{ $kehadiran->persentase }}%</p>
 
 <a href="{{ route('kehadiran.edit', $kehadiran) }}">Ubah Data</a>
 <br><br>
