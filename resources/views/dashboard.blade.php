@@ -31,6 +31,8 @@
 
 <h3>Akademik</h3>
 <a href="{{ route('kehadiran.index') }}">Kehadiran</a>
+<br>
+<a href="{{ route('historiNilai.index') }}">Histori Nilai</a>
 <br><br>
 
 <form method="POST" action="/logout">
