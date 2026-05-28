@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Pengguna;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,12 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::create([
-            'nama'     => 'Admin ',
+        Pengguna::create([
+            'nama'     => 'Admin',
             'email'    => 'admin@untar.ac.id',
-            'nim'  => 'admin001',
+            'nim'      => 'admin001',
             'password' => Hash::make('12345678'),
             'role'     => 'admin',
         ]);

@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penggunas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+
+            $table->renameColumn('name', 'nama');
+
+            $table->string('nim')->nullable();
+
+            $table->string('role')->default('mahasiswa');
         });
     }
 
@@ -22,6 +26,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penggunas');
+        Schema::table('users', function (Blueprint $table) {
+
+            $table->renameColumn('nama', 'name');
+
+            $table->dropColumn('nim');
+
+            $table->dropColumn('role');
+        });
     }
 };
