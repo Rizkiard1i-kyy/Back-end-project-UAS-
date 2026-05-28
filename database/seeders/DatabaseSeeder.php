@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::create([
-            'name'     => 'Admin sistem',
+            'nama'     => 'Admin ',
             'email'    => 'admin@untar.ac.id',
-            'nim_nip'  => 'admin001',
+            'nim'  => 'admin001',
             'password' => Hash::make('12345678'),
             'role'     => 'admin',
         ]);
