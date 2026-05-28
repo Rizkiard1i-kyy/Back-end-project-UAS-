@@ -3,12 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\SuratKeteranganController;
+use App\Http\Controllers\SkpiController;
 
 Route::get('/', function () {
     return view('/login');
 });
+
+Route::resource('jadwal', JadwalController::class);
 
 Route::get('/login', [AuthController::class, 'showLogin'])
     ->name('login');
@@ -26,7 +30,10 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware('auth');
 
+// Rute Kehadiran (versi update temanmu) & Surat Keterangan
 Route::resource('kehadiran', KehadiranController::class)
     ->middleware('auth');
-
 Route::resource('surat_keterangan', SuratKeteranganController::class);
+
+// Rute SKPI milikmu
+Route::resource('skpi', SkpiController::class);
