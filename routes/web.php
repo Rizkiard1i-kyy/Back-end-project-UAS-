@@ -8,6 +8,7 @@ use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\HistoriNilaiController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SkpiController;
+use App\Http\Controllers\KsmController;
 
 Route::get('/', function () {
     return view('/login');
@@ -39,3 +40,5 @@ Route::resource('kehadiran', KehadiranController::class)
 Route::resource('surat_keterangan', SuratKeteranganController::class);
 
 Route::resource('skpi', SkpiController::class);
+
+Route::resource('ksm', KsmController::class)->middleware('auth');

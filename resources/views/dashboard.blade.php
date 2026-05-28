@@ -36,6 +36,8 @@
 <br><br>
 <a href="{{ route('jadwal.index') }}">Jadwal Kuliah</a>
 <br><br>
+<a href="{{ route('ksm.index') }}">KSM</a>
+<br><br>
 
 <h3>Surat Keterangan</h3>
 <a href="{{ route('surat_keterangan.index') }}">Daftar Surat Keterangan</a>
