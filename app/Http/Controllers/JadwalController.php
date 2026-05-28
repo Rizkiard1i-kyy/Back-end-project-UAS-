@@ -45,7 +45,7 @@ class JadwalController extends Controller
      */
     public function edit(Jadwal $jadwal)
     {
-        //
+        return view('jadwalkuliah.edit', compact('jadwal'));
     }
 
     /**
@@ -53,7 +53,8 @@ class JadwalController extends Controller
      */
     public function update(Request $request, Jadwal $jadwal)
     {
-        //
+        $jadwal->update($request->all());
+        return redirect()->route('jadwal.index');
     }
 
     /**
@@ -61,6 +62,7 @@ class JadwalController extends Controller
      */
     public function destroy(Jadwal $jadwal)
     {
-        //
+        $jadwal->delete();
+        return redirect()->route('jadwal.index');
     }
 }
