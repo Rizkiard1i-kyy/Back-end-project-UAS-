@@ -27,10 +27,7 @@ class PenggunaController extends Controller
             'created_at'
         )->get();
 
-        return response()->json([
-            'status'=> 'success',
-            'data'=> $pengguna,
-        ]);
+        return view('pengguna.index', compact('pengguna'));
     }
 
     /**
@@ -38,7 +35,7 @@ class PenggunaController extends Controller
      */
     public function create()
     {
-        //
+        return view('pengguna.create');
     }
 
     /**
@@ -46,7 +43,23 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'=> 'required|string|max:255',
+            'email'=> 'required|email|unique:users,email',
+            'nim'=> 'nullable|string|max:20|unique:users,nim',
+            'password'=> 'required|string|min:8|confirmed',
+            'role'=> 'required|in:mahasiswa,dosen,admin',
+        ]);
+
+        Pengguna::create([
+            'nama'=> $request->nama,
+            'email'=> $request->email,
+            'nim'=> $request->nim,
+            'password'=> Hash::make($request->password),
+            'role'=> $request->role,
+        ]);
+
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
     /**
@@ -56,24 +69,12 @@ class PenggunaController extends Controller
     {
         $me = $request->user();
 
-        if (!$me->isAdmin() && $me->id !== $pengguna->id) {
-            return response()->json([
-                'status'=> 'error',
-                'message'=> 'Akses ditolak.',
-            ], 403);
-        }
+        $me = $request->user();
 
-        return response()->json([
-            'status'=> 'success',
-            'data'=> $pengguna->only(
-                'id',
-                'nama',
-                'email',
-                'nim',
-                'role',
-                'created_at'
-            ),
-        ]);
+        if (!$me->isAdmin() && $me->id !== $pengguna->id) {
+            abort(403, 'Akses ditolak.');
+        }
+        return view('pengguna.show', compact('pengguna'));
     }
 
     /**
@@ -81,7 +82,7 @@ class PenggunaController extends Controller
      */
     public function edit(Pengguna $pengguna)
     {
-        //
+        return view('pengguna.edit', compact('pengguna'));
     }
 
     /**
@@ -92,48 +93,35 @@ class PenggunaController extends Controller
         $me = $request->user();
 
         if (!$me->isAdmin() && $me->id !== $pengguna->id) {
-            return response()->json([
-                'status'=> 'error',
-                'message'=> 'akses ditolak.',
-            ], 403);
+            abort(403, 'Akses ditolak.');
         }
 
         $rules = [
             'nama'=> 'sometimes|string|max:255',
             'nim'=> 'sometimes|string|max:20|unique:users,nim,' . $pengguna->id,
             'email'=> 'sometimes|email|unique:users,email,' . $pengguna->id,
+            'password'=> 'nullable|string|min:8|confirmed',
         ];
-
-        // Hanya admin yang boleh ubah role
+        
         if ($me->isAdmin()) {
             $rules['role'] = 'sometimes|in:mahasiswa,dosen,admin';
         }
 
         $request->validate($rules);
 
-        $data = $request->only([
-            'nama',
-            'nim',
-            'email'
-        ]);
+        $data = $request->only(['nama', 'nim', 'email']);
 
         if ($me->isAdmin() && $request->has('role')) {
             $data['role'] = $request->role;
         }
 
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
         $pengguna->update($data);
 
-        return response()->json([
-            'status'=> 'success',
-            'message'=> 'Pengguna berhasil diupdate',
-            'data' => $pengguna->only(
-                'id',
-                'nama',
-                'email',
-                'nim',
-                'role'
-            ),
-        ]);
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil diupdate.');
     }
 
     /**
@@ -143,9 +131,6 @@ class PenggunaController extends Controller
     {
         $pengguna->delete();
 
-        return response()->json([
-            'status'=> 'success',
-            'message'=> 'Pengguna berhasil dihapus',
-        ]);
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil dihapus.');
     }
 }
