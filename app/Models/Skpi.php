@@ -11,6 +11,14 @@ class Skpi extends Model
 
     protected $table = 'skpis';
 
-    protected $fillable = ['user_id','kegiatan','jenis','klasifikasi','tgl_input','bukti','validasi','point'
+    protected $fillable = [
+        'user_id',
+        'kegiatan',
+        'jenis',
+        'klasifikasi',
+        'tgl_input',
+        'bukti',
+        'validasi',
+        'point'
 ];
 }

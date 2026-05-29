@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('skpis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
+            $table->foreignId('user_id');
             $table->string('kegiatan');
             $table->string('jenis');
             $table->string('klasifikasi');
