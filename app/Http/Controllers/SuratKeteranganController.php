@@ -7,47 +7,38 @@ use Illuminate\Http\Request;
 
 class SuratKeteranganController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    if (!$user) {
-        return redirect('/login');
+        if (!$user) {
+            return redirect('/login');
+        }
+
+        if ($user->isAdmin()) {
+
+            $suratKeterangan = SuratKeterangan::query()
+            ->latest('tanggal_pengajuan')
+            ->get();
+        } else {
+
+            $suratKeterangan = SuratKeterangan::where(
+                'nim',
+                $user->nim
+            )->latest('tanggal_pengajuan')->get();
+        }
+
+        return view(
+            'surat_keterangan.index',
+            compact('suratKeterangan')
+        );
     }
 
-    if ($user->isAdmin()) {
-
-        $suratKeterangan = SuratKeterangan::query()
-        ->latest('tanggal_pengajuan')
-        ->get();
-    } else {
-
-        $suratKeterangan = SuratKeterangan::where(
-            'nim',
-            $user->nim
-        )->latest('tanggal_pengajuan')->get();
-    }
-
-    return view(
-        'surat_keterangan.index',
-        compact('suratKeterangan')
-    );
-}
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('surat_keterangan.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -66,9 +57,6 @@ class SuratKeteranganController extends Controller
             ->with('success', 'Surat berhasil dibuat.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(SuratKeterangan $suratKeterangan)
     {
         if (
@@ -84,9 +72,6 @@ class SuratKeteranganController extends Controller
         );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(SuratKeterangan $suratKeterangan)
     {
         if (!auth()->user()->isAdmin()) {
@@ -96,9 +81,6 @@ class SuratKeteranganController extends Controller
         return view('surat_keterangan.edit', compact('suratKeterangan'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, SuratKeterangan $suratKeterangan)
     {
         if (!auth()->user()->isAdmin()) {
@@ -118,9 +100,6 @@ class SuratKeteranganController extends Controller
             ->with('success', 'Status surat berhasil diupdate.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(SuratKeterangan $suratKeterangan)
     {
         if (!auth()->user()->isAdmin()) {

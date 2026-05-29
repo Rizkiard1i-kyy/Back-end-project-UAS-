@@ -58,9 +58,6 @@ class KsmController extends Controller
             ->with('success', 'KSM berhasil dibuat.');
     }
 
-    /**
-     * Display a single KSM — the main card view.
-     */
     public function show(Ksm $ksm)
     {
         $ksm->load('mataKuliahs');
@@ -68,9 +65,6 @@ class KsmController extends Controller
         return view('ksm.show', compact('ksm'));
     }
 
-    /**
-     * Show the form for editing a KSM.
-     */
     public function edit(Ksm $ksm)
     {
         $ksm->load('mataKuliahs');
@@ -78,9 +72,6 @@ class KsmController extends Controller
         return view('ksm.edit', compact('ksm'));
     }
 
-    /**
-     * Update an existing KSM in storage.
-     */
     public function update(Request $request, Ksm $ksm)
     {
         $request->validate([
@@ -102,7 +93,6 @@ class KsmController extends Controller
             'nama', 'nim', 'prodi', 'semester', 'tahunAkademik'
         ));
 
-        // Replace all mata kuliah rows
         $ksm->mataKuliahs()->delete();
 
         foreach ($request->mataKuliahs as $index => $mk) {
@@ -121,12 +111,9 @@ class KsmController extends Controller
             ->with('success', 'KSM berhasil diperbarui.');
     }
 
-    /**
-     * Delete a KSM and its mata kuliah rows.
-     */
     public function destroy(Ksm $ksm)
     {
-        $ksm->delete();   // cascades to ksm_mata_kuliahs
+        $ksm->delete();
 
         return redirect()->route('ksm.index')
             ->with('success', 'KSM berhasil dihapus.');

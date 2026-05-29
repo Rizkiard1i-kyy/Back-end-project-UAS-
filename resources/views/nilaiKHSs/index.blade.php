@@ -1,4 +1,4 @@
-<h1>Daftar Histori Nilai</h1>
+<h1>Daftar Nilai KHS</h1>
 
 <a href="{{ route('historiNilai.create') }}">Buat Data Histori Nilai Baru</a>
 <br><br>

@@ -16,9 +16,6 @@ class KsmMataKuliah extends Model
         'status',
     ];
 
-    /**
-     * Each mata kuliah row belongs to one KSM.
-     */
     public function ksm()
     {
         return $this->belongsTo(Ksm::class);

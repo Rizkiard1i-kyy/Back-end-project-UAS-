@@ -31,7 +31,7 @@
 
 <h3>Akademik</h3>
 <a href="{{ route('kehadiran.index') }}">Kehadiran</a>
-<br>
+<br><br>
 <a href="{{ route('historiNilai.index') }}">Histori Nilai</a>
 <br><br>
 <a href="{{ route('jadwal.index') }}">Jadwal Kuliah</a>
@@ -50,7 +50,6 @@
 <form method="POST" action="/logout">
 
     @csrf
-
     <button type="submit">
         Logout
     </button>
