@@ -1,48 +1,50 @@
 <h1>Daftar Nilai KHS</h1>
 
-<a href="{{ route('historiNilai.create') }}">Buat Data Histori Nilai Baru</a>
+<a href="{{ route('nilaiKHS.create') }}">Buat Data Nilai KHS Baru</a>
 <br><br>
 
-@if ($historiNilai->isEmpty())
-    <p>Belum ada data histori nilai yang tersimpan.</p>
+@if ($nilaiKHS->isEmpty())
+    <p>Belum ada data nilai KHS yang tersimpan.</p>
 @else
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>
-            <th style="width: 50px">No</th>
-            <th style="width: 100px">TH.AKAD</th>            
-            <th style="width: 100px">KODE</th>
-            <th style="width: 150px">MATA KULIAH</th>
-            <th style="width: 50px">SKS</th>
-            <th style="width: 50px">NILAI</th>
-            <th style="width: 50px">BOBOT</th>
-            <th style="width: 120px">AKSI</th>
+            <th style="width: 50px">Cek</th>
+            <th style="width: 50px">No</th>           
+            <th style="width: 100px">KODE MK</th>
+            <th style="width: 150px"> NAMA MATA KULIAH</th>
+            <th style="width: 70px">STATUS</th>
+            <th style="width: 70px">KREDIT(sks)</th>
+            <th style="width: 70px">NILAI(huruf)</th>
+            <th style="width: 70px">NILAI(angka)</th>
+            <th style="width: 70px">BOBOT KUALITAS(sksN)</th>
+            <th style="width: 50px">Ket.</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($historiNilai as $historiNilai)
+        @foreach($nilaiKHS as $nilaiKHS)
             <tr>
                 <td style="text-align: center">{{ $loop->iteration }}</td>
                 <td>
-                    <a> {{ $historiNilai->tahunAkademik }}</a>
+                    <a> {{ $nilaiKHS->tahunAkademik }}</a>
                 </td>
                 <td>
-                    <a> {{ $historiNilai->kode }}</a>
+                    <a> {{ $nilaiKHS->kode }}</a>
                 </td>
                 <td>
-                    <a> {{ $historiNilai->mataKuliah }}</a>
+                    <a> {{ $nilaiKHS->mataKuliah }}</a>
                 </td>
                 <td>
-                    <a> {{ $historiNilai->sks }}</a>
+                    <a> {{ $nilaiKHS->sks }}</a>
                 </td>
                 <td>
-                    <a> {{ $historiNilai->nilai }}</a>
+                    <a> {{ $nilaiKHS->nilai }}</a>
                 </td>
                 <td>
-                    <a> {{ $historiNilai->bobot }}</a>
+                    <a> {{ $nilaiKHS->bobot }}</a>
                 </td>
                 <td style="text-align: center">
-                    <a href="{{ route('historiNilai.show', $historiNilai) }}">Detail</a>
+                    <a href="{{ route('nilaiKHS.show', $nilaiKHS) }}">Detail</a>
                 </td>
             </tr>
         @endforeach

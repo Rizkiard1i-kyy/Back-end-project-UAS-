@@ -1,5 +1,5 @@
 <h1>Buat Data Nilai KHS Baru</h1>
-<form method="POST" action="{{ route('historiNilai.store') }}">
+<form method="POST" action="{{ route('nilaiKHS.store') }}">
     @csrf
     NIM:
     <br>
