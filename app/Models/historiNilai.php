@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class historiNilai extends Model
 {
-
     protected $fillable = [
         'nim',
         'tahunAkademik',

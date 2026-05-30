@@ -26,12 +26,12 @@ class NilaiKHSController extends Controller
 
     public function show(nilaiKHS $nilaiKHS)
     {
-        //
+        return view('nilaiKHSs.show', compact('nilaiKHS'));
     }
 
     public function edit(nilaiKHS $nilaiKHS)
     {
-        //
+        return view('nilaiKHSs.edit', compact('nilaiKHS'));
     }
 
     public function update(Request $request, nilaiKHS $nilaiKHS)
@@ -41,6 +41,7 @@ class NilaiKHSController extends Controller
 
     public function destroy(nilaiKHS $nilaiKHS)
     {
-        //
+        $nilaiKHS->delete();
+        return redirect()->route('nilaiKHS.index')->with('success', 'Data nilai KHS dihapus.');
     }
 }

@@ -6,5 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class nilaiKHS extends Model
 {
-    //
+    protected $fillable = [
+        'nim',
+        'tahunAkademik',
+        'gabungan',
+        'kehadiran',
+        'tugas',
+        'uts',
+        'uas',
+
+        'kodeMK',
+        'namaMataKuliah',
+        'status',
+        'sks',
+        'nilaiHuruf',
+        'nilaiAngka',
+        'bobotKualitas',
+        'keterangan',
+        
+        'jumlahSKS',
+        'IPS',
+        'kreditDiambil',
+        'kreditPeroleh',
+        'ipk',
+    ];
 }
