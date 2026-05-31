@@ -24,7 +24,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::resource('pengguna', PenggunaController::class)
-    ->middleware('auth');
+    ->middleware('role:admin');
 
 Route::get('/dashboard', function () {
     return view('dashboard', [
