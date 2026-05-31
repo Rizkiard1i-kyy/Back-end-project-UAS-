@@ -47,6 +47,10 @@
 <a href="{{ route('skpi.index') }}">SKPI (Penalaran dan Keilmuan)</a>
 <br><br>
 
+<h3>Administrasi</h3>
+<a href="{{ route('pengguna.index') }}">Manajemen Pengguna</a>
+<br><br>
+
 <form method="POST" action="/logout">
 
     @csrf
