@@ -34,7 +34,8 @@ class NilaiKHSController extends Controller
             'keterangan'=>'required|string|max:40',
         ]);
 
-        $request['nilaiAngka'] = ($request->tugas * 0.4 + $request->uts * 0.3 + $request->uas * 0.3);
+        $nilaiAngka = ($request->tugas * 0.4 + $request->uts * 0.3 + $request->uas * 0.3);
+        $request['nilaiAngka'] = $nilaiAngka;
         if ($nilaiAngka >= 80) {
             $request['nilaiHuruf'] = 'A';
             $request['bobotKualitas'] = 4.00;
@@ -63,7 +64,7 @@ class NilaiKHSController extends Controller
             $request['nilaiHuruf'] = 'E';
             $request['bobotKualitas'] = 0.00;
         }
-        historiNilai::create($request->only(
+        nilaiKHS::create($request->only(
             'nim',
             'tahunAkademik',
             'tugas',
@@ -135,7 +136,7 @@ class NilaiKHSController extends Controller
             $request['nilaiHuruf'] = 'E';
             $request['bobotKualitas'] = 0.00;
         }
-        historiNilai::create($request->only(
+        nilaiKHS::create($request->only(
             'nim',
             'tahunAkademik',
             'tugas',

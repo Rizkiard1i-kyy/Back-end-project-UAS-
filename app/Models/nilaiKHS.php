@@ -22,10 +22,10 @@ class nilaiKHS extends Model
         'bobotKualitas',
         'keterangan',
         
-        'jumlahSKS',
-        'Ips',
-        'kreditDiambil',
-        'kreditPeroleh',
-        'ipk',
+        // 'jumlahSKS',
+        // 'ips',
+        // 'kreditDiambil',
+        // 'kreditPeroleh',
+        // 'ipk',
     ];
 }

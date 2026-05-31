@@ -23,7 +23,7 @@ class HistoriNilaiController extends Controller
     {
         $request->validate([
             'nim'=>'required|string|max:9',
-            'tahunAkademik'=>'required|integer|min:19591',
+            'tahunAkademik'=>'required|string|min:19591',
             'kode'=>'required|string|min:1',
             'mataKuliah'=>'required|string|max:255',
             'sks'=>'required|integer|min:1',

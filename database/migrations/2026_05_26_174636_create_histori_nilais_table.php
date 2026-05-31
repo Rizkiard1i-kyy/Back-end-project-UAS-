@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('tahunAkademik');
             $table->string('kode');
             $table->string('mataKuliah');
-            $table->string('sks');
+            $table->integer('sks');
             $table->string('nilai');
             $table->integer('bobot');
             $table->timestamps();
