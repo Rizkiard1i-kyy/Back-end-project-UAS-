@@ -70,7 +70,7 @@ class HistoriNilaiController extends Controller
             'sks',
             'nilai',
             'bobot'));
-        return redirect()->route('historiNilai.index')->with('success', 'Data histori nilai baru dibuat.');
+        return redirect()->route('historiNilai.index')->with('success', 'Data histori nilai diperbarui.');
     }
 
     public function destroy(historiNilai $historiNilai)
