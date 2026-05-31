@@ -15,11 +15,17 @@ class JadwalController extends Controller
 
     public function create()
     {
+        if (!in_array(auth()->user()->role, ['admin','dosen'])) {
+            return redirect()->route('jadwal.index')->with('error', 'Mahasiswa tidak bisa menambahkan jadwal');
+        }
         return view('jadwalkuliah.create');
     }
 
     public function store(Request $request)
     {
+        if (!in_array(auth()->user()->role, ['admin','dosen'])) {
+            return redirect()->route('jadwal.index')->with('error', 'Mahasiswa tidak bisa menambahkan jadwal');
+        }
         $request->validate([
             'kodeMK' => 'required',
             'namaMK' => 'required',
@@ -40,11 +46,17 @@ class JadwalController extends Controller
 
     public function edit(Jadwal $jadwal)
     {
+        if (!in_array(auth()->user()->role, ['admin','dosen'])) {
+            return redirect()->route('jadwal.index')->with('error', 'Mahasiswa tidak bisa menambahkan jadwal');
+        }
         return view('jadwalkuliah.edit', compact('jadwal'));
     }
 
     public function update(Request $request, Jadwal $jadwal)
     {
+        if (!in_array(auth()->user()->role, ['admin','dosen'])) {
+            return redirect()->route('jadwal.index')->with('error', 'Mahasiswa tidak bisa menambahkan jadwal');
+        }
         $request->validate([
             'kodeMK' => 'required',
             'namaMK' => 'required',
@@ -61,6 +73,9 @@ class JadwalController extends Controller
 
     public function destroy(Jadwal $jadwal)
     {
+        if (!in_array(auth()->user()->role, ['admin','dosen'])) {
+            return redirect()->route('jadwal.index')->with('error', 'Mahasiswa tidak bisa menambahkan jadwal');
+        }
         $jadwal->delete();
         return redirect()->route('jadwal.index')->with('success', 'Data Jadwal berhasil dihapus.');
     }

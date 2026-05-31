@@ -8,7 +8,7 @@
     <br>
     Jenis Kegiatan:
     <br>
-    <input type="text" name="jenis" placeholder="Contoh: Penalaran dan Keilmuan" required>
+    <input type="text" name="jenis" required>
     <br>
     <br>
     Klasifikasi (Peran):

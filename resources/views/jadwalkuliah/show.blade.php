@@ -7,6 +7,8 @@
 <p>Kode Join Teams: {{ $jadwal->kodeMSteams }}</p>
 <p>Email Dosen: {{ $jadwal->emailDosen }}</p>
 
+<br>
+@if(in_array(auth()->user()->role, ['admin', 'dosen']))
 <a href="{{ route('jadwal.edit', $jadwal->id) }}">Ubah Data</a>
 <br><br>
 
@@ -15,5 +17,6 @@
     <button type="submit" onclick="return confirm('Anda yakin ingin menghapus data jadwal ini?')">Hapus Data</button>
 </form>
 <br><br>
+@endif
 
 <a href="{{ route('jadwal.index') }}">Kembali</a>

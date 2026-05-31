@@ -1,7 +1,19 @@
 <h1>Daftar Jadwal Kuliah</h1>
 
-<a href="{{ route('jadwal.create') }}">Tambah Jadwal Kuliah Baru</a>
-<br><br>
+@if(session('error'))
+    <div>
+        {{ session('error') }}
+    </div>
+@endif
+@if(session('success'))
+    <div>
+        {{ session('success') }}
+    </div>
+@endif
+@if(in_array(auth()->user()->role, ['admin', 'dosen']))
+    <a href="{{ route('jadwal.create') }}">Tambah Jadwal Kuliah Baru</a>
+    <br><br>
+@endif
 
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
