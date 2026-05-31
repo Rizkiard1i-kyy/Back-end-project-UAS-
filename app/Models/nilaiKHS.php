@@ -9,8 +9,6 @@ class nilaiKHS extends Model
     protected $fillable = [
         'nim',
         'tahunAkademik',
-        'gabungan',
-        'kehadiran',
         'tugas',
         'uts',
         'uas',
@@ -24,10 +22,10 @@ class nilaiKHS extends Model
         'bobotKualitas',
         'keterangan',
         
-        'jumlahSKS',
-        'IPS',
-        'kreditDiambil',
-        'kreditPeroleh',
-        'ipk',
+        // 'jumlahSKS',
+        // 'ips',
+        // 'kreditDiambil',
+        // 'kreditPeroleh',
+        // 'ipk',
     ];
 }

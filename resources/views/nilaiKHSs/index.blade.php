@@ -26,22 +26,28 @@
             <tr>
                 <td style="text-align: center">{{ $loop->iteration }}</td>
                 <td>
-                    <a> {{ $nilaiKHS->tahunAkademik }}</a>
+                    <a> {{ $nilaiKHS->kodeMK }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->kode }}</a>
+                    <a> {{ $nilaiKHS->namaMataKuliah }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->mataKuliah }}</a>
+                    <a> {{ $nilaiKHS->status }}</a>
                 </td>
                 <td>
                     <a> {{ $nilaiKHS->sks }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->nilai }}</a>
+                    <a> {{ $nilaiKHS->nilaiHuruf }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->bobot }}</a>
+                    <a> {{ $nilaiKHS->nilaiAngka }}</a>
+                </td>
+                <td>
+                    <a> {{ $nilaiKHS->bobotKualitas }}</a>
+                </td>
+                <td>
+                    <a> {{ $nilaiKHS->keterangan }}</a>
                 </td>
                 <td style="text-align: center">
                     <a href="{{ route('nilaiKHS.show', $nilaiKHS) }}">Detail</a>

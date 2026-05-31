@@ -9,25 +9,37 @@
     <br>
     <input name="tahunAkademik" required>
     <br><br>
-    KODE:
+    NILAI TUGAS:
     <br>
-    <input name="kode" required>
+    <input name="tugas" required>
     <br><br>
-    MATA KULIAH:
+    NILAI UTS:
     <br>
-    <input name="mataKuliah" required>
+    <input name="uts" required>
+    <br><br>
+    NILAI UAS:
+    <br>
+    <input name="uas" required>
+    <br><br>
+    KODE MATA KULIAH:
+    <br>
+    <input name="kodeMK" required>
+    <br><br>
+    NAMA MATA KULIAH:
+    <br>
+    <input name="namaMataKuliah" required>
+    <br><br>
+    STATUS:
+    <br>
+    <input name="status" required>
     <br><br>
     SKS:
     <br>
-    <input type="number" name="sks" required>
+    <input name="sks" required>
     <br><br>
-    NILAI:
+    KETERANGAN:
     <br>
-    <input name="nilai" required>
-    <br><br>
-    BOBOT:
-    <br>
-    <input type="number" name="bobot" required>
+    <input name="keterangan" required>
     <br><br>
     <button type="submit">Simpan</button>
 </form>

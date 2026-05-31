@@ -9,6 +9,7 @@ use App\Http\Controllers\HistoriNilaiController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SkpiController;
 use App\Http\Controllers\KsmController;
+use App\Http\Controllers\NilaiKHSController;
 
 Route::get('/', function () {
     return view('/login');
@@ -35,6 +36,7 @@ Route::get('/dashboard', function () {
 Route::resource('kehadiran', KehadiranController::class);
 
 Route::resource('historiNilai', HistoriNilaiController::class);
+Route::resource('nilaiKHS', NilaiKHSController::class)->middleware('auth');
 Route::resource('kehadiran', KehadiranController::class)
     ->middleware('auth');
 Route::resource('surat_keterangan', SuratKeteranganController::class);
