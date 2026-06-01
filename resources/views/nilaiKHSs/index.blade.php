@@ -1,5 +1,7 @@
 <h1>Daftar Nilai KHS</h1>
 
+<h2>KARTU HASIL STUDI</h2>
+
 <a href="{{ route('nilaiKHS.create') }}">Buat Data Nilai KHS Baru</a>
 <br><br>
 
@@ -12,7 +14,7 @@
             <th style="width: 50px">Cek</th>
             <th style="width: 50px">No</th>           
             <th style="width: 100px">KODE MK</th>
-            <th style="width: 150px"> NAMA MATA KULIAH</th>
+            <th style="width: 150px">NAMA MATA KULIAH</th>
             <th style="width: 70px">STATUS</th>
             <th style="width: 70px">KREDIT(sks)</th>
             <th style="width: 70px">NILAI(huruf)</th>
@@ -52,6 +54,27 @@
                 <td style="text-align: center">
                     <a href="{{ route('nilaiKHS.show', $nilaiKHS) }}">Detail</a>
                 </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+</table>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th style="width: 50px">Jumlah SKS</th>
+            <!-- <th style="width: 50px">IPK</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($nilaiKHS as $nilaiKHS)
+            <tr>
+                <td>
+                    <a> {{ $nilaiKHS->jumlahSKS }}</a>
+                </td>
+                <!-- <td>
+                    <a> {{ $nilaiKHS->ipk }}</a>
+                </td> -->
             </tr>
         @endforeach
     </tbody>

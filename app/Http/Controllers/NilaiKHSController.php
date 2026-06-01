@@ -64,6 +64,11 @@ class NilaiKHSController extends Controller
             $request['nilaiHuruf'] = 'E';
             $request['bobotKualitas'] = 0.00;
         }
+
+        $sksSebelumnya = nilaiKHS::where('nim', $request->nim)->sum('sks');
+        $jumlahSKS = $sksSebelumnya + $request->sks;
+        $request['jumlahSKS'] = $jumlahSKS;
+        
         nilaiKHS::create($request->only(
             'nim',
             'tahunAkademik',
@@ -77,7 +82,8 @@ class NilaiKHSController extends Controller
             'nilaiHuruf',
             'nilaiAngka',
             'bobotKualitas',
-            'keterangan',));
+            'keterangan',
+            'jumlahSKS',));
         return redirect()->route('nilaiKHS.index')->with('success', 'Data nilai KHS baru dibuat.');
     }
 
@@ -136,7 +142,12 @@ class NilaiKHSController extends Controller
             $request['nilaiHuruf'] = 'E';
             $request['bobotKualitas'] = 0.00;
         }
-        nilaiKHS::create($request->only(
+
+        $sksSebelumnya = nilaiKHS::where('nim', $request->nim)->sum('sks');
+        $jumlahSKS = $sksSebelumnya + $request->sks;
+        $request['jumlahSKS'] = $jumlahSKS;
+
+        nilaiKHS::update($request->only(
             'nim',
             'tahunAkademik',
             'tugas',
@@ -149,7 +160,8 @@ class NilaiKHSController extends Controller
             'nilaiHuruf',
             'nilaiAngka',
             'bobotKualitas',
-            'keterangan',));
+            'keterangan',
+            'jumlahSKS',));
         return redirect()->route('nilaiKHS.index')->with('success', 'Data nilai kHS diperbarui');
     }
 
