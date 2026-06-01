@@ -28,7 +28,7 @@ return new class extends Migration
             $table->integer('bobotKualitas');
             $table->string('keterangan');
 
-            // $table->integer('jumlahSKS');
+            $table->integer('jumlahSKS');
             // $table->integer('ips');
             // $table->integer('kreditDiambil');
             // $table->integer('kreditPeroleh');
