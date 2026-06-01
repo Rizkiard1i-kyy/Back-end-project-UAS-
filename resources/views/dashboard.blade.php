@@ -49,9 +49,11 @@
 <a href="{{ route('skpi.index') }}">SKPI (Penalaran dan Keilmuan)</a>
 <br><br>
 
+@if(auth()->user()->isAdmin())
 <h3>Administrasi</h3>
 <a href="{{ route('pengguna.index') }}">Manajemen Pengguna</a>
 <br><br>
+@endif
 
 <form method="POST" action="/logout">
 
