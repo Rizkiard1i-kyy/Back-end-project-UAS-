@@ -10,6 +10,7 @@ use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SkpiController;
 use App\Http\Controllers\KsmController;
 use App\Http\Controllers\NilaiKHSController;
+use App\Http\Controllers\SuratPermohonanController;
 
 Route::get('/', function () {
     return view('/login');
@@ -40,6 +41,7 @@ Route::resource('nilaiKHS', NilaiKHSController::class)->middleware('auth');
 Route::resource('kehadiran', KehadiranController::class)
     ->middleware('auth');
 Route::resource('surat_keterangan', SuratKeteranganController::class);
+Route::resource('surat_permohonan', SuratPermohonanController::class);
 
 Route::resource('skpi', SkpiController::class);
 
