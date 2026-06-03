@@ -23,9 +23,9 @@ class nilaiKHS extends Model
         'keterangan',
         
         'jumlahSKS',
-        // 'ips',
-        // 'kreditDiambil',
-        // 'kreditPeroleh',
-        // 'ipk',
+        'ips',
+        'kreditDiambil',
+        'kreditPeroleh',
+        'ipk',
     ];
 }

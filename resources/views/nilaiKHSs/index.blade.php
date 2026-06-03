@@ -63,7 +63,10 @@
     <thead>
         <tr>
             <th style="width: 50px">Jumlah SKS</th>
-            <!-- <th style="width: 50px">IPK</th> -->
+            <th style="width: 50px">IPS</th>
+            <th style="width: 70px">Kredit Diambil</th>
+            <th style="width: 50px">Kredit Peroleh</th>
+            <th style="width: 50px">IPK</th>
         </tr>
     </thead>
     <tbody>
@@ -72,9 +75,18 @@
                 <td>
                     <a> {{ $nilaiKHS->jumlahSKS }}</a>
                 </td>
-                <!-- <td>
+                <td>
+                    <a> {{ $nilaiKHS->ips }}</a>
+                </td>
+                <td>
+                    <a> {{ $nilaiKHS->kreditDiambil }}</a>
+                </td>
+                <td>
+                    <a> {{ $nilaiKHS->kreditPeroleh }}</a>
+                </td>
+                <td>
                     <a> {{ $nilaiKHS->ipk }}</a>
-                </td> -->
+                </td>
             </tr>
         @endforeach
     </tbody>
