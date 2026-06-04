@@ -70,7 +70,6 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($nilaiKHS as $nilaiKHS)
             <tr>
                 <td>
                     <a> {{ $nilaiKHS->jumlahSKS }}</a>
@@ -88,7 +87,6 @@
                     <a> {{ $nilaiKHS->ipk }}</a>
                 </td>
             </tr>
-        @endforeach
     </tbody>
 </table>
 @endif

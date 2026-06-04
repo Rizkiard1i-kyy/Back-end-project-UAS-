@@ -80,7 +80,7 @@ class NilaiKHSController extends Controller
         $request['kreditDiambil'] = $kreditDiambil;
         $request['kreditPeroleh'] = $kreditPeroleh;
 
-        $dataSemesterIni = $allDataLama->where('tahunAkademik', $request->tahunAkademik);
+        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
         $totalSksSemester = $dataSemesterIni->sum('sks') + $request->sks;
         $totalMutuSemester = $dataSemesterIni->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
@@ -88,7 +88,7 @@ class NilaiKHSController extends Controller
         
         $request['ips'] = $totalSksSemester > 0 ? round($totalMutuSemester / $totalSksSemester, 2) : 0.00;
 
-        $totalMutuKumulatif = $allDataLama->sum(function($item) {
+        $totalMutuKumulatif = $semuaDataLama->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
         }) + ($request['bobotKualitas'] * $request->sks);
 
@@ -189,7 +189,7 @@ class NilaiKHSController extends Controller
         $request['kreditDiambil'] = $kreditDiambil;
         $request['kreditPeroleh'] = $kreditPeroleh;
 
-        $dataSemesterIni = $allDataLama->where('tahunAkademik', $request->tahunAkademik);
+        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
         $totalSksSemester = $dataSemesterIni->sum('sks') + $request->sks;
         $totalMutuSemester = $dataSemesterIni->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
@@ -197,7 +197,7 @@ class NilaiKHSController extends Controller
         
         $request['ips'] = $totalSksSemester > 0 ? round($totalMutuSemester / $totalSksSemester, 2) : 0.00;
 
-        $totalMutuKumulatif = $allDataLama->sum(function($item) {
+        $totalMutuKumulatif = $semuaDataLama->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
         }) + ($request['bobotKualitas'] * $request->sks);
 
