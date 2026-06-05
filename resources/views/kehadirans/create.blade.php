@@ -3,12 +3,12 @@
     @csrf
     Kode:
     <br>
-    <input name="kodeMatkul" required>
+    <input name="kodeMatkul" value="{{ old('kodeMatkul') }}" required>
     <br>
     <br>
     Mata Kuliah:
     <br>
-    <input name="namaMatkul" required>
+    <input name="namaMatkul" value="{{ old('namaMatkul') }}" required>
     <br>
     <br>
     Semester:
@@ -21,28 +21,41 @@
     <br>
     Nama Dosen:
     <br>
-    <input name="namaDosen" required>
+    <select name="namaDosen" required>
+        <option value = "">-Pilih Dosen-</option>
+        @foreach($dosens as $dosen)
+            <option value = "{{ $dosen->id }}">{{ $dosen->nama }}</option>
+        @endforeach
+    </select>   
     <br>
     <br>
-    Nama Mahasiswa:
+    NIM:
     <br>
-    <input name="namaMahasiswa" required>
+    <select name="nim" required>
+        <option value = "">-Pilih Mahasiswa-</option>
+        @foreach($mahasiswas as $mhs)
+            <option value = "{{ $mhs->id }}">{{ $mhs->nim }} - {{ $mhs->nama }}</option>
+        @endforeach
+    </select>
     <br>
     <br>
     Kelas:
     <br>
-    <input name="kelas" required>
+    <input name="kelas" value="{{ old('kelas') }}" required>
     <br>
     <br>
     Jumlah Pertemuan:
     <br>
-    <input type="number" name="jumlahPertemuan" required>
+    <input type="number" name="jumlahPertemuan" value="{{ old('jumlahPertemuan') }}" required>
     <br>
     <br>
     Jumlah Kehadiran:
     <br>
-    <input type="number" name="jumlahKehadiran" required>
+    <input type="number" name="jumlahKehadiran" value="{{ old('jumlahKehadiran') }}" required>
     <br>
     <br>
     <button type="submit">Simpan</button>
 </form>
+
+<br><br>
+<a href="{{ route('kehadiran.index') }}">Kembali</a>

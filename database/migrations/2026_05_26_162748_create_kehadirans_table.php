@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('kodeMatkul');
             $table->string('namaMatkul');
             $table->string('semester');
-            $table->string('namaDosen');
-            $table->string('namaMahasiswa');
+            $table->foreignId('namaDosen')->constrained('users');
+            $table->string('nim')->constrained('users');
             $table->string('kelas');
             $table->integer('jumlahPertemuan');
             $table->integer('jumlahKehadiran');

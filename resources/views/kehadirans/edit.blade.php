@@ -21,12 +21,22 @@
     <br>
     Nama Dosen:
     <br>
-    <input name="namaDosen" value="{{ $kehadiran-> namaDosen }}" required>
+    <select name="namaDosen" required>
+        <option value = "">-Pilih Dosen-</option>
+        @foreach($dosens as $dosen)
+            <option value = "{{ $dosen->id }}">{{ $dosen->nama }}</option>
+        @endforeach
+    </select>   
     <br>
     <br>
-    Nama Mahasiswa:
+    NIM:
     <br>
-    <input name="namaMahasiswa" value="{{ $kehadiran-> namaMahasiswa }}" required>
+    <select name="nim" required>
+        <option value = "">-Pilih Mahasiswa-</option>
+        @foreach($mahasiswas as $mhs)
+            <option value = "{{ $mhs->id }}">{{ $mhs->nim }} - {{ $mhs->nama }}</option>
+        @endforeach
+    </select>
     <br>
     <br>
     Kelas:
@@ -46,3 +56,6 @@
     <br>
     <button type="submit">Simpan</button>
 </form>
+
+<br><br>
+<a href="{{ route('kehadiran.index') }}">Kembali</a>

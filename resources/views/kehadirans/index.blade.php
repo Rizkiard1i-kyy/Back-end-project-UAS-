@@ -1,7 +1,9 @@
 <h1>Daftar Kehadiran</h1>
 
-<a href="{{ route('kehadiran.create') }}">Buat Data Kehadiran Baru</a>
-<br><br>
+@if(auth()->user()->isAdmin() || auth()->user()->isDosen())
+    <a href="{{ route('kehadiran.create') }}">Buat Data Kehadiran Baru</a>
+    <br><br>
+@endif
 
 @if ($kehadiran->isEmpty())
     <p>Belum ada data kehadiran yang tersimpan.</p>
@@ -12,7 +14,7 @@
             <th style="width: 50px">No</th>
             <th style="width: 150px">Kode</th>            
             <th style="width: 300px">Mata Kuliah</th>
-            <th style="width: 300px">Nama Mahasiswa</th>
+            <th style="width: 300px">Mahasiswa</th>
             <th style="width: 120px">Aksi</th>
         </tr>
     </thead>
@@ -27,7 +29,7 @@
                     <a> {{ $kehadiran->namaMatkul }}</a>
                 </td>
                 <td>
-                    <a> {{ $kehadiran->namaMahasiswa }}</a>
+                    <a> {{ $kehadiran->mahasiswa->nim }} - {{ $kehadiran->mahasiswa->nama }}</a>
                 </td>
                 <td style="text-align: center">
                     <a href="{{ route('kehadiran.show', $kehadiran) }}">Detail</a>
