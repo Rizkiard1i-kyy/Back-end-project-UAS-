@@ -11,12 +11,25 @@ class KehadiranController extends Controller
 {
     public function index()
     {
-        $kehadiran = Kehadiran::all();
+        $user = auth()->user();
+        $akses = Kehadiran::with(['mahasiswa','dosen']);;
+
+        if ($user->isMahasiswa()) {
+            $akses->where('nim', $user->id);
+        } elseif ($user->isDosen()) {
+            $akses->where('namaDosen', $user->id);
+        }
+
+        $kehadiran = $akses->get();
         return view('kehadirans.index', compact('kehadiran'));
     }
 
     public function create()
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh membuat data kehadiran.');
+        }
+
         $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
         $dosens = Pengguna::where('role', 'dosen')->get();
         return view('kehadirans.create', compact('mahasiswas', 'dosens'));
@@ -44,11 +57,26 @@ class KehadiranController extends Controller
 
     public function show(Kehadiran $kehadiran)
     {
+        $user = auth()->user();
+    
+        if ($user->isMahasiswa() && (int)$kehadiran->nim !== $user->id) {
+            abort(403, 'Anda tidak bisa melihat data kehadiran mahasiswa lain.');
+        }
+
+        if ($user->isDosen() && (int)$kehadiran->namaDosen !== $user->id) {
+            abort(403, 'Anda tidak bisa melihat data kehadiran ini.');
+        }
         return view('kehadirans.show', compact('kehadiran'));
     }
 
     public function edit(Kehadiran $kehadiran)
     {
+        $user = auth()->user();
+
+        if ($user->isMahasiswa() || $user->isDosen() && (int)$kehadiran->namaDosen !== $user->id ) {
+            abort(403, 'Anda tidak boleh mengubah data kehadiran ini.');
+        }
+
         $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
         $dosens = Pengguna::where('role', 'dosen')->get();    
         return view('kehadirans.edit', compact('kehadiran', 'mahasiswas', 'dosens'));
@@ -56,16 +84,29 @@ class KehadiranController extends Controller
 
     public function update(Request $request, Kehadiran $kehadiran)
     {
-        $request->validate([
-            'kodeMatkul'=>'required|string|max:7',
-            'namaMatkul'=>'required|string|max:255',
-            'semester'=>'required|string|in:Gasal,Genap',
-            'namaDosen'=>'required|exists:users,id',
-            'nim'=>'required|exists:users,id',
-            'kelas'=>'required|string|max:10',
-            'jumlahPertemuan'=>'required|integer|min:1',
-            'jumlahKehadiran'=>'required|integer|min:0|lte:jumlahPertemuan',
-        ]);
+       $user = auth()->user();
+
+        if ($user->isMahasiswa() || $user->isDosen() && (int)$kehadiran->namaDosen !== $user->id ) {
+            abort(403, 'Anda tidak boleh mengubah data kehadiran ini.');
+        }
+
+        if ($user->isAdmin()) {
+            $request->validate([
+                'kodeMatkul'=>'required|string|max:7',
+                'namaMatkul'=>'required|string|max:255',
+                'semester'=>'required|string|in:Gasal,Genap',
+                'namaDosen'=>'required|exists:users,id',
+                'nim'=>'required|exists:users,id',
+                'kelas'=>'required|string|max:10',
+                'jumlahPertemuan'=>'required|integer|min:1',
+                'jumlahKehadiran'=>'required|integer|min:0|lte:jumlahPertemuan',
+            ]);
+        } else {
+             $request->validate([
+                'jumlahPertemuan'=>'required|integer|min:1',
+                'jumlahKehadiran'=>'required|integer|min:0|lte:jumlahPertemuan',
+            ]);
+        }
 
         $request['persentase'] = ($request->jumlahKehadiran / $request->jumlahPertemuan) * 100;
 
@@ -76,6 +117,10 @@ class KehadiranController extends Controller
 
     public function destroy(Kehadiran $kehadiran)
     {
+      if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh menghapus data kehadiran.');
+        }
+
         $kehadiran->delete();
 
         return redirect()->route('kehadiran.index')->with('success', 'Data kehadiran dihapus.');
