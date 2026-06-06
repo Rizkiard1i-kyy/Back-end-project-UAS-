@@ -12,6 +12,7 @@ use App\Http\Controllers\KsmController;
 use App\Http\Controllers\NilaiKHSController;
 use App\Http\Controllers\SuratPermohonanController;
 use App\Http\Controllers\SkemaPembayaranController;
+use App\Http\Controllers\KonsultasiController;
 
 Route::get('/', function () {
     return view('/login');
@@ -49,3 +50,5 @@ Route::resource('skpi', SkpiController::class);
 Route::resource('ksm', KsmController::class)->middleware('auth');
 
 Route::resource('skema_pembayaran', SkemaPembayaranController::class)->middleware('auth');
+
+Route::resource('konsultasi', KonsultasiController::class)->middleware('auth');
