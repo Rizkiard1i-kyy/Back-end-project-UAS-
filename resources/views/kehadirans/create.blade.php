@@ -14,6 +14,7 @@
     Semester:
     <br>
     <select name="semester" required>
+        <option value = "">-Pilih Semester-</option>
         <option value="Gasal">Gasal</option>
         <option value="Genap">Genap</option>
     </select>
