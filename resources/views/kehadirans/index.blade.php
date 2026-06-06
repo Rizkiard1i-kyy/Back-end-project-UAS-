@@ -1,6 +1,6 @@
 <h1>Daftar Kehadiran</h1>
 
-@if(auth()->user()->isAdmin() || auth()->user()->isDosen())
+@if(auth()->user()->isAdmin())
     <a href="{{ route('kehadiran.create') }}">Buat Data Kehadiran Baru</a>
     <br><br>
 @endif
