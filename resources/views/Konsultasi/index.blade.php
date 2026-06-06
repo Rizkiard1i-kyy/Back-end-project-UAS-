@@ -1,7 +1,7 @@
 <h1>Konsultasi Akademik</h1>
 
 @if(!auth()->user()->isAdmin())
-    <a href="{{ route('konsultasi.create') }}">+ ajukan Konsultasi</a>
+    <a href="{{ route('konsultasi.create') }}">ajukan Konsultasi</a>
     <br><br>
 @endif
 

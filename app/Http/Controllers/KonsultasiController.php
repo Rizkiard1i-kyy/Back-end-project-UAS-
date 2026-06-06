@@ -25,8 +25,7 @@ class KonsultasiController extends Controller
      */
     public function create()
     {
-        $dosen = Jadwal::select('dosenPengajar')->distinct()->get();
-        return view('konsultasi.create', compact('dosen'));
+        return view('konsultasi.create');
     }
 
     /**
@@ -35,20 +34,20 @@ class KonsultasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_dosen'=> 'required|string|max:255',
-            'tanggal'=> 'required|date|after_or_equal:today',
-            'jam'=> 'required|string|max:20',
-            'topik'=> 'required|string|max:1000',
+            'nama_dosen'=>'required|string|max:255',
+            'tanggal'=>'required|date|after_or_equal:today',
+            'jam'=>'required|string|max:20',
+            'topik'=>'required|string|max:1000',
         ]);
 
         Konsultasi::create([
-            'nim'=> auth()->user()->nim,
-            'nama_mahasiswa'=> auth()->user()->nama,
-            'nama_dosen'=> $request->nama_dosen,
-            'tanggal'=> $request->tanggal,
-            'jam'=> $request->jam,
-            'topik'=> $request->topik,
-            'status'=> 'menunggu',
+            'nim'=>auth()->user()->nim,
+            'nama_mahasiswa'=>auth()->user()->nama,
+            'nama_dosen'=>$request->nama_dosen,
+            'tanggal'=>$request->tanggal,
+            'jam'=>$request->jam,
+            'topik'=>$request->topik,
+            'status'=>'menunggu',
         ]);
 
         return redirect()->route('konsultasi.index')->with('success', 'Permintaan konsultasi berhasil dikirim.');
@@ -76,8 +75,8 @@ class KonsultasiController extends Controller
     public function update(Request $request, Konsultasi $konsultasi)
     {
         $request->validate([
-            'status'  => 'required|in:disetujui,ditolak',
-            'catatan' => 'nullable|string|max:1000',
+            'status'=>'required|in:disetujui,ditolak',
+            'catatan'=>'nullable|string|max:1000',
         ]);
 
         $konsultasi->update($request->only('status', 'catatan'));
