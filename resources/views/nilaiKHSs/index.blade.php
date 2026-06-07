@@ -2,8 +2,10 @@
 
 <h2>KARTU HASIL STUDI</h2>
 
-<a href="{{ route('nilaiKHS.create') }}">Buat Data Nilai KHS Baru</a>
-<br><br>
+@if(auth()->user()->isAdmin())
+    <a href="{{ route('nilaiKHS.create') }}">Buat Data Nilai KHS Baru</a>
+    <br><br>
+@endif
 
 @if ($nilaiKHS->isEmpty())
     <p>Belum ada data nilai KHS yang tersimpan.</p>
