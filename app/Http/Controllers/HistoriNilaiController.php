@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\historiNilai;
+use App\Models\Pengguna;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,24 +11,39 @@ class HistoriNilaiController extends Controller
 {
     public function index()
     {
-        $historiNilai = historiNilai::all();
+        $user = auth()->user();
+        $akses = historiNilai::with(['mahasiswa','dosen']);
+
+        if ($user->isMahasiswa()) {
+            $akses->where('nim', $user->id);
+        } elseif ($user->isDosen()) {
+            $akses->where('namaDosen', $user->id);
+        }
+
+        $historiNilai = $akses->get();
         return view('historiNilais.index', compact('historiNilai'));
     }
 
     public function create()
     {
-        return view('historiNilais.create');
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh membuat data kehadiran.');
+        }
+
+        $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
+        $dosens = Pengguna::where('role', 'dosen')->get();
+        return view('historiNilais.create', compact('mahasiswas', 'dosens'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nim'=>'required|string|max:9',
-            'tahunAkademik'=>'required|string|min:19591',
+            'nim'=>'required|string|min:1',
+            'tahunAkademik'=>'required|integer|min:19591',
             'kode'=>'required|string|min:1',
             'mataKuliah'=>'required|string|max:255',
             'sks'=>'required|integer|min:1',
-            'nilai'=>'required|string|max:1',
+            'nilai'=>'required|string|in:A,A-,B+,B,B-,C+,C,D,E,F',
             'bobot'=>'required|integer|max:4',
         ]);
         historiNilai::create($request->only(
@@ -54,13 +70,13 @@ class HistoriNilaiController extends Controller
     public function update(Request $request, historiNilai $historiNilai)
     {
         $request->validate([
-            'nim'=>'required|string|max:9',
+            'nim'=>'required|string|min:1',
             'tahunAkademik'=>'required|integer|min:19591',
-            'kode'=>'required|string|min:7',
+            'kode'=>'required|string|min:1',
             'mataKuliah'=>'required|string|max:255',
             'sks'=>'required|integer|min:1',
-            'nilai'=>'required|string|max:1',
-            'bobot'=>'required|float|max:4.00',
+            'nilai'=>'required|string|in:A,A-,B+,B,B-,C+,C,D,E,F',
+            'bobot'=>'required|integer|max:4',
         ]);
         historiNilai::create($request->only(
             'nim',

@@ -43,3 +43,6 @@
     <br><br>
     <button type="submit">Simpan</button>
 </form>
+
+<br><br>
+<a href="{{ route('kehadiran.index') }}">Kembali</a>
