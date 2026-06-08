@@ -1,7 +1,9 @@
 <h1>Daftar Histori Nilai</h1>
 
-<a href="{{ route('historiNilai.create') }}">Buat Data Histori Nilai Baru</a>
-<br><br>
+@if(auth()->user()->isAdmin())
+    <a href="{{ route('historiNilai.create') }}">Buat Data Histori Nilai Baru</a>
+    <br><br>
+@endif
 
 @if ($historiNilai->isEmpty())
     <p>Belum ada data histori nilai yang tersimpan.</p>
