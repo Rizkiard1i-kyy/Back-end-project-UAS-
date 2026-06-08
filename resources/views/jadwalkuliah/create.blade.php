@@ -1,8 +1,6 @@
 <h1>Tambah Jadwal Kuliah Baru</h1>
-
 <form method="POST" action="{{ route('jadwal.store') }}">
     @csrf
-    
     Kode MK:
     <br>
     <input name="kodeMK" required>

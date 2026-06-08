@@ -18,8 +18,6 @@ Route::get('/', function () {
     return view('/login');
 });
 
-Route::resource('jadwal', JadwalController::class);
-
 Route::get('/login', [AuthController::class, 'showLogin'])
     ->name('login');
 
@@ -37,6 +35,7 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 Route::resource('kehadiran', KehadiranController::class)->middleware('auth');
+Route::resource('jadwal', JadwalController::class)->middleware('auth');
 Route::resource('historiNilai', HistoriNilaiController::class)->middleware('auth');
 
 Route::resource('ksm', KsmController::class)->middleware('auth');
@@ -47,7 +46,7 @@ Route::resource('surat_permohonan', SuratPermohonanController::class);
 Route::resource('surat_keterangan', SuratKeteranganController::class);
 Route::resource('konsultasi', KonsultasiController::class)->middleware('auth');
 
-Route::resource('skpi', SkpiController::class);
+Route::resource('skpi', SkpiController::class)->middleware('auth');
 
 
 Route::resource('skema_pembayaran', SkemaPembayaranController::class)->middleware('auth');
