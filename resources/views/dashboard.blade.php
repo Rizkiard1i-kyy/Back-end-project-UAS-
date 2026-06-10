@@ -46,6 +46,8 @@
 <br><br>
 <a href="{{ route('surat_keterangan.index') }}">Surat Keterangan</a>
 <br><br>
+<a href="{{ route('konsultasi.index') }}">Konsultasi Akademik</a>
+<br><br>
 
 <h3>SKPI</h3>
 <a href="{{ route('skpi.index') }}">SKPI (Penalaran dan Keilmuan)</a>

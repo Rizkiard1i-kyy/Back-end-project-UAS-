@@ -12,12 +12,12 @@ use App\Http\Controllers\KsmController;
 use App\Http\Controllers\NilaiKHSController;
 use App\Http\Controllers\SuratPermohonanController;
 use App\Http\Controllers\ChatBotController;
+use App\Http\Controllers\SkemaPembayaranController;
+use App\Http\Controllers\KonsultasiController;
 
 Route::get('/', function () {
     return view('/login');
 });
-
-Route::resource('jadwal', JadwalController::class);
 
 Route::get('/login', [AuthController::class, 'showLogin'])
     ->name('login');
@@ -35,16 +35,20 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware('auth');
 
-Route::resource('kehadiran', KehadiranController::class);
+Route::resource('kehadiran', KehadiranController::class)->middleware('auth');
+Route::resource('jadwal', JadwalController::class)->middleware('auth');
+Route::resource('historiNilai', HistoriNilaiController::class)->middleware('auth');
 
-Route::resource('historiNilai', HistoriNilaiController::class);
+Route::resource('ksm', KsmController::class)->middleware('auth');
 Route::resource('nilaiKHS', NilaiKHSController::class)->middleware('auth');
-Route::resource('kehadiran', KehadiranController::class)
-    ->middleware('auth');
-Route::resource('surat_keterangan', SuratKeteranganController::class);
-Route::resource('surat_permohonan', SuratPermohonanController::class);
 
-Route::resource('skpi', SkpiController::class);
+
+Route::resource('surat_permohonan', SuratPermohonanController::class);
+Route::resource('surat_keterangan', SuratKeteranganController::class);
+Route::resource('konsultasi', KonsultasiController::class)->middleware('auth');
+
+Route::resource('skpi', SkpiController::class)->middleware('auth');
+
 
 Route::resource('ksm', KsmController::class)->middleware('auth');
 
@@ -55,3 +59,4 @@ Route::resource('ksm', KsmController::class)->middleware('auth');
         Route::get('/history', [ChatBotController::class, 'history']) ->name('history');
         Route::delete('/clear',[ChatBotController::class, 'clear'])   ->name('clear');
     });
+Route::resource('skema_pembayaran', SkemaPembayaranController::class)->middleware('auth');

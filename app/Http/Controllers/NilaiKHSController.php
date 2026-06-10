@@ -64,6 +64,36 @@ class NilaiKHSController extends Controller
             $request['nilaiHuruf'] = 'E';
             $request['bobotKualitas'] = 0.00;
         }
+
+        $semuaDataLama = nilaiKHS::where('nim', $request->nim)->get();
+
+        $sksSebelumnya = $semuaDataLama->sum('sks');
+        $jumlahSKS = $sksSebelumnya + $request->sks;
+        $request['jumlahSKS'] = $jumlahSKS;
+
+        $kreditDiambil = $sksSebelumnya + $request->sks;
+
+        $kreditPerolehanLama = $semuaDataLama->where('nilaiHuruf', '!=', 'E')->sum('sks');
+        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'E') ? $request->sks : 0;
+        $kreditPeroleh = $kreditPerolehanLama + $kreditPerolehanBaru;
+
+        $request['kreditDiambil'] = $kreditDiambil;
+        $request['kreditPeroleh'] = $kreditPeroleh;
+
+        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
+        $totalSksSemester = $dataSemesterIni->sum('sks') + $request->sks;
+        $totalMutuSemester = $dataSemesterIni->sum(function($item) {
+            return $item->bobotKualitas * $item->sks;
+        }) + ($request['bobotKualitas'] * $request->sks);
+        
+        $request['ips'] = $totalSksSemester > 0 ? round($totalMutuSemester / $totalSksSemester, 2) : 0.00;
+
+        $totalMutuKumulatif = $semuaDataLama->sum(function($item) {
+            return $item->bobotKualitas * $item->sks;
+        }) + ($request['bobotKualitas'] * $request->sks);
+
+        $request['ipk'] = $kreditDiambil > 0 ? round($totalMutuKumulatif / $kreditDiambil, 2) : 0.00;
+        
         nilaiKHS::create($request->only(
             'nim',
             'tahunAkademik',
@@ -77,7 +107,14 @@ class NilaiKHSController extends Controller
             'nilaiHuruf',
             'nilaiAngka',
             'bobotKualitas',
-            'keterangan',));
+            'keterangan',
+            'jumlahSKS',
+            'ips',
+            'kreditDiambil',
+            'kreditPeroleh',
+            'ipk',
+        ));
+        
         return redirect()->route('nilaiKHS.index')->with('success', 'Data nilai KHS baru dibuat.');
     }
 
@@ -136,7 +173,37 @@ class NilaiKHSController extends Controller
             $request['nilaiHuruf'] = 'E';
             $request['bobotKualitas'] = 0.00;
         }
-        nilaiKHS::create($request->only(
+
+        $semuaDataLama = nilaiKHS::where('nim', $request->nim)->get();
+
+        $sksSebelumnya = $semuaDataLama->sum('sks');
+        $jumlahSKS = $sksSebelumnya + $request->sks;
+        $request['jumlahSKS'] = $jumlahSKS;
+
+        $kreditDiambil = $sksSebelumnya + $request->sks;
+
+        $kreditPerolehanLama = $semuaDataLama->where('nilaiHuruf', '!=', 'E')->sum('sks');
+        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'E') ? $request->sks : 0;
+        $kreditPeroleh = $kreditPerolehanLama + $kreditPerolehanBaru;
+
+        $request['kreditDiambil'] = $kreditDiambil;
+        $request['kreditPeroleh'] = $kreditPeroleh;
+
+        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
+        $totalSksSemester = $dataSemesterIni->sum('sks') + $request->sks;
+        $totalMutuSemester = $dataSemesterIni->sum(function($item) {
+            return $item->bobotKualitas * $item->sks;
+        }) + ($request['bobotKualitas'] * $request->sks);
+        
+        $request['ips'] = $totalSksSemester > 0 ? round($totalMutuSemester / $totalSksSemester, 2) : 0.00;
+
+        $totalMutuKumulatif = $semuaDataLama->sum(function($item) {
+            return $item->bobotKualitas * $item->sks;
+        }) + ($request['bobotKualitas'] * $request->sks);
+
+        $request['ipk'] = $kreditDiambil > 0 ? round($totalMutuKumulatif / $kreditDiambil, 2) : 0.00;
+
+        nilaiKHS::update($request->only(
             'nim',
             'tahunAkademik',
             'tugas',
@@ -149,7 +216,14 @@ class NilaiKHSController extends Controller
             'nilaiHuruf',
             'nilaiAngka',
             'bobotKualitas',
-            'keterangan',));
+            'keterangan',
+            'jumlahSKS',
+            'ips',
+            'kreditDiambil',
+            'kreditPeroleh',
+            'ipk'
+        ,));
+
         return redirect()->route('nilaiKHS.index')->with('success', 'Data nilai kHS diperbarui');
     }
 
