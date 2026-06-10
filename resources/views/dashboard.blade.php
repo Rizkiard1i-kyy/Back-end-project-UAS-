@@ -42,15 +42,19 @@
 <br><br>
 
 <h3>Layanan Mahasiswa</h3>
-<a href="{{ route('surat_permohonan.index') }}">Daftar Surat Permohonan</a>
+<a href="{{ route('surat_permohonan.index') }}">Surat Permohonan</a>
 <br><br>
-<a href="{{ route('surat_keterangan.index') }}">Daftar Surat Keterangan</a>
+<a href="{{ route('surat_keterangan.index') }}">Surat Keterangan</a>
 <br><br>
 <a href="{{ route('konsultasi.index') }}">Konsultasi Akademik</a>
 <br><br>
 
 <h3>SKPI</h3>
 <a href="{{ route('skpi.index') }}">SKPI (Penalaran dan Keilmuan)</a>
+<br><br>
+
+<h3>Chatbot Asisten Akademik</h3>
+<a href="{{ route('chatbot.index') }}">Chatbot</a>
 <br><br>
 
 @if(auth()->user()->isAdmin())
