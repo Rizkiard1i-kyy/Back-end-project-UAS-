@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kehadiran;
 use App\Models\Pengguna;
+use App\Models\MataKuliah;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class KehadiranController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $akses = Kehadiran::with(['mahasiswa','dosen']);;
+        $akses = Kehadiran::with(['mahasiswa','dosen', 'mataKuliah']);;
 
         if ($user->isMahasiswa()) {
             $akses->where('nim', $user->id);
@@ -32,14 +33,15 @@ class KehadiranController extends Controller
 
         $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
         $dosens = Pengguna::where('role', 'dosen')->get();
-        return view('kehadirans.create', compact('mahasiswas', 'dosens'));
+        $matkuls = MataKuliah::all();
+
+        return view('kehadirans.create', compact('mahasiswas', 'dosens', 'matkuls'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'kodeMatkul'=>'required|string|max:7',
-            'namaMatkul'=>'required|string|max:255',
+            'matkul'=>'required|exists:mata_kuliahs,id',
             'semester'=>'required|string|in:Gasal,Genap',
             'namaDosen'=>'required|exists:users,id',
             'nim'=>'required|exists:users,id',
@@ -50,7 +52,7 @@ class KehadiranController extends Controller
 
         $request['persentase'] = ($request->jumlahKehadiran / $request->jumlahPertemuan) * 100;
 
-        Kehadiran::create($request->only('kodeMatkul','namaMatkul', 'semester', 'namaDosen', 'nim', 'kelas', 'jumlahPertemuan', 'jumlahKehadiran', 'persentase'));
+        Kehadiran::create($request->only('matkul', 'semester', 'namaDosen', 'nim', 'kelas', 'jumlahPertemuan', 'jumlahKehadiran', 'persentase'));
 
         return redirect()->route('kehadiran.index')->with('success', 'Data kehadiran baru dibuat.');
     }
@@ -78,8 +80,10 @@ class KehadiranController extends Controller
         }
 
         $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
-        $dosens = Pengguna::where('role', 'dosen')->get();    
-        return view('kehadirans.edit', compact('kehadiran', 'mahasiswas', 'dosens'));
+        $dosens = Pengguna::where('role', 'dosen')->get();
+        $matkuls = MataKuliah::all();
+
+        return view('kehadirans.edit', compact('kehadiran', 'mahasiswas', 'dosens', 'matkuls'));
     }
 
     public function update(Request $request, Kehadiran $kehadiran)
@@ -92,8 +96,7 @@ class KehadiranController extends Controller
 
         if ($user->isAdmin()) {
             $request->validate([
-                'kodeMatkul'=>'required|string|max:7',
-                'namaMatkul'=>'required|string|max:255',
+                'matkul'=>'required|exists:mata_kuliahs,id',
                 'semester'=>'required|string|in:Gasal,Genap',
                 'namaDosen'=>'required|exists:users,id',
                 'nim'=>'required|exists:users,id',
@@ -110,7 +113,7 @@ class KehadiranController extends Controller
 
         $request['persentase'] = ($request->jumlahKehadiran / $request->jumlahPertemuan) * 100;
 
-        $kehadiran->update($request->only('kodeMatkul','namaMatkul', 'semester', 'namaDosen', 'nim', 'kelas', 'jumlahPertemuan', 'jumlahKehadiran', 'persentase'));
+        $kehadiran->update($request->only('matkul', 'semester', 'namaDosen', 'nim', 'kelas', 'jumlahPertemuan', 'jumlahKehadiran', 'persentase'));
 
         return redirect()->route('kehadiran.index')->with('success', 'Data kehadiran diperbarui.');
     }

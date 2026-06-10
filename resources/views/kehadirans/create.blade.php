@@ -1,14 +1,14 @@
 <h1>Buat Data Kehadiran Baru</h1>
 <form method="POST" action="{{ route('kehadiran.store') }}">
     @csrf
-    Kode:
-    <br>
-    <input name="kodeMatkul" value="{{ old('kodeMatkul') }}" required>
-    <br>
-    <br>
     Mata Kuliah:
     <br>
-    <input name="namaMatkul" value="{{ old('namaMatkul') }}" required>
+    <select name="matkul" required>
+        <option value = "">-Pilih Mata Kuliah-</option>
+        @foreach($matkuls as $matkul)
+            <option value = "{{ $matkul->id }}">{{ $matkul->kodeMatkul }} - {{ $matkul->namaMatkul }}</option>
+        @endforeach
+    </select>
     <br>
     <br>
     Semester:

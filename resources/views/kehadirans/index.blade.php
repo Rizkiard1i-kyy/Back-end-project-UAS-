@@ -23,10 +23,10 @@
             <tr>
                 <td style="text-align: center">{{ $loop->iteration }}</td>
                 <td>
-                    <a> {{ $kehadiran->kodeMatkul }}</a>
+                    <a> {{ $kehadiran->mataKuliah->kodeMatkul }}</a>
                 </td>
                 <td>
-                    <a> {{ $kehadiran->namaMatkul }}</a>
+                    <a> {{ $kehadiran->mataKuliah->namaMatkul }}</a>
                 </td>
                 <td>
                     <a> {{ $kehadiran->mahasiswa->nim }} - {{ $kehadiran->mahasiswa->nama }}</a>
