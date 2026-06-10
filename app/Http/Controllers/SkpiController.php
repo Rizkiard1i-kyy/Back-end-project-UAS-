@@ -16,6 +16,9 @@ class SkpiController extends Controller
 
     public function create()
     {
+        if (!in_array(auth()->user()->role, ['mahasiswa'])) {
+            return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa buat daftar skpi baru');
+        }
         return view('skpi.create');
     }
 
@@ -49,6 +52,9 @@ class SkpiController extends Controller
 
     public function edit(Skpi $skpi)
     {
+        if (!in_array(auth()->user()->role, ['mahasiswa'])) {
+            return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa buat daftar skpi baru');
+        }
         return view('skpi.edit', compact('skpi'));
     }
 
@@ -82,6 +88,9 @@ class SkpiController extends Controller
 
     public function destroy(Skpi $skpi)
     {
+        if (!in_array(auth()->user()->role, ['mahasiswa'])) {
+            return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa buat daftar skpi baru');
+        }
         $skpi->delete();
         return redirect()->route('skpi.index')->with('success', 'Data SKPI berhasil dihapus.');
     }
