@@ -1,7 +1,18 @@
 <h1>Daftar SKPI (Penalaran dan Keilmuan)</h1>
-
-<a href="{{ route('skpi.create') }}">Tambah Kegiatan SKPI Baru</a>
-<br><br>
+@if(session('error'))
+    <div>
+        {{ session('error') }}
+    </div>
+@endif
+@if(session('success'))
+    <div>
+        {{ session('success') }}
+    </div>
+@endif
+@if(in_array(auth()->user()->role, ['mahasiswa']))
+    <a href="{{ route('skpi.create') }}">Tambah Jadwal Kuliah Baru</a>
+    <br><br>
+@endif
 @if ($skpis->isEmpty())
     <p>Belum ada data kegiatan SKPI yang tersimpan.</p>
 @else
