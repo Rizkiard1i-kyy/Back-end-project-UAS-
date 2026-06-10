@@ -6,6 +6,8 @@
 
 <p><strong>Status:</strong> {{ $suratPermohonan->status }}</p>
 
+<p><strong>NIM:</strong> {{ $suratPermohonan->nim }}</p>
+
 <p><strong>Tanggal Pengajuan:</strong>
     {{ \Carbon\Carbon::parse($suratPermohonan->tanggal_pengajuan)->format('d-m-Y H:i') }}
 </p>
