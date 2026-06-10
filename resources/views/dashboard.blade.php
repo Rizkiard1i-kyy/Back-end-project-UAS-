@@ -61,6 +61,8 @@
 <h3>Administrasi</h3>
 <a href="{{ route('pengguna.index') }}">Manajemen Pengguna</a>
 <br><br>
+<a href="{{ route('mataKuliah.index') }}">Manajemen Mata Kuliah</a>
+<br><br>
 @endif
 
 <form method="POST" action="/logout">
