@@ -9,6 +9,7 @@
         <th>No</th>
         <th>Jenis Surat</th>
         <th>Bahasa</th>
+        <th>NIM</th>
         <th>Status</th>
         <th>Aksi</th>
     </tr>
@@ -18,6 +19,7 @@
         <td>{{ $loop->iteration   }}</td>
         <td>{{ $surat->jenis_surat }}</td>
         <td>{{ $surat->bahasa }}</td>
+        <td>{{ $surat->nim }}</td>
         <td>{{ $surat->status }}</td>
 
         <td>
