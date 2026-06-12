@@ -3,7 +3,12 @@
     @csrf @method('PUT')
     NIM:
     <br>
-    <input name="nim" required>
+    <select name= "nim" required>
+        <option value = "">-Pilih NIM Mahasiswa-</option>
+        @foreach($mahasiswas as $mhs)
+            <option value = "{{ $mhs->id }}">{{ $mhs->nim }} - {{ $mhs->nama }}</option>
+        @endforeach
+    </select>
     <br><br>
     TAHUN AKADEMIK:
     <br>
