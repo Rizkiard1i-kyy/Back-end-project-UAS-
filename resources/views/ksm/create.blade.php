@@ -21,7 +21,6 @@
         <form method="POST" action="{{ route('ksm.store') }}">
             @csrf
 
-            {{-- ── Identitas Mahasiswa ── --}}
             <h3>Identitas Mahasiswa</h3>
             <div class="grid-2">
                 <div>
@@ -47,7 +46,6 @@
                 </div>
             </div>
 
-            {{-- ── Mata Kuliah ── --}}
             <h3>Mata Kuliah</h3>
 
             <table class="mk-table" id="mk-table">
@@ -82,7 +80,7 @@
                         </tr>
                         @endforeach
                     @else
-                        {{-- default first row --}}
+
                         <tr>
                             <td style="text-align:center">1</td>
                             <td><input type="text" name="mataKuliahs[0][kodeMatkul]" required></td>
@@ -92,7 +90,6 @@
                             <td>
                                 <select name="mataKuliahs[0][status]" required>
                                     <option value="B">B</option>
-                                    <option value="P">P</option>
                                     <option value="U">U</option>
                                 </select>
                             </td>
@@ -130,7 +127,6 @@ function addRow() {
         <td>
             <select name="mataKuliahs[${i}][status]" required>
                 <option value="B">B</option>
-                <option value="P">P</option>
                 <option value="U">U</option>
             </select>
         </td>
