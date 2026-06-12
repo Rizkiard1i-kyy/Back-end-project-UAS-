@@ -27,7 +27,7 @@ class HistoriNilaiController extends Controller
     public function create()
     {
         if (!auth()->user()->isAdmin()) {
-            abort(403, 'Anda tidak boleh membuat data kehadiran.');
+            abort(403, 'Anda tidak boleh membuat data histori nilai.');
         }
 
         $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
