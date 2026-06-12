@@ -64,7 +64,13 @@ class HistoriNilaiController extends Controller
 
     public function edit(historiNilai $historiNilai)
     {
-        return view('historiNilais.edit', compact('historiNilai'));
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh mengubah data histori nilai.');
+        }
+
+        $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
+        $dosens = Pengguna::where('role', 'dosen')->get();
+        return view('historiNilais.edit', compact('historiNilai','mahasiswas', 'dosens'));
     }
 
     public function update(Request $request, historiNilai $historiNilai)
@@ -78,7 +84,7 @@ class HistoriNilaiController extends Controller
             'nilai'=>'required|string|in:A,A-,B+,B,B-,C+,C,D,E,F',
             'bobot'=>'required|integer|max:4',
         ]);
-        historiNilai::create($request->only(
+        historiNilai::update($request->only(
             'nim',
             'tahunAkademik',
             'kode',
@@ -91,6 +97,9 @@ class HistoriNilaiController extends Controller
 
     public function destroy(historiNilai $historiNilai)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh menghapus data histori nilai.');
+        }
         $historiNilai->delete();
         return redirect()->route('historiNilai.index')->with('success', 'Data histori nilai dihapus.');
     }
