@@ -1,4 +1,4 @@
-<h1>Detail Kehadiran {{ $kehadiran->mahasiswa->nama }} ({{ $kehadiran->mahasiswa->nim }}) untuk {{ $kehadiran->kodeMatkul }} {{ $kehadiran->namaMatkul }}:</h1>
+<h1>Detail Kehadiran {{ $kehadiran->mahasiswa->nama }} ({{ $kehadiran->mahasiswa->nim }}) untuk {{ $kehadiran->mataKuliah->kodeMatkul }} {{ $kehadiran->mataKuliah->namaMatkul }}:</h1>
 
 <p>Nama Dosen: {{ $kehadiran->dosen->nama }}</p>
 <p>Semester: {{ $kehadiran->semester }}</p>

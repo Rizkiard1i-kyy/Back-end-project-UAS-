@@ -6,6 +6,7 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\HistoriNilaiController;
+use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SkpiController;
 use App\Http\Controllers\KsmController;
@@ -36,6 +37,8 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 Route::resource('kehadiran', KehadiranController::class)->middleware('auth');
+Route::resource('mataKuliah', MataKuliahController::class)->middleware('auth');
+
 Route::resource('jadwal', JadwalController::class)->middleware('auth');
 Route::resource('historiNilai', HistoriNilaiController::class)->middleware('auth');
 
