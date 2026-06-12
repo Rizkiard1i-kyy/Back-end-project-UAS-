@@ -15,6 +15,7 @@ use App\Http\Controllers\SuratPermohonanController;
 use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\SkemaPembayaranController;
 use App\Http\Controllers\KonsultasiController;
+use App\Http\Controllers\RpsController;
 
 Route::get('/', function () {
     return view('/login');
@@ -49,6 +50,8 @@ Route::resource('nilaiKHS', NilaiKHSController::class)->middleware('auth');
 Route::resource('surat_permohonan', SuratPermohonanController::class);
 Route::resource('surat_keterangan', SuratKeteranganController::class);
 Route::resource('konsultasi', KonsultasiController::class)->middleware('auth');
+
+Route::resource('rps', RpsController::class)->middleware('auth');
 
 Route::resource('skpi', SkpiController::class)->middleware('auth');
 

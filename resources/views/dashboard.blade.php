@@ -49,6 +49,10 @@
 <a href="{{ route('konsultasi.index') }}">Konsultasi Akademik</a>
 <br><br>
 
+<h3>Bahan Ajar</h3>
+<a href="{{ route('rps.index') }}">RPS (rancangan program studi)</a>
+<br><br>
+
 <h3>SKPI</h3>
 <a href="{{ route('skpi.index') }}">SKPI (Penalaran dan Keilmuan)</a>
 <br><br>
