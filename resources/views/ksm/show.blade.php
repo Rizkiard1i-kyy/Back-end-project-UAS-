@@ -6,7 +6,6 @@
 </head>
 <body>
 
-{{-- ── Toolbar ── --}}
 <div class="toolbar">
     <label>Tahun akademik :</label>
     <span class="tahun-val">{{ $ksm->semester }} {{ explode(' / ', $ksm->tahunAkademik)[0] }}</span>
@@ -23,7 +22,6 @@
     </form>
 </div>
 
-{{-- ── KSM Card ── --}}
 <div class="ksm-card">
     <div class="ksm-header">AKADEMIK - KARTU STUDI MAHASISWA</div>
     <div class="ksm-notice">* Cetak KSM HARUS DENGAN PRINTER WARNA</div>
