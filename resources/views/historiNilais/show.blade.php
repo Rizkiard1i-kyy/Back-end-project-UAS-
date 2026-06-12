@@ -1,6 +1,5 @@
-<h1>Detail Histori Nilai untuk {{ $historiNilai->kode }} {{ $historiNilai->mataKuliah }}:</h1>
+<h1>Detail Histori Nilai {{ $historiNilai->mahasiswa->nama }} ({{ $historiNilai->mahasiswa->nim }}) untuk {{ $historiNilai->kode }} {{ $historiNilai->mataKuliah }}:</h1>
 
-<p>NIM: {{ $historiNilai->nim }}</p>
 <p>Tahun: {{ $historiNilai->tahunAkademik }}</p>
 <p>Kode Matakuliah: {{ $historiNilai->kode }}</p>
 <p>sks: {{ $historiNilai->sks }}</p>
@@ -42,9 +41,9 @@
     <br><br>
     <form action="{{ route('historiNilai.destroy', $historiNilai) }}" method="post" style="display:inline;">
         @csrf @method('DELETE')
-        <button type="submit" onclick="return confirm('Anda yakin ingin menghapus data kehadiran ini?')">Hapus Data</button>
+        <button type="submit" onclick="return confirm('Anda yakin ingin menghapus data histori nilai ini?')">Hapus Data</button>
     </form>
 @endif
 
 <br><br>
-<a href="{{ route('kehadiran.index') }}">Kembali</a>
+<a href="{{ route('historiNilai.index') }}">Kembali</a>
