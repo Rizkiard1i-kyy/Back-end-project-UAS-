@@ -15,4 +15,12 @@ class historiNilai extends Model
         'nilai',
         'bobot',
     ];
+
+    public function mahasiswa() {
+        return $this->belongsTo(Pengguna::class, 'nim', 'id');
+    }
+
+    public function dosen() {
+        return $this->belongsTo(Pengguna::class, 'namaDosen', 'id');
+    }
 }
