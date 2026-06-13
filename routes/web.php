@@ -14,6 +14,7 @@ use App\Http\Controllers\SuratPermohonanController;
 use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\SkemaPembayaranController;
 use App\Http\Controllers\KonsultasiController;
+use App\Http\Controllers\PengumumanController;
 
 Route::get('/', function () {
     return view('/login');
@@ -52,11 +53,17 @@ Route::resource('skpi', SkpiController::class)->middleware('auth');
 
 Route::resource('ksm', KsmController::class)->middleware('auth');
 
-
-    Route::prefix('chatbot')->name('chatbot.')->group(function () {
-        Route::get('/',        [ChatBotController::class, 'index'])   ->name('index');
-        Route::post('/ask',    [ChatBotController::class, 'ask'])     ->name('ask');
-        Route::get('/history', [ChatBotController::class, 'history']) ->name('history');
-        Route::delete('/clear',[ChatBotController::class, 'clear'])   ->name('clear');
+Route::resource('chatbot', ChatBotController::class)->middleware('auth');
+Route::prefix('chatbot')
+    ->middleware('auth')
+    ->name('chatbot.')
+    ->group(function () {
+        Route::get('/', [ChatBotController::class, 'index'])->name('index');
+        Route::post('/ask', [ChatBotController::class, 'ask'])->name('ask');
+        Route::get('/history', [ChatBotController::class, 'history'])->name('history');
+        Route::delete('/clear', [ChatBotController::class, 'clear'])->name('clear');
     });
+    
 Route::resource('skema_pembayaran', SkemaPembayaranController::class)->middleware('auth');
+
+Route::resource('Pengumuman', PengumumanController::class)->middleware('auth');
