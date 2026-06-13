@@ -13,15 +13,15 @@ class KehadiranController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $akses = Kehadiran::with(['mahasiswa','dosen', 'mataKuliah']);;
+        $query = Kehadiran::with(['mahasiswa','dosen', 'mataKuliah']);;
 
         if ($user->isMahasiswa()) {
-            $akses->where('nim', $user->id);
+            $query->where('nim', $user->id);
         } elseif ($user->isDosen()) {
-            $akses->where('namaDosen', $user->id);
+            $query->where('namaDosen', $user->id);
         }
 
-        $kehadiran = $akses->get();
+        $kehadiran = $query->get();
         return view('kehadirans.index', compact('kehadiran'));
     }
 
@@ -40,6 +40,10 @@ class KehadiranController extends Controller
 
     public function store(Request $request)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh membuat data kehadiran.');
+        }
+
         $request->validate([
             'matkul'=>'required|exists:mata_kuliahs,id',
             'semester'=>'required|string|in:Gasal,Genap',
@@ -52,7 +56,15 @@ class KehadiranController extends Controller
 
         $request['persentase'] = ($request->jumlahKehadiran / $request->jumlahPertemuan) * 100;
 
-        Kehadiran::create($request->only('matkul', 'semester', 'namaDosen', 'nim', 'kelas', 'jumlahPertemuan', 'jumlahKehadiran', 'persentase'));
+        Kehadiran::create($request->only(
+            'matkul', 
+            'semester', 
+            'namaDosen', 
+            'nim', 
+            'kelas', 
+            'jumlahPertemuan', 
+            'jumlahKehadiran', 
+            'persentase'));
 
         return redirect()->route('kehadiran.index')->with('success', 'Data kehadiran baru dibuat.');
     }
@@ -113,7 +125,15 @@ class KehadiranController extends Controller
 
         $request['persentase'] = ($request->jumlahKehadiran / $request->jumlahPertemuan) * 100;
 
-        $kehadiran->update($request->only('matkul', 'semester', 'namaDosen', 'nim', 'kelas', 'jumlahPertemuan', 'jumlahKehadiran', 'persentase'));
+        $kehadiran->update($request->only(
+            'matkul', 
+            'semester', 
+            'namaDosen', 
+            'nim', 
+            'kelas', 
+            'jumlahPertemuan', 
+            'jumlahKehadiran', 
+            'persentase'));
 
         return redirect()->route('kehadiran.index')->with('success', 'Data kehadiran diperbarui.');
     }

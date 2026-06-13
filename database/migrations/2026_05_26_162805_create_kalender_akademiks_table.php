@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('kalender_akademiks', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggalMulai');
+            $table->date('tanggalSelesai');
+            $table->string('namaKegiatan');
             $table->timestamps();
         });
     }

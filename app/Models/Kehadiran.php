@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Kehadiran extends Model
 {
     protected $fillable = [
-    'matkul', 
-    'semester',
-    'namaDosen',
-    'nim',
-    'kelas',
-    'jumlahPertemuan',
-    'jumlahKehadiran',
-    'persentase'];
+        'matkul', 
+        'semester',
+        'namaDosen',
+        'nim',
+        'kelas',
+        'jumlahPertemuan',
+        'jumlahKehadiran',
+        'persentase'
+    ];
 
     public function mahasiswa() {
         return $this->belongsTo(Pengguna::class, 'nim', 'id');
