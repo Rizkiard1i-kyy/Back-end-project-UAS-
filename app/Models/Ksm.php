@@ -14,6 +14,16 @@ class Ksm extends Model
         'tahunAkademik',
     ];
 
+    public function mahasiswa()
+    {
+        return $this->belongsTo(User::class, 'nim', 'id');
+    }
+
+    public function Admin()
+    {
+        return $this->belongsTo(User::class, 'nim', 'id');
+    }
+    
     public function mataKuliahs()
     {
         return $this->hasMany(KsmMataKuliah::class);
