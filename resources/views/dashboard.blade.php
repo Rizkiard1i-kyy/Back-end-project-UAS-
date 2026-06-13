@@ -36,6 +36,8 @@
 <br><br>
 <a href="{{ route('jadwal.index') }}">Jadwal Kuliah</a>
 <br><br>
+<a href="{{ route('kalenderAkademik.index') }}">Kalender Akademik</a>
+<br><br>
 <a href="{{ route('ksm.index') }}">KSM</a>
 <br><br>
 <a href="{{ route('kehadiran.index') }}">Kehadiran</a>
