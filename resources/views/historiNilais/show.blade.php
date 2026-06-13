@@ -1,8 +1,8 @@
-<h1>Detail Histori Nilai {{ $historiNilai->mahasiswa->nama }} ({{ $historiNilai->mahasiswa->nim }}) untuk {{ $historiNilai->kode }} {{ $historiNilai->mataKuliah }}:</h1>
+<h1>Detail Histori Nilai {{ $historiNilai->mahasiswa->nama }} ({{ $historiNilai->mahasiswa->nim }}) untuk {{ $historiNilai->mataKuliah->kodeMatkul }} {{ $historiNilai->mataKuliah->namaMatkul }}:</h1>
 
+<p>Nama Dosen: {{ $historiNilai->dosen->nama }}</p>
 <p>Tahun: {{ $historiNilai->tahunAkademik }}</p>
-<p>Kode Matakuliah: {{ $historiNilai->kode }}</p>
-<p>sks: {{ $historiNilai->sks }}</p>
+<p>sks: {{ $historiNilai->mataKuliah->sks }}</p>
 <p>nilai: {{ $historiNilai->nilai }}</p>
 <p>bobot: {{ $historiNilai->bobot }}</p>
 
@@ -13,24 +13,8 @@
         @csrf
         @method('PATCH')
         <div>
-            <label>sks:</label>
-            <input type="number" name="sks" value="{{ $historiNilai-> sks }}" required>
-        </div>
-        <div>
-            <label>nilai:</label>
-            <select name="nilai" required>
-                <option value = "">-PILIH NILAI-</option>
-                <option value="A">A</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B">B</option>
-                <option value="B-">B-</option>
-                <option value="C+">C+</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-            </select>
+            <label>bobot:</label>
+            <input type="number" name="bobot" step="0.01" min="0" max="4" value="{{ $historiNilai-> bobot }}" required>
         </div>
         <button type="submit">Simpan Perubahan</button>
     </form>
