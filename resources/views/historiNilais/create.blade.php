@@ -31,7 +31,7 @@
     <select name= "nilai" required>
         <option value = "">-PILIH NILAI-</option>
         <option value="A">A</option>
-        <option value="A=">A-</option>
+        <option value="A-">A-</option>
         <option value="B+">B+</option>
         <option value="B">B</option>
         <option value="B-">B-</option>

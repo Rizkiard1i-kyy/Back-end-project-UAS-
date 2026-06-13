@@ -8,7 +8,7 @@
 <p>Email Dosen: {{ $jadwal->emailDosen }}</p>
 
 <br>
-@if(in_array(auth()->user()->role, ['admin', 'dosen']))
+@if(!auth()->user()->isMahasiswa())
 <a href="{{ route('jadwal.edit', $jadwal->id) }}">Ubah Data</a>
 <br><br>
 
