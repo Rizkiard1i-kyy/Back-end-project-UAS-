@@ -8,7 +8,7 @@ class ChatBot extends Model
 {
     protected $fillable = [
         'user_id',
-        'role',    // 'user' | 'bot'
+        'role',   
         'message',
     ];
 

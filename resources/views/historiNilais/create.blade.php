@@ -10,41 +10,31 @@
         @endforeach
     </select>
     <br><br>
+    NAMA DOSEN:
+    <br>
+    <select name="namaDosen" required>
+        <option value = "">-Pilih Dosen-</option>
+        @foreach($dosens as $dosen)
+            <option value = "{{ $dosen->id }}">{{ $dosen->nama }}</option>
+        @endforeach
+    </select>   
+    <br><br>
     TAHUN AKADEMIK:
     <br>
     <input name= "tahunAkademik" required>
     <br><br>
-    KODE:
-    <br>
-    <input name= "kode" required>
-    <br><br>
     MATA KULIAH:
     <br>
-    <input name= "mataKuliah" required>
-    <br><br>
-    SKS:
-    <br>
-    <input type="number" name= "sks" required>
-    <br><br>
-    NILAI:
-    <br>
-    <select name= "nilai" required>
-        <option value = "">-PILIH NILAI-</option>
-        <option value="A">A</option>
-        <option value="A=">A-</option>
-        <option value="B+">B+</option>
-        <option value="B">B</option>
-        <option value="B-">B-</option>
-        <option value="C+">C+</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
+    <select name="namaMataKuliah" required>
+        <option value = "">-Pilih Mata Kuliah-</option>
+        @foreach($namaMataKuliahs as $namaMataKuliah)
+            <option value = "{{ $namaMataKuliah->id }}">{{ $namaMataKuliah->kodeMatkul }} - {{ $namaMataKuliah->namaMatkul }}</option>
+        @endforeach
     </select>
     <br><br>
     BOBOT:
     <br>
-    <input type= "number" name= "bobot" required>
+    <input type="number" name="bobot" step="0.01" min="0" max="4" required>
     <br><br>
     <button type= "submit">Simpan</button>
 </form>

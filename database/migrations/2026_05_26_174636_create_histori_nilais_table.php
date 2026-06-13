@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('histori_nilais', function (Blueprint $table) {
             $table->id();
-            $table->string('nim');
+            $table->string('nim')->constrained('users');
+            $table->string('namaDosen')->constrained('users');
             $table->string('tahunAkademik');
-            $table->string('kode');
-            $table->string('mataKuliah');
-            $table->integer('sks');
+            $table->string('namaMataKuliah')->constrained('mata_kuliahs');;
             $table->string('nilai');
-            $table->integer('bobot');
+            $table->decimal('bobot');
             $table->timestamps();
         });
     }
