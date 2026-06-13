@@ -8,10 +8,9 @@ class historiNilai extends Model
 {
     protected $fillable = [
         'nim',
+        'namaDosen',
         'tahunAkademik',
-        'kode',
-        'mataKuliah',
-        'sks',
+        'namaMataKuliah',
         'nilai',
         'bobot',
     ];
@@ -22,5 +21,9 @@ class historiNilai extends Model
 
     public function dosen() {
         return $this->belongsTo(Pengguna::class, 'namaDosen', 'id');
+    }
+
+    public function mataKuliah() {
+        return $this->belongsTo(MataKuliah::class, 'namaMataKuliah', 'id');
     }
 }
