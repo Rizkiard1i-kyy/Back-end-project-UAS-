@@ -10,7 +10,7 @@
         {{ session('success') }}
     </div>
 @endif
-@if(in_array(auth()->user()->role, ['admin', 'dosen']))
+@if(!auth()->user()->isMahasiswa())
     <a href="{{ route('jadwal.create') }}">Tambah Jadwal Kuliah Baru</a>
     <br><br>
 @endif

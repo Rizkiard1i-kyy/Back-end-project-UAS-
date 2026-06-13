@@ -1,14 +1,14 @@
 <h1>Edit Data Kehadiran</h1>
 <form method="POST" action="{{ route('kehadiran.update', $kehadiran) }}">
     @csrf @method('PUT')
-    Kode:
-    <br>
-    <input name="kodeMatkul" value="{{ $kehadiran-> kodeMatkul }}" required>
-    <br>
-    <br>
     Mata Kuliah:
     <br>
-    <input name="namaMatkul" value="{{ $kehadiran-> namaMatkul }}" required>
+    <select name="matkul" required>
+        <option value = "">-Pilih Mata Kuliah-</option>
+        @foreach($matkuls as $matkul)
+            <option value = "{{ $matkul->id }}">{{ $matkul->kodeMatkul }} - {{ $matkul->namaMatkul }}</option>
+        @endforeach
+    </select>
     <br>
     <br>
     Semester:

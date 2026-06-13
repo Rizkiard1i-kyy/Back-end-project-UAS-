@@ -9,6 +9,7 @@
 <p>Poin Didapat: {{ $skpi->point }}</p>
 <p>Bukti Sertifikat: <a href="{{ $skpi->bukti }}" target="_blank">Buka Link Google Drive</a></p>
 
+@if(in_array(auth()->user()->role, ['mahasiswa']))
 <a href="{{ route('skpi.edit', $skpi->id) }}">Ubah Data</a>
 <br><br>
 
@@ -17,5 +18,6 @@
     <button type="submit" onclick="return confirm('Anda yakin ingin menghapus riwayat SKPI ini?')">Hapus Data</button>
 </form>
 <br><br>
+@endif
 
 <a href="{{ route('skpi.index') }}">Kembali</a>

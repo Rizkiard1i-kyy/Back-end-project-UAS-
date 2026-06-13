@@ -82,7 +82,6 @@
                         <td>
                             <select name="mataKuliahs[{{ $i }}][status]" required>
                                 <option value="B" {{ $status === 'B' ? 'selected' : '' }}>B</option>
-                                <option value="P" {{ $status === 'P' ? 'selected' : '' }}>P</option>
                                 <option value="U" {{ $status === 'U' ? 'selected' : '' }}>U</option>
                             </select>
                         </td>
@@ -120,7 +119,6 @@ function addRow() {
         <td>
             <select name="mataKuliahs[${i}][status]" required>
                 <option value="B">B</option>
-                <option value="P">P</option>
                 <option value="U">U</option>
             </select>
         </td>

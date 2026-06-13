@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kehadiran extends Model
 {
-    protected $fillable = ['kodeMatkul', 
-    'namaMatkul',
+    protected $fillable = [
+    'matkul', 
     'semester',
     'namaDosen',
     'nim',
@@ -22,5 +22,9 @@ class Kehadiran extends Model
 
     public function dosen() {
         return $this->belongsTo(Pengguna::class, 'namaDosen', 'id');
+    }
+    
+    public function mataKuliah() {
+        return $this->belongsTo(MataKuliah::class, 'matkul', 'id');
     }
 }
