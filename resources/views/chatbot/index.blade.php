@@ -13,7 +13,7 @@
 <div id="chat-messages"
      style="height:400px; overflow-y:auto; border:1px solid #ccc; padding:10px; margin-bottom:10px; background:#fafafa;">
 
-    <div><strong>Bot:</strong> Halo! Saya LintarBotBot, asisten akademik virtual Anda. Ada yang bisa saya bantu?</div>
+    <div><strong>Bot:</strong> Halo! Saya LintarBot, asisten akademik virtual Anda. Ada yang bisa saya bantu?</div>
 
 </div>
 
@@ -49,7 +49,6 @@ window.onload = async function () {
             box.scrollTop = box.scrollHeight;
         }
     } catch (e) {
-        // biarkan pesan default tampil
     }
 };
 
@@ -84,7 +83,7 @@ async function sendChat() {
     box.scrollTop = box.scrollHeight;
 
     try {
-        var res  = await fetch('{{ route("chatbot.ask") }}', {
+        var res  = await fetch('{{ route("chatbot.store") }}', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -112,7 +111,7 @@ async function clearHistory() {
     if (!confirm('Hapus semua riwayat chat?')) return;
 
     try {
-        await fetch('{{ route("chatbot.clear") }}', {
+        await fetch('{{ route("chatbot.destroy") }}', {
             method: 'DELETE',
             headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
         });
