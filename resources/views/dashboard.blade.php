@@ -36,6 +36,8 @@
 <br><br>
 <a href="{{ route('jadwal.index') }}">Jadwal Kuliah</a>
 <br><br>
+<a href="{{ route('kalenderAkademik.index') }}">Kalender Akademik</a>
+<br><br>
 <a href="{{ route('ksm.index') }}">KSM</a>
 <br><br>
 <a href="{{ route('kehadiran.index') }}">Kehadiran</a>
@@ -64,7 +66,9 @@
 <br><br>
 
 <h3>Chatbot Asisten Akademik</h3>
-<a href="{{ route('chatbot.index') }}">Chatbot</a>
+<a href="{{ route('chatbot.index') }}">Lintar bot</a>
+<br><br>
+<a href="{{ route('Pengumuman.index') }}">Pengumuman</a>
 <br><br>
 
 @if(auth()->user()->isAdmin())

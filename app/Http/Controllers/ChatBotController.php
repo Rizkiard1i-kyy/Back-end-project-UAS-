@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Gemini\Laravel\Facades\Gemini;
-use Gemini\Data\Content;
-use Gemini\Data\FunctionResponse;
-use Gemini\Data\Tool;
-use Gemini\Data\FunctionDeclaration;
-use Gemini\Enums\Role;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use App\Models\ChatBot;
 use App\Models\nilaiKHS;
 use App\Models\Jadwal;
@@ -22,21 +18,19 @@ class ChatBotController extends Controller
         return view('chatbot.index');
     }
 
-    public function history(Request $request)
+    public function history()
     {
         $user = auth()->user();
 
-        $history = ChatBot::where('user_id', $user->id)
-            ->orderBy('created_at', 'asc')
-            ->get(['role', 'message', 'created_at']);
-
         return response()->json([
             'success' => true,
-            'history' => $history,
+            'history' => ChatBot::where('user_id', $user->id)
+                ->orderBy('created_at', 'asc')
+                ->get(['role', 'message', 'created_at']),
         ]);
     }
 
-    public function ask(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'message' => 'required|string|max:500',
@@ -51,76 +45,39 @@ class ChatBotController extends Controller
             'message' => $message,
         ]);
 
+        $systemText = "Kamu adalah Asisten Akademik Virtual Kampus bernama 'Lintar Bot'. "
+            . "Nama mahasiswa: {$user->nama}, NIM: {$user->nim}. "
+            . "Jawab sopan, ringkas, dalam Bahasa Indonesia. "
+            . "Gunakan fungsi yang tersedia untuk data akademik. Jangan mengarang data.";
+
+        $chatHistory = ChatBot::where('user_id', $user->id)
+            ->latest()->take(20)->get()
+            ->sortBy('created_at')
+            ->map(fn($c) => [
+                'role'    => $c->role === 'bot' ? 'assistant' : $c->role,
+                'content' => $c->message,
+            ])
+            ->values()->toArray();
+
+        $messages = array_merge(
+            [['role' => 'system', 'content' => $systemText]],
+            $chatHistory
+        );
+
         $tools = [
-    new Tool(
-        functionDeclarations: [
-            new FunctionDeclaration(
-                name: 'ambilDataNilaiKHS',
-                description: 'Mengambil data nilai KHS mahasiswa'
-            ),
-            new FunctionDeclaration(
-                name: 'ambilDataJadwalKuliah',
-                description: 'Mengambil jadwal kuliah'
-            ),
-            new FunctionDeclaration(
-                name: 'ambilDataKehadiranAbsen',
-                description: 'Mengambil data kehadiran'
-            ),
-            new FunctionDeclaration(
-                name: 'ambilDataKsmSemester',
-                description: 'Mengambil data KSM'
-            ),
-        ]
-    )
-];
-
-        $systemText = "Kamu adalah Asisten Akademik Virtual Kampus bernama 'LintarBot'. "
-            . "Nama mahasiswa saat ini: {$user->nama}, NIM: {$user->nim}. "
-            . "Jawablah dengan sopan, ringkas, dan dalam Bahasa Indonesia. "
-            . "Jika pertanyaan membutuhkan data akademik spesifik, panggil fungsi yang tersedia. "
-            . "Jangan mengarang data — selalu gunakan fungsi untuk mengambil data nyata.";
-
-        $systemContent = Content::parse(part: $systemText, role: Role::MODEL);
+            $this->buildTool('ambilDataNilaiKHS', 'Mengambil data nilai KHS mahasiswa.'),
+            $this->buildTool('ambilDataJadwalKuliah', 'Mengambil jadwal kuliah.'),
+            $this->buildTool('ambilDataKehadiranAbsen', 'Mengambil data kehadiran mahasiswa.'),
+            $this->buildTool('ambilDataKsmSemester', 'Mengambil data KSM semester terbaru.'),
+        ];
 
         try {
-            $firstResponse = Gemini::generativeModel(
-    model: 'gemini-2.0-flash'
-)
-->withSystemInstruction($systemContent)
-->generateContent($message);
-
-            $functionCall = $firstResponse->functionCall();
-
-            if ($functionCall) {
-                $functionName   = $functionCall->name;
-                $functionResult = $this->executeAgentFunction($functionName, $user);
-
-                $finalResponse = Gemini::generativeModel(model: 'gemini-2.0-flash')
-                    ->withSystemInstruction($systemContent)
-                    ->generateContent([
-                        'contents' => [
-                            Content::parse(part: $message, role: Role::USER),
-                            Content::parse(part: $functionCall, role: Role::MODEL),
-                            Content::parse(
-                                part: new FunctionResponse(
-                                    name: $functionName,
-                                    response: ['result' => $functionResult]
-                                ),
-                                role: Role::USER
-                            ),
-                        ]
-                    ]);
-
-                $answer = $finalResponse->text();
-            } else {
-                $answer = $firstResponse->text();
-            }
+            $answer = $this->callAI($messages, $tools, $user);
         } catch (\Exception $e) {
-            \Log::error('[ChatBot Error] ' . $e->getMessage());
-
+            Log::error('[ChatBot Error] ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'answer'  => 'Maaf, layanan AI sedang mengalami gangguan. Silakan coba beberapa saat lagi.',
+                'answer'  => 'Maaf, layanan AI sedang mengalami gangguan.',
             ], 500);
         }
 
@@ -136,44 +93,97 @@ class ChatBotController extends Controller
         ]);
     }
 
-    public function clear(Request $request)
+    public function destroy()
     {
-        $user = auth()->user();
-        ChatBot::where('user_id', $user->id)->delete();
-
+        ChatBot::where('user_id', auth()->id())->delete();
         return response()->json(['success' => true]);
     }
 
 
-    private function executeAgentFunction(string $functionName, $user): string
+    private function callAI(array $messages, array $tools, $user): string
     {
-        switch ($functionName) {
-            case 'ambilDataNilaiKHS':
-                $nilais = nilaiKHS::where('nim', $user->nim)->get();
-                return $nilais->isNotEmpty()
-                    ? $nilais->map(fn($n) => "- {$n->namaMataKuliah}: {$n->nilaiHuruf}")->join("\n")
-                    : 'Data nilai KHS tidak ditemukan untuk NIM ini.';
+        $payload = [
+            'model'=> env('AZURE_OPENAI_MODEL', 'gpt-5-mini'),
+            'messages' => $messages,
+            'tools'=> $tools,
+            'temperature'=> 0.7,
+            'max_tokens'=> 500,
+        ];
 
-            case 'ambilDataJadwalKuliah':
-                $jadwals = Jadwal::all();
-                return $jadwals->isNotEmpty()
-                    ? $jadwals->map(fn($j) => "- {$j->namaMK} ({$j->ruangDanWaktu})")->join("\n")
-                    : 'Jadwal kuliah tidak ditemukan.';
+        $response = $this->sendRequest($payload);
+        $choice   = $response->json('choices.0.message');
 
-            case 'ambilDataKehadiranAbsen':
-                $kehadirans = Kehadiran::where('namaMahasiswa', $user->nama)->get();
-                return $kehadirans->isNotEmpty()
-                    ? $kehadirans->map(fn($k) => "- {$k->namaMatkul}: {$k->persentase}%")->join("\n")
-                    : 'Data kehadiran tidak ditemukan.';
 
-            case 'ambilDataKsmSemester':
-                $ksm = Ksm::where('nim', $user->nim)->latest()->first();
-                return $ksm
-                    ? "Semester {$ksm->semester}, Tahun Akademik {$ksm->tahunAkademik}"
-                    : 'Data KSM tidak ditemukan.';
+        if (!empty($choice['tool_calls'])) {
+            $messages[] = $choice;
 
-            default:
-                return 'Fungsi tidak dikenali.';
+            foreach ($choice['tool_calls'] as $tc) {
+                $messages[] = [
+                    'role'=> 'tool',
+                    'tool_call_id'=> $tc['id'],
+                    'content'=> $this->executeAgentFunction($tc['function']['name'], $user),
+                ];
+            }
+
+            $followUp = $this->sendRequest([
+                'model'=> env('AZURE_OPENAI_MODEL', 'gpt-5-mini'),
+                'messages'=> $messages,
+                'temperature' => 0.7,
+                'max_tokens'  => 500,
+            ]);
+
+            return $followUp->json('choices.0.message.content');
         }
+
+        return $choice['content'];
+    }
+
+    private function sendRequest(array $payload)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . env('AZURE_OPENAI_API_KEY'),
+            'Content-Type'  => 'application/json',
+        ])->timeout(30)->post(env('AZURE_OPENAI_ENDPOINT') . '/chat/completions', $payload);
+
+        if (!$response->successful()) {
+            throw new \Exception('API ' . $response->status() . ': ' . $response->body());
+        }
+
+        return $response;
+    }
+
+    private function buildTool(string $name, string $description): array
+    {
+        return [
+            'type'     => 'function',
+            'function' => [
+                'name'        => $name,
+                'description' => $description,
+                'parameters'  => ['type' => 'object', 'properties' => (object) []],
+            ],
+        ];
+    }
+
+    private function executeAgentFunction(string $fn, $user): string
+    {
+        return match ($fn) {
+            'ambilDataNilaiKHS' => ($n = nilaiKHS::where('nim', $user->nim)->get())->isNotEmpty()
+                ? $n->map(fn($r) => "- {$r->namaMataKuliah}: {$r->nilaiHuruf}")->join("\n")
+                : 'Data nilai KHS tidak ditemukan.',
+
+            'ambilDataJadwalKuliah' => ($j = Jadwal::all())->isNotEmpty()
+                ? $j->map(fn($r) => "- {$r->namaMK} ({$r->ruangDanWaktu})")->join("\n")
+                : 'Jadwal kuliah tidak ditemukan.',
+
+            'ambilDataKehadiranAbsen' => ($k = Kehadiran::where('namaMahasiswa', $user->nama)->get())->isNotEmpty()
+                ? $k->map(fn($r) => "- {$r->namaMatkul}: {$r->persentase}%")->join("\n")
+                : 'Data kehadiran tidak ditemukan.',
+
+            'ambilDataKsmSemester' => ($s = Ksm::where('nim', $user->nim)->latest()->first())
+                ? "Semester {$s->semester}, Tahun Akademik {$s->tahunAkademik}"
+                : 'Data KSM tidak ditemukan.',
+
+            default => 'Fungsi tidak dikenali.',
+        };
     }
 }

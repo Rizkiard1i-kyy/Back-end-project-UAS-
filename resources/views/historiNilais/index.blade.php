@@ -29,13 +29,13 @@
                     <a> {{ $historiNilai->tahunAkademik }}</a>
                 </td>
                 <td>
-                    <a> {{ $historiNilai->kode }}</a>
+                    <a> {{ $historiNilai->mataKuliah->kodeMatkul }}</a>
                 </td>
                 <td>
-                    <a> {{ $historiNilai->mataKuliah }}</a>
+                    <a> {{ $historiNilai->mataKuliah->namaMatkul }}</a>
                 </td>
                 <td>
-                    <a> {{ $historiNilai->sks }}</a>
+                    <a> {{ $historiNilai->mataKuliah->sks }}</a>
                 </td>
                 <td>
                     <a> {{ $historiNilai->nilai }}</a>
