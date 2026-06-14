@@ -9,7 +9,7 @@
         {{ session('success') }}
     </div>
 @endif
-@if(in_array(auth()->user()->role, ['mahasiswa']))
+@if(auth()->user() && in_array(auth()->user()->role, ['mahasiswa']))
     <a href="{{ route('skpi.create') }}">Tambah Jadwal Kuliah Baru</a>
     <br><br>
 @endif
