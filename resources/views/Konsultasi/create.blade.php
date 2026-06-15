@@ -9,7 +9,15 @@
 
     <label>dosen</label>
     <br>
-    <input type="text" name="nama_dosen" value="{{ old('nama_dosen') }}"required>
+    <select name="dosen_id" required>
+    <option value="">pilih dosen </option>
+
+    @foreach($dosenList as $dosen)
+        <option value="{{ $dosen->id }}">
+            {{ $dosen->nama }}
+        </option>
+    @endforeach
+    </select>
     <br><br>
 
     <label>tanggal (liat conth 12-12-2026)</label>

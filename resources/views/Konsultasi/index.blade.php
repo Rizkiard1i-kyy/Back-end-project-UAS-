@@ -1,12 +1,15 @@
 <h1>Konsultasi Akademik</h1>
 
-@if(!auth()->user()->isAdmin())
+@if(auth()->user()->isMahasiswa())
     <a href="{{ route('konsultasi.create') }}">ajukan Konsultasi</a>
     <br><br>
 @endif
 
 @if(session('success'))
     <p>{{ session('success') }}</p>
+@endif
+@if(session('error'))
+    <p>{{ session('error') }}</p>
 @endif
 
 @if($konsultasi->isEmpty())
