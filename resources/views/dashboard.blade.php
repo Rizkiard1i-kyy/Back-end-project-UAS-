@@ -64,6 +64,8 @@
 <h3>Uang Kuliah</h3>
 <a href="{{ route('skema_pembayaran.index') }}">Skema Pembayaran</a>
 <br><br>
+<a href="{{ route('tagihan_pembayaran.index') }}">Tagihan Pembayaran</a>
+<br><br>
 
 <h3>SKPI</h3>
 <a href="{{ route('skpi.index') }}">SKPI (Penalaran dan Keilmuan)</a>
