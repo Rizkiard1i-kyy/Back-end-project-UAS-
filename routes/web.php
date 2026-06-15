@@ -19,6 +19,7 @@ use App\Http\Controllers\SkemaPembayaranController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\TagihanPembayaranController;
 
 Route::get('/', function () {
     return view('/login');
@@ -74,7 +75,12 @@ Route::resource('ukm', UkmController::class)
 Route::resource('skpi', SkpiController::class)
     ->middleware('auth');
 
-Route::resource('skema_pembayaran', SkemaPembayaranController::class)
+Route::get('skema_pembayaran', [SkemaPembayaranController::class, 'index'])->name('skema_pembayaran.index')
+    ->middleware('auth');
+Route::post('skema_pembayaran', [SkemaPembayaranController::class, 'store'])->name('skema_pembayaran.store')
+    ->middleware('auth');
+
+Route::get('tagihan_pembayaran',       [TagihanPembayaranController::class, 'index'])->name('tagihan_pembayaran.index')
     ->middleware('auth');
 
 Route::resource('mataKuliah', MataKuliahController::class)
