@@ -28,3 +28,4 @@ Konten:
 <br>
 <button type="submit">Simpan</button>
 </form>
+<a href="{{ route('Pengumuman.index') }}">Kembali</a>
