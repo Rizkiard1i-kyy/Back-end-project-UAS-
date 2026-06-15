@@ -14,7 +14,7 @@
     @endif
 </p>
 
-@if(auth()->user()->isAdmin() && $konsultasi->status === 'menunggu')
+@if(auth()->user()->isDosen()&& $konsultasi->dosen_id === auth()->id()&& $konsultasi->status === 'menunggu')
 <br>
 <form method="POST" action="{{ route('konsultasi.update', $konsultasi) }}">
     @csrf 
@@ -23,12 +23,13 @@
     <label>keputusan</label>
     <br>
     <select name="status" required>
-        <option>setujui</option>
-        <option>tolak</option>
+    <option value="disetujui">setujui</option>
+    <option value="ditolak">tolak</option>
     </select>
     <br><br>
 
     <label>catatan (opsional aja)</label><br>
+    <textarea name="catatan"></textarea>
     <br><br>
 
     <button>simpan keputusan</button>

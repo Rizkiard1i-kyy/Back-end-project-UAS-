@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nim');
             $table->string('nama_mahasiswa');
             $table->string('nama_dosen');
+            $table->foreignId('dosen_id')->constrained('users')->cascadeOnDelete();
             $table->date('tanggal');
             $table->string('jam');
             $table->text('topik');
