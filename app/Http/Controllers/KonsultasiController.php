@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Konsultasi;
+use App\Models\Pengguna;
 use Illuminate\Http\Request;
 
 class KonsultasiController extends Controller
@@ -12,12 +13,16 @@ class KonsultasiController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->isAdmin()) {
+        $user = auth()->user();
+        if ($user->isAdmin()) {
             $konsultasi = Konsultasi::orderBy('tanggal', 'desc')->get();
+        } elseif ($user->isDosen()) {
+            $konsultasi = Konsultasi::where('dosen_id', $user->id)->orderBy('tanggal', 'desc')->get();
         } else {
-            $konsultasi = Konsultasi::where('nim', auth()->user()->nim)->orderBy('tanggal', 'desc')->get();
+            $konsultasi = Konsultasi::where('nim', $user->nim)->orderBy('tanggal', 'desc')->get();
         }
-        return view('konsultasi.index', compact('konsultasi'));
+
+        return view('Konsultasi.index', compact('konsultasi'));
     }
 
     /**
@@ -25,7 +30,13 @@ class KonsultasiController extends Controller
      */
     public function create()
     {
-        return view('konsultasi.create');
+        if (!auth()->user()->isMahasiswa()) {
+            abort(403, 'cuma mahasiswa yang bisa mengajukan konsultasi.');
+        }
+
+        $dosenList = Pengguna::where('role', 'dosen')->orderBy('nama')->get();
+
+        return view('Konsultasi.create', compact('dosenList'));
     }
 
     /**
@@ -33,17 +44,23 @@ class KonsultasiController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->isMahasiswa()) {abort(403, 'cuma mahasiswa yang bisa mengajukan konsultasi.');
+        }
+
         $request->validate([
-            'nama_dosen'=>'required|string|max:255',
+            'dosen_id' => 'required|exists:users,id',
             'tanggal'=>'required|date|after_or_equal:today',
             'jam'=>'required|string|max:20',
             'topik'=>'required|string|max:1000',
         ]);
 
+        $dosen = Pengguna::where('id', $request->dosen_id)->where('role', 'dosen')->firstOrFail();
+
         Konsultasi::create([
             'nim'=>auth()->user()->nim,
             'nama_mahasiswa'=>auth()->user()->nama,
-            'nama_dosen'=>$request->nama_dosen,
+            'nama_dosen' =>$dosen->nama,
+            'dosen_id'=>$dosen->id,
             'tanggal'=>$request->tanggal,
             'jam'=>$request->jam,
             'topik'=>$request->topik,
@@ -58,7 +75,15 @@ class KonsultasiController extends Controller
      */
     public function show(Konsultasi $konsultasi)
     {
-        return view('konsultasi.show', compact('konsultasi'));
+        $user = auth()->user();
+
+        if ($user->isMahasiswa() && $konsultasi->nim !== $user->nim) {abort(403);
+        }
+
+        if ($user->isDosen() && $konsultasi->dosen_id !== $user->id) {abort(403);
+        }
+
+        return view('Konsultasi.show', compact('konsultasi'));
     }
 
     /**
@@ -74,6 +99,19 @@ class KonsultasiController extends Controller
      */
     public function update(Request $request, Konsultasi $konsultasi)
     {
+        $user = auth()->user();
+
+        if ($user->isMahasiswa()) {
+            abort(403, 'mahasiswa tidak bisa ngubah status konsultasi.');
+        }
+
+        if ($user->isDosen() && $konsultasi->dosen_id !== $user->id) {
+            abort(403, 'anda tidak ada hak untuk memperbarui.');
+        }
+
+        if ($konsultasi->status !== 'menunggu') {return redirect()->back()->with('error', 'Konsultasi lagi diproses.');
+        }
+
         $request->validate([
             'status'=>'required|in:disetujui,ditolak',
             'catatan'=>'nullable|string|max:1000',
@@ -81,7 +119,7 @@ class KonsultasiController extends Controller
 
         $konsultasi->update($request->only('status', 'catatan'));
 
-        return redirect()->route('konsultasi.index')->with('success', 'Status berhasil diperbarui.');
+        return redirect()->route('konsultasi.index')->with('success', 'status konsultasi diperbarui.');
     }
 
     /**
