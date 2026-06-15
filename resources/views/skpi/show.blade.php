@@ -9,10 +9,12 @@
 <p>Poin Didapat: {{ $skpi->point }}</p>
 <p>Bukti Sertifikat: <a href="{{ $skpi->bukti }}" target="_blank">Buka Link Google Drive</a></p>
 
-@if(in_array(auth()->user()->role, ['mahasiswa']))
+@if(auth()->user() && in_array(auth()->user()->role, ['mahasiswa']))
 <a href="{{ route('skpi.edit', $skpi->id) }}">Ubah Data</a>
 <br><br>
+@endif
 
+@if(auth()->user())
 <form action="{{ route('skpi.destroy', $skpi->id) }}" method="post" style="display:inline;">
     @csrf @method('DELETE')
     <button type="submit" onclick="return confirm('Anda yakin ingin menghapus riwayat SKPI ini?')">Hapus Data</button>
