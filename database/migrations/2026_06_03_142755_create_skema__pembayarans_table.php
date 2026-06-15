@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('skema__pembayarans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('jenis_skema');
             $table->timestamps();
         });
     }
