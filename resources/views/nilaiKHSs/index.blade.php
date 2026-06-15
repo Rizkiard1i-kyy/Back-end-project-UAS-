@@ -1,11 +1,21 @@
 <h1>Daftar Nilai KHS</h1>
 
-<h2>KARTU HASIL STUDI</h2>
-
 @if(auth()->user()->isAdmin())
     <a href="{{ route('nilaiKHS.create') }}">Buat Data Nilai KHS Baru</a>
     <br><br>
 @endif
+
+<h2>KARTU HASIL STUDI</h2>
+<form action="{{ route('nilaiKHS.index') }}" method="GET">
+    <label for="tahunAkademik">Tahun akademik :</label>
+    
+    <select name="tahunAkademik" required>
+        <option value="">-- Semua Semester --</option>
+        <option value="20251">Gasal 2025</option>
+        <option value="20252">Genap 2025</option>
+    </select>
+    <button type="submit">Cek</button>
+</form>
 
 @if ($nilaiKHS->isEmpty())
     <p>Belum ada data nilai KHS yang tersimpan.</p>
@@ -61,6 +71,7 @@
     </tbody>
 </table>
 </table>
+@if(!auth()->user()->isAdmin())
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>
@@ -91,6 +102,7 @@
             </tr>
     </tbody>
 </table>
+@endif
 @endif
 <br><br>
 <a href="/dashboard">Kembali Ke Dashboard</a>

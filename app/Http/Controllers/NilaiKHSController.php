@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class NilaiKHSController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
         $akses = nilaiKHS::with(['mahasiswa','dosen','mataKuliah']);
@@ -19,6 +19,10 @@ class NilaiKHSController extends Controller
             $akses->where('nim', $user->id);
         } elseif ($user->isDosen()) {
             $akses->where('namaDosen', $user->id);
+        }
+
+        if ($request->filled('tahunAkademik')) {
+            $akses->where('tahunAkademik', $request->tahunAkademik);
         }
 
         $nilaiKHS = $akses->get();
