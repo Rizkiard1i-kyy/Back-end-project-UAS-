@@ -1,6 +1,12 @@
 <h1>Tambah Jadwal Kuliah Baru</h1>
 <form method="POST" action="{{ route('jadwal.store') }}">
     @csrf
+
+    Tahun Akademik:
+    <br>
+    <input name="tahun_akademik" required>
+    <br><br>
+
     Kode MK:
     <br>
     <input name="kodeMK" required>

@@ -1,5 +1,6 @@
 <h1>Detail Jadwal {{ $jadwal->kodeMK }} - {{ $jadwal->namaMK }}:</h1>
 
+<p>Tahun Akademik: {{ $jadwal->tahun_akademik }}</p>
 <p>SKS: {{ $jadwal->sks }}</p>
 <p>Kelas: {{ $jadwal->kelas }}</p>
 <p>Dosen Pengajar: {{ $jadwal->dosenPengajar }}</p>

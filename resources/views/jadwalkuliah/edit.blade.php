@@ -2,6 +2,11 @@
 
 <form method="POST" action="{{ route('jadwal.update', $jadwal) }}">
     @csrf @method('PUT')
+
+    Tahun Akademik:
+    <br>
+    <input name="tahun_akademik" value="{{ $jadwal->tahun_akademik }}" required>
+    <br><br>
     
     Kode MK:
     <br>
