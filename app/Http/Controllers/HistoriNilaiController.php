@@ -75,7 +75,8 @@ class HistoriNilaiController extends Controller
             'tahunAkademik',
             'namaMataKuliah',
             'nilai',
-            'bobot'));
+            'bobot'
+        ));
         return redirect()->route('historiNilai.index')->with('success', 'Data histori nilai baru dibuat.');
     }
 
@@ -155,7 +156,8 @@ class HistoriNilaiController extends Controller
             'tahunAkademik',
             'namaMataKuliah',
             'nilai',
-            'bobot'));
+            'bobot'
+        ));
         return redirect()->route('historiNilai.index')->with('success', 'Data histori nilai diperbarui.');
     }
 

@@ -9,9 +9,8 @@
         {{ session('success') }}
     </div>
 @endif
-@if(in_array(auth()->user()->role, ['mahasiswa']))
-    <a href="{{ route('skpi.create') }}">Tambah Jadwal Kuliah Baru</a>
-    <br><br>
+@if(auth()->user() && in_array(auth()->user()->role, ['mahasiswa']))
+    <a href="{{ route('skpi.create') }}">Tambah Data SKPI Baru</a>
 @endif
 @if ($skpis->isEmpty())
     <p>Belum ada data kegiatan SKPI yang tersimpan.</p>

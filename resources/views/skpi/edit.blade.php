@@ -1,6 +1,6 @@
 <h1>Edit Data Kegiatan SKPI</h1>
 
-<form method="POST" action="{{ route('skpi.update', $skpi) }}">
+<form method="POST" action="{{ route('skpi.update', $skpi->id) }}">
     @csrf @method('PUT')
     
     Nama Kegiatan:

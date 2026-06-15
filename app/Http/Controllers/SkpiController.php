@@ -16,7 +16,7 @@ class SkpiController extends Controller
 
     public function create()
     {
-        if (!in_array(auth()->user()->role, ['mahasiswa'])) {
+        if (auth()->user() && !in_array(auth()->user()->role, ['mahasiswa'])) {
             return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa buat daftar skpi baru');
         }
         return view('skpi.create');
@@ -24,6 +24,9 @@ class SkpiController extends Controller
 
     public function store(Request $request)
     {
+        if (auth()->user() && !in_array(auth()->user()->role, ['mahasiswa'])) {
+            return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa buat daftar skpi baru');
+        }
         $poinOtomatis = 0;
         if ($request->klasifikasi == 'Peserta') {
             $poinOtomatis = 20;
@@ -52,14 +55,17 @@ class SkpiController extends Controller
 
     public function edit(Skpi $skpi)
     {
-        if (!in_array(auth()->user()->role, ['mahasiswa'])) {
-            return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa buat daftar skpi baru');
+        if (auth()->user() && !in_array(auth()->user()->role, ['mahasiswa'])) {
+            return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa mengedit skpi');
         }
         return view('skpi.edit', compact('skpi'));
     }
 
     public function update(Request $request, Skpi $skpi)
     {
+        if (auth()->user() && !in_array(auth()->user()->role, ['mahasiswa'])) {
+            return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa mengedit skpi.');
+        }
         $request->validate([
             'kegiatan' => 'required',
             'jenis' => 'required',
@@ -88,8 +94,8 @@ class SkpiController extends Controller
 
     public function destroy(Skpi $skpi)
     {
-        if (!in_array(auth()->user()->role, ['mahasiswa'])) {
-            return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa buat daftar skpi baru');
+        if (!auth()->user()) {
+            return redirect()->route('login');
         }
         $skpi->delete();
         return redirect()->route('skpi.index')->with('success', 'Data SKPI berhasil dihapus.');

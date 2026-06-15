@@ -9,7 +9,8 @@ class KalenderAkademik extends Model
     protected $fillable = [
         'tanggalMulai', 
         'tanggalSelesai', 
-        'namaKegiatan'
+        'namaKegiatan',
+        'tahunAkademik'
     ];
 
     protected $casts = [
