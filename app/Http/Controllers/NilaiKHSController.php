@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\nilaiKHS;
+use App\Models\Pengguna;
+use App\Models\MataKuliah;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,28 +12,43 @@ class NilaiKHSController extends Controller
 {
     public function index()
     {
-        $nilaiKHS = nilaiKHS::all();
+        $user = auth()->user();
+        $akses = nilaiKHS::with(['mahasiswa','dosen','mataKuliah']);
+        
+        if ($user->isMahasiswa()) {
+            $akses->where('nim', $user->id);
+        } elseif ($user->isDosen()) {
+            $akses->where('namaDosen', $user->id);
+        }
+
+        $nilaiKHS = $akses->get();
         return view('nilaiKHSs.index', compact('nilaiKHS'));
     }
 
     public function create()
     {
-        return view('nilaiKHSs.create');
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh membuat data nilai KHS.');
+        }
+
+        $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
+        $dosens = Pengguna::where('role', 'dosen')->get();
+        $namaMataKuliahs = MataKuliah::all();
+
+        return view('nilaiKHSs.create', compact('mahasiswas', 'dosens','namaMataKuliahs'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nim'=>'required|string|max:9',
+            'nim'=>'required|exists:users,id',
+            'namaDosen'=>'required|exists:users,id',
             'tahunAkademik'=>'required|integer|min:19591',
+            'namaMataKuliah'=>'required|exists:mata_kuliahs,id',
             'tugas' =>'required|integer|between:0,100',
             'uts' =>'required|integer|between:0,100',
             'uas' =>'required|integer|between:0,100',
-            'kodeMK'=>'required|string|min:1',
-            'namaMataKuliah'=>'required|string|max:255',
             'status'=>'required|string|max:1',
-            'sks'=>'required|integer|min:1',
-            'keterangan'=>'required|string|max:40',
         ]);
 
         $nilaiAngka = ($request->tugas * 0.4 + $request->uts * 0.3 + $request->uas * 0.3);
@@ -65,34 +82,39 @@ class NilaiKHSController extends Controller
             $request['bobotKualitas'] = 0.00;
         }
 
+        if ($nilaiAngka >= 56) {
+            $request['keterangan'] = 'Lulus';
+        } else {
+            $request['keterangan'] = 'Tidak Lulus';
+        }
+
         $semuaDataLama = nilaiKHS::where('nim', $request->nim)->get();
-
-        $sksSebelumnya = $semuaDataLama->sum('sks');
-        $jumlahSKS = $sksSebelumnya + $request->sks;
-        $request['jumlahSKS'] = $jumlahSKS;
-
-        $kreditDiambil = $sksSebelumnya + $request->sks;
-
-        $kreditPerolehanLama = $semuaDataLama->where('nilaiHuruf', '!=', 'E')->sum('sks');
-        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'E') ? $request->sks : 0;
+        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
+        $sksMatkul = MataKuliah::where('id', $request->namaMataKuliah)->value('sks');
+        $request['sks'] = $sksMatkul;
+        
+        $sksLama = $semuaDataLama->where('nim', $request->nim)->sum('sks');
+        $jumlahSKS = $sksLama + $request->sks;
+        $jumlahSKSSemester = $dataSemesterIni->sum('sks') + $request->sks;;
+        $kreditPerolehanLama = $semuaDataLama->whereNotIn('nilaiHuruf', ['D', 'E'])->sum('sks');
+        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'D' && $request['nilaiHuruf'] !== 'E' ) ? $request->sks : 0;
         $kreditPeroleh = $kreditPerolehanLama + $kreditPerolehanBaru;
 
-        $request['kreditDiambil'] = $kreditDiambil;
+        $request['sksSemester'] = $jumlahSKSSemester;
+        $request['kreditDiambil'] = $jumlahSKS;
         $request['kreditPeroleh'] = $kreditPeroleh;
-
-        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
-        $totalSksSemester = $dataSemesterIni->sum('sks') + $request->sks;
+        
         $totalMutuSemester = $dataSemesterIni->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
         }) + ($request['bobotKualitas'] * $request->sks);
         
-        $request['ips'] = $totalSksSemester > 0 ? round($totalMutuSemester / $totalSksSemester, 2) : 0.00;
+        $request['ips'] = $jumlahSKSSemester > 0 ? round($totalMutuSemester / $jumlahSKSSemester, 2) : 0.00;
 
         $totalMutuKumulatif = $semuaDataLama->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
         }) + ($request['bobotKualitas'] * $request->sks);
 
-        $request['ipk'] = $kreditDiambil > 0 ? round($totalMutuKumulatif / $kreditDiambil, 2) : 0.00;
+        $request['ipk'] = $request->kreditDiambil > 0 ? round($totalMutuKumulatif / $request->kreditDiambil, 2) : 0.00;
         
         nilaiKHS::create($request->only(
             'nim',
@@ -100,15 +122,14 @@ class NilaiKHSController extends Controller
             'tugas',
             'uts',
             'uas',
-            'kodeMK',
             'namaMataKuliah',
             'status',
-            'sks',
             'nilaiHuruf',
             'nilaiAngka',
             'bobotKualitas',
             'keterangan',
-            'jumlahSKS',
+            'sks',
+            'sksSemester',
             'ips',
             'kreditDiambil',
             'kreditPeroleh',
@@ -120,28 +141,57 @@ class NilaiKHSController extends Controller
 
     public function show(nilaiKHS $nilaiKHS)
     {
+        $user = auth()->user();
+
+        if ($user->isMahasiswa() && $nilaiKHS->nim !== $user->id) {
+            abort(403, 'Anda tidak bisa melihat data  nilai KHS mahasiswa lain.');
+        }
+
+        if ($user->isDosen() && $nilaiKHS->namaDosen !== $user->id) {
+            abort(403, 'Anda tidak bisa melihat data nilai KHS ini.');
+        }
         return view('nilaiKHSs.show', compact('nilaiKHS'));
     }
 
     public function edit(nilaiKHS $nilaiKHS)
     {
-        return view('nilaiKHSs.edit', compact('nilaiKHS'));
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh mengubah data nilai KHS.');
+        }
+
+        $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
+        $dosens = Pengguna::where('role', 'dosen')->get();
+        $namaMataKuliahs = MataKuliah::all();
+
+        return view('nilaiKHSs.edit', compact('nilaiKHS','mahasiswas', 'dosens','namaMataKuliahs'));
     }
 
     public function update(Request $request, nilaiKHS $nilaiKHS)
     {
-        $request->validate([
-            'nim'=>'required|string|max:9',
-            'tahunAkademik'=>'required|integer|min:19591',
-            'tugas' =>'required|integer|between:0,100',
-            'uts' =>'required|integer|between:0,100',
-            'uas' =>'required|integer|between:0,100',
-            'kodeMK'=>'required|string|min:1',
-            'namaMataKuliah'=>'required|string|max:255',
-            'status'=>'required|string|max:1',
-            'sks'=>'required|integer|min:1',
-            'keterangan'=>'required|string|max:300',
-        ]);
+        $user = auth()->user();
+
+        if ($user->isMahasiswa() || $user->isDosen() && $nilaiKHS->namaDosen !== $user->id ) {
+            abort(403, 'Anda tidak boleh mengubah data  nilai KHS ini.');
+        }
+
+        if ($user->isAdmin()) {
+            $request->validate([
+                'nim'=>'required|exists:users,id',
+                'namaDosen'=>'required|exists:users,id',
+                'tahunAkademik'=>'required|integer|min:19591',
+                'namaMataKuliah'=>'required|exists:mata_kuliahs,id',
+                'tugas' =>'required|integer|between:0,100',
+                'uts' =>'required|integer|between:0,100',
+                'uas' =>'required|integer|between:0,100',
+                'status'=>'required|string|max:1',
+            ]);
+        } else {
+            $request->validate([
+                'tugas' =>'required|integer|between:0,100',
+                'uts' =>'required|integer|between:0,100',
+                'uas' =>'required|integer|between:0,100',
+            ]);
+        }
 
         $nilaiAngka = ($request->tugas * 0.4 + $request->uts * 0.3 + $request->uas * 0.3);
         $request['nilaiAngka'] = $nilaiAngka;
@@ -174,61 +224,67 @@ class NilaiKHSController extends Controller
             $request['bobotKualitas'] = 0.00;
         }
 
+        if ($nilaiAngka >= 56) {
+            $request['keterangan'] = 'Lulus';
+        } else {
+            $request['keterangan'] = 'Tidak Lulus';
+        }
+
         $semuaDataLama = nilaiKHS::where('nim', $request->nim)->get();
-
-        $sksSebelumnya = $semuaDataLama->sum('sks');
-        $jumlahSKS = $sksSebelumnya + $request->sks;
-        $request['jumlahSKS'] = $jumlahSKS;
-
-        $kreditDiambil = $sksSebelumnya + $request->sks;
-
-        $kreditPerolehanLama = $semuaDataLama->where('nilaiHuruf', '!=', 'E')->sum('sks');
-        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'E') ? $request->sks : 0;
+        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
+        $sksMatkul = MataKuliah::where('id', $request->namaMataKuliah)->value('sks');
+        $request['sks'] = $sksMatkul;
+        
+        $sksLama = $semuaDataLama->where('nim', $request->nim)->sum('sks');
+        $jumlahSKS = $sksLama + $request->sks;
+        $jumlahSKSSemester = $dataSemesterIni->sum('sks') + $request->sks;;
+        $kreditPerolehanLama = $semuaDataLama->whereNotIn('nilaiHuruf', ['D', 'E'])->sum('sks');
+        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'D' && $request['nilaiHuruf'] !== 'E' ) ? $request->sks : 0;
         $kreditPeroleh = $kreditPerolehanLama + $kreditPerolehanBaru;
 
-        $request['kreditDiambil'] = $kreditDiambil;
+        $request['sksSemester'] = $jumlahSKSSemester;
+        $request['kreditDiambil'] = $jumlahSKS;
         $request['kreditPeroleh'] = $kreditPeroleh;
 
-        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
-        $totalSksSemester = $dataSemesterIni->sum('sks') + $request->sks;
         $totalMutuSemester = $dataSemesterIni->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
         }) + ($request['bobotKualitas'] * $request->sks);
         
-        $request['ips'] = $totalSksSemester > 0 ? round($totalMutuSemester / $totalSksSemester, 2) : 0.00;
+        $request['ips'] = $jumlahSKSSemester > 0 ? round($totalMutuSemester / $jumlahSKSSemester, 2) : 0.00;
 
         $totalMutuKumulatif = $semuaDataLama->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
         }) + ($request['bobotKualitas'] * $request->sks);
 
-        $request['ipk'] = $kreditDiambil > 0 ? round($totalMutuKumulatif / $kreditDiambil, 2) : 0.00;
-
-        nilaiKHS::update($request->only(
+        $request['ipk'] = $request->kreditDiambil > 0 ? round($totalMutuKumulatif / $request->kreditDiambil, 2) : 0.00;
+        
+        $nilaiKHS->update($request->only(
             'nim',
             'tahunAkademik',
             'tugas',
             'uts',
             'uas',
-            'kodeMK',
             'namaMataKuliah',
             'status',
-            'sks',
             'nilaiHuruf',
             'nilaiAngka',
             'bobotKualitas',
             'keterangan',
-            'jumlahSKS',
+            'sks',
+            'sksSemester',
             'ips',
             'kreditDiambil',
             'kreditPeroleh',
-            'ipk'
-        ,));
-
+            'ipk',
+        ));
         return redirect()->route('nilaiKHS.index')->with('success', 'Data nilai kHS diperbarui');
     }
 
     public function destroy(nilaiKHS $nilaiKHS)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh menghapus data nilai KHS.');
+        }
         $nilaiKHS->delete();
         return redirect()->route('nilaiKHS.index')->with('success', 'Data nilai KHS dihapus.');
     }

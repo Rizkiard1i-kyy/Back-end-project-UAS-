@@ -13,7 +13,6 @@
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>
-            <th style="width: 50px">Cek</th>
             <th style="width: 50px">No</th>           
             <th style="width: 100px">KODE MK</th>
             <th style="width: 150px">NAMA MATA KULIAH</th>
@@ -23,6 +22,7 @@
             <th style="width: 70px">NILAI(angka)</th>
             <th style="width: 70px">BOBOT KUALITAS(sksN)</th>
             <th style="width: 50px">Ket.</th>
+            <th style="width: 50px">Cek</th>
         </tr>
     </thead>
     <tbody>
@@ -30,10 +30,10 @@
             <tr>
                 <td style="text-align: center">{{ $loop->iteration }}</td>
                 <td>
-                    <a> {{ $nilaiKHS->kodeMK }}</a>
+                    <a> {{ $nilaiKHS->mataKuliah->kodeMatkul }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->namaMataKuliah }}</a>
+                    <a> {{ $nilaiKHS->mataKuliah->namaMatkul }}</a>
                 </td>
                 <td>
                     <a> {{ $nilaiKHS->status }}</a>
@@ -45,10 +45,10 @@
                     <a> {{ $nilaiKHS->nilaiHuruf }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->nilaiAngka }}</a>
+                    <a> {{ $nilaiKHS->bobotKualitas }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->bobotKualitas }}</a>
+                    <a> {{ $nilaiKHS->bobotKualitas * $nilaiKHS->sks}}</a>
                 </td>
                 <td>
                     <a> {{ $nilaiKHS->keterangan }}</a>
@@ -74,7 +74,7 @@
     <tbody>
             <tr>
                 <td>
-                    <a> {{ $nilaiKHS->jumlahSKS }}</a>
+                    <a> {{ $nilaiKHS->sksSemester }}</a>
                 </td>
                 <td>
                     <a> {{ $nilaiKHS->ips }}</a>
