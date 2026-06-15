@@ -25,13 +25,34 @@
             <div class="grid-2">
                 <div>
                     <label>Nama</label>
-                    <input type="text" name="nama" value="{{ old('nama') }}" required>
+                    <select name="nama" required>
+                        <option value="">-- Pilih Mahasiswa --</option>
+                        @foreach ($mahasiswas as $mahasiswa)
+                            <option value="{{ $mahasiswa->id }}" {{ old('nama') === $mahasiswa->id ? 'selected' : '' }}>
+                                {{ $mahasiswa->name }}
+                            </option>
+                        @endforeach
+                    </select>
 
                     <label>No. Pokok Mahasiswa (NIM)</label>
-                    <input type="text" name="nim" value="{{ old('nim') }}" required>
+                    <select name="nim" required>
+                        <option value="">-- Pilih NIM --</option>
+                        @foreach ($mahasiswas as $mahasiswa)
+                            <option value="{{ $mahasiswa->id }}" {{ old('nim') === $mahasiswa->id ? 'selected' : '' }}>
+                                {{ $mahasiswa->nim }}
+                            </option>
+                        @endforeach
+                    </select>
 
                     <label>Program Studi</label>
-                    <input type="text" name="prodi" value="{{ old('prodi') }}" required>
+                    <select name="prodi" required>
+                        <option value="">-- Pilih Program Studi --</option>
+                        @foreach ($prodis as $prodi)
+                            <option value="{{ $prodi->id }}" {{ old('prodi') === $prodi->id ? 'selected' : '' }}>
+                                {{ $prodi->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div>
                     <label>Semester</label>

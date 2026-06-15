@@ -16,6 +16,11 @@ class KsmMataKuliah extends Model
         'status',
     ];
 
+    public function Mahasiswa()
+    {
+        return $this->belongsTo(User::class, 'nim', 'id');
+    }
+
     public function ksm()
     {
         return $this->belongsTo(Ksm::class);
