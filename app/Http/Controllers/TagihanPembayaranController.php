@@ -14,16 +14,7 @@ class TagihanPembayaranController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-
-        $tagihanGrouped = Tagihan_Pembayaran::where('user_id', $user->id)
-            ->orderByRaw("FIELD(status, 'BELUM LUNAS', 'LUNAS')")
-            ->orderBy('tahun_akademik', 'desc')
-            ->orderBy('tgl_batas_bayar')
-            ->get()
-            ->groupBy('tahun_akademik');
-
-        return view('tagihan_pembayaran.index', compact('user', 'tagihanGrouped'));
+        //
     }
 
 
