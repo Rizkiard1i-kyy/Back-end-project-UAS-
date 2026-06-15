@@ -16,20 +16,19 @@ return new class extends Migration
             $table->integer('uts');
             $table->integer('uas');
 
-            $table->string('kodeMK');
             $table->string('namaMataKuliah');
             $table->string('status');
-            $table->integer('sks');
             $table->string('nilaiHuruf');
-            $table->integer('nilaiAngka');
-            $table->integer('bobotKualitas');
+            $table->decimal('nilaiAngka');
+            $table->decimal('bobotKualitas');
             $table->string('keterangan');
 
-            $table->integer('jumlahSKS');
-            $table->integer('ips');
+            $table->integer('sks');
+            $table->integer('sksSemester');
+            $table->decimal('ips');
             $table->integer('kreditDiambil');
             $table->integer('kreditPeroleh');
-            $table->integer('ipk');
+            $table->decimal('ipk');
             $table->timestamps();
         });
     }
