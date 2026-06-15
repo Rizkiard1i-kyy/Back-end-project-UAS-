@@ -15,7 +15,9 @@
 <th style="width: 50px">No</th>
 <th style="width: 300px">Judul</th>
 <th style="width: 200px">Tags</th>
+@if(auth()->user()->isAdmin())
 <th style="width: 120px">Aksi</th>
+@endif
 </tr>
 </thead>
 <tbody>
@@ -32,17 +34,17 @@
     <span>{{ $tag->name }}</span>@if(!$loop->last), @endif
 @endforeach
 </td>
-<td style="text-align: center">
 @auth
     @if(auth()->user()->isAdmin())
+<td style="text-align: center">
         <a href="{{ route('Pengumuman.edit', $item) }}">Ubah</a>
         <form action="{{ route('Pengumuman.destroy', $item) }}" method="post" style="display:inline;">
             @csrf @method('DELETE')
             <button type="submit" onclick="return confirm('Hapus pengumuman ini?')">Hapus</button>
         </form>
+</td>
     @endif
 @endauth
-</td>
 </tr>
 @endforeach
 </tbody>

@@ -103,7 +103,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'role'     => 'dosen',
         ]);
+
+        $this->call([
+            TagSeeder::class,
+        ]);
+
         $this->command->info('Seeder selesai');
     }
 }
-
