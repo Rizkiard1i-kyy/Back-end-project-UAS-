@@ -10,13 +10,14 @@ return new class extends Migration
     {
         Schema::create('nilai_k_h_s', function (Blueprint $table) {
             $table->id();
-            $table->string('nim');
+            $table->foreignId('nim')->constrained('users');
+            $table->foreignId('namaDosen')->constrained('users');
             $table->string('tahunAkademik');
             $table->integer('tugas');
             $table->integer('uts');
             $table->integer('uas');
 
-            $table->string('namaMataKuliah');
+            $table->string('namaMataKuliah')->constrained('mata_kuliahs');
             $table->string('status');
             $table->string('nilaiHuruf');
             $table->decimal('nilaiAngka');

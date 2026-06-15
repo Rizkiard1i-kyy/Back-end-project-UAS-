@@ -122,6 +122,7 @@ class NilaiKHSController extends Controller
         
         nilaiKHS::create($request->only(
             'nim',
+            'namaDosen',
             'tahunAkademik',
             'tugas',
             'uts',
@@ -147,11 +148,11 @@ class NilaiKHSController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->isMahasiswa() && $nilaiKHS->nim !== $user->id) {
+        if ($user->isMahasiswa() && (int)$nilaiKHS->nim !== $user->id) {
             abort(403, 'Anda tidak bisa melihat data  nilai KHS mahasiswa lain.');
         }
 
-        if ($user->isDosen() && $nilaiKHS->namaDosen !== $user->id) {
+        if ($user->isDosen() && (int)$nilaiKHS->namaDosen !== $user->id) {
             abort(403, 'Anda tidak bisa melihat data nilai KHS ini.');
         }
         return view('nilaiKHSs.show', compact('nilaiKHS'));
@@ -159,8 +160,10 @@ class NilaiKHSController extends Controller
 
     public function edit(nilaiKHS $nilaiKHS)
     {
-        if (!auth()->user()->isAdmin()) {
-            abort(403, 'Anda tidak boleh mengubah data nilai KHS.');
+         $user = auth()->user();
+
+        if ($user->isMahasiswa() || $user->isDosen() && (int)$nilaiKHS->namaDosen !== $user->id ) {
+            abort(403, 'Anda tidak boleh mengubah data nilai KHS ini.');
         }
 
         $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
@@ -264,6 +267,7 @@ class NilaiKHSController extends Controller
         
         $nilaiKHS->update($request->only(
             'nim',
+            'namaDosen',
             'tahunAkademik',
             'tugas',
             'uts',

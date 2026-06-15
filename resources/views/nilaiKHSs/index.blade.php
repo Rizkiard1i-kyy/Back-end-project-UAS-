@@ -70,7 +70,6 @@
         @endforeach
     </tbody>
 </table>
-</table>
 @if(!auth()->user()->isAdmin())
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>

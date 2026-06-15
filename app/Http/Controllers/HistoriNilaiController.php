@@ -84,11 +84,11 @@ class HistoriNilaiController extends Controller
     {
         $user = auth()->user();
     
-        if ($user->isMahasiswa() && $historiNilai->nim !== $user->id) {
+        if ($user->isMahasiswa() && (int)$historiNilai->nim !== $user->id) {
             abort(403, 'Anda tidak bisa melihat data histori nilai mahasiswa lain.');
         }
 
-        if ($user->isDosen() && $historiNilai->namaDosen !== $user->id) {
+        if ($user->isDosen() && (int)$historiNilai->namaDosen !== $user->id) {
             abort(403, 'Anda tidak bisa melihat data histori nilai ini.');
         }
         return view('historiNilais.show', compact('historiNilai'));
@@ -96,8 +96,10 @@ class HistoriNilaiController extends Controller
 
     public function edit(historiNilai $historiNilai)
     {
-        if (!auth()->user()->isAdmin()) {
-            abort(403, 'Anda tidak boleh mengubah data histori nilai.');
+        $user = auth()->user();
+
+        if ($user->isMahasiswa() || $user->isDosen() && (int)$historiNilai->namaDosen !== $user->id ) {
+            abort(403, 'Anda tidak boleh mengubah data histori nilai ini.');
         }
 
         $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
