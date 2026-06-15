@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\HistoriNilaiController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\KalenderAkademikController;
 use App\Http\Controllers\KsmController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\NilaiKHSController;
@@ -45,6 +46,9 @@ Route::resource('historiNilai', HistoriNilaiController::class)
 Route::resource('jadwal', JadwalController::class)
     ->middleware('auth');
 
+Route::resource('kalenderAkademik', KalenderAkademikController::class)
+    ->middleware('auth');
+
 Route::resource('ksm', KsmController::class)
     ->middleware('auth');
 
@@ -64,10 +68,10 @@ Route::resource('surat_permohonan', SuratPermohonanController::class);
 Route::resource('rps', RpsController::class)
     ->middleware('auth');
 
-Route::resource('ukm', RpsController::class)
+Route::resource('ukm', UkmController::class)
     ->middleware('auth');
 
-Route::resource('skpi', UkmController::class)
+Route::resource('skpi', SkpiController::class)
     ->middleware('auth');
 
 Route::resource('skema_pembayaran', SkemaPembayaranController::class)

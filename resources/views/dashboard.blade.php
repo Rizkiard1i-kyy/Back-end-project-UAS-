@@ -36,6 +36,8 @@
 <br><br>
 <a href="{{ route('jadwal.index') }}">Jadwal Kuliah</a>
 <br><br>
+<a href="{{ route('kalenderAkademik.index') }}">Kalender Akademik</a>
+<br><br>
 <a href="{{ route('ksm.index') }}">KSM</a>
 <br><br>
 <a href="{{ route('kehadiran.index') }}">Kehadiran</a>
@@ -57,6 +59,10 @@
 
 <h3>Unit Kegiatan Mahasiswa</h3>
 <a href="{{ route('ukm.index') }}">UKM</a>
+<br><br>
+
+<h3>Uang Kuliah</h3>
+<a href="{{ route('skema_pembayaran.index') }}">Skema Pembayaran</a>
 <br><br>
 
 <h3>SKPI</h3>

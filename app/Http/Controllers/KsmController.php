@@ -11,7 +11,16 @@ class KsmController extends Controller
 {
     public function index()
     {
-        $ksms = Ksm::with('mataKuliahs')->get();
+        $user = auth()->user();
+        $akses = Ksm::with('mataKuliahs');
+        if ($user->isMahasiswa()) {
+            $akses->where('nim', $user->id);
+        } elseif ($user->isAdmin()) {
+            // Admin bisa melihat semua KSM
+        } else {
+            abort(403, 'Anda tidak boleh mengakses halaman ini.');
+        }
+        $ksms = $akses->get();
 
         return view('ksm.index', compact('ksms'));
     }

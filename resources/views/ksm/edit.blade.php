@@ -23,18 +23,38 @@
             @csrf
             @method('PUT')
 
-            {{-- ── Identitas Mahasiswa ── --}}
             <h3>Identitas Mahasiswa</h3>
             <div class="grid-2">
                 <div>
                     <label>Nama</label>
-                    <input type="text" name="nama" value="{{ old('nama', $ksm->nama) }}" required>
+                    <select name="nama" required>
+                        <option value="">-- Pilih Mahasiswa --</option>
+                        @foreach ($mahasiswas as $mahasiswa)
+                            <option value="{{ $mahasiswa->id }}" {{ old('nama', $ksm->mahasiswa->id) === $mahasiswa->id ? 'selected' : '' }}>
+                                {{ $mahasiswa->name }}
+                            </option>
+                        @endforeach
+                    </select>
 
                     <label>No. Pokok Mahasiswa (NIM)</label>
-                    <input type="text" name="nim" value="{{ old('nim', $ksm->nim) }}" required>
+                    <select name="nim" required>
+                        <option value="">-- Pilih NIM --</option>
+                        @foreach ($mahasiswas as $mahasiswa)
+                            <option value="{{ $mahasiswa->id }}" {{ old('nim', $ksm->nim) === $mahasiswa->id ? 'selected' : '' }}>
+                                {{ $mahasiswa->nim }}
+                            </option>
+                        @endforeach
+                    </select>
 
                     <label>Program Studi</label>
-                    <input type="text" name="prodi" value="{{ old('prodi', $ksm->prodi) }}" required>
+                    <select name="prodi" required>
+                        <option value="">-- Pilih Program Studi --</option>
+                        @foreach ($prodis as $prodi)
+                            <option value="{{ $prodi->id }}" {{ old('prodi', $ksm->prodi) === $prodi->id ? 'selected' : '' }}>
+                                {{ $prodi->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div>
                     <label>Semester</label>
@@ -48,7 +68,6 @@
                 </div>
             </div>
 
-            {{-- ── Mata Kuliah ── --}}
             <h3>Mata Kuliah</h3>
 
             <table class="mk-table">
