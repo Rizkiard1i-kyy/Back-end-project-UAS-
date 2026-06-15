@@ -10,7 +10,7 @@
     </div>
 @endif
 @if(in_array(auth()->user()->role, ['mahasiswa']))
-    <a href="{{ route('skpi.create') }}">Tambah Jadwal Kuliah Baru</a>
+    <a href="{{ route('skpi.create') }}">Tambah Data SKPI Baru</a>
     <br><br>
 @endif
 @if ($skpis->isEmpty())
