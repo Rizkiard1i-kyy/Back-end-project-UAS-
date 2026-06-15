@@ -7,9 +7,8 @@
 
 <form action="{{ route('kalenderAkademik.index') }}" method="GET">
     <select name="filter" id="filter" onchange="this.form.submit()">
-        <option value="">-Pilih Tahun Akademik-</option>
         @foreach($daftarTahun as $tahun)
-            <option value="{{ $tahun }}" {{ $tahunDipilih == $tahun ? 'tahunDipilih' : '' }}>{{ $tahun }}</option>
+            <option value="{{ $tahun }}" {{ $tahunDipilih == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
         @endforeach
     </select>
 </form>

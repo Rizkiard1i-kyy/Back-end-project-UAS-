@@ -15,7 +15,7 @@ class KalenderAkademikController extends Controller
         ->orderBy('tahunAkademik', 'desc')
         ->pluck('tahunAkademik');
 
-        $tahunDipilih = $request->get('filter', $daftarTahun->first() ?? '2025 Genap');
+        $tahunDipilih = $request->get('filter', $daftarTahun->first());
 
         $kalenderAkademik = KalenderAkademik::where('tahunAkademik', $tahunDipilih)
         ->orderBy('tanggalMulai', 'asc')
