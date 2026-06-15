@@ -9,10 +9,8 @@ class Skema_Pembayaran extends Model
     protected $table = 'skema__pembayarans';
 
     protected $fillable = [
-        'namaSkema', 
-        'jumlahCicilan', 
-        'jumlahPembayaran', 
-        'tanggalJatuhTempo'
+        'user_id',
+        'jenis_skema',
     ];
 
 }

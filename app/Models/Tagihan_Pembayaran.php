@@ -6,18 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tagihan_Pembayaran extends Model
 {
-    protected $table = 'tagihan_pembayaran';
-    protected $primaryKey = 'id_tagihan_pembayaran';
     protected $fillable = [
-        'id_tagihan',
-        'jumlah_pembayaran',
-        'tanggal_pembayaran',
-        'metode_pembayaran',
-        'bukti_pembayaran',
+        'user_id',
+        'tahun_akademik',
+        'jenis',
+        'no_virtual_account',
+        'tgl_batas_bayar',
+        'jumlah_tagihan',
+        'rincian',
+        'bank',
+        'tgl_pembayaran',
+        'nominal_bayar',
+        'status',
     ];
 
-    public function tagihan()
+    protected $casts = [
+        'tgl_batas_bayar'  => 'date',
+        'tgl_pembayaran'   => 'date',
+    ];
+
+    public function user()
     {
-        return $this->belongsTo(Tagihan::class, 'id_tagihan');
+        return $this->belongsTo(\App\Models\pengguna::class, 'user_id');
     }
 }
