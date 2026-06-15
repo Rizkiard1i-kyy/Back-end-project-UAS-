@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('tanggalMulai');
             $table->date('tanggalSelesai');
             $table->string('namaKegiatan');
+            $table->string('tahunAkademik');
             $table->timestamps();
         });
     }
