@@ -5,32 +5,32 @@ namespace App\Http\Controllers;
 use app\Models\Skema_Pembayaran;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request; 
+use Illuminate\Support\Facades\Auth;
 
 class SkemaPembayaranController extends Controller
 {
     public function index()
     {
-        $skemaPembayaran = Skema_Pembayaran::all();
-        return view('skema_pembayaran.index', compact('skemaPembayaran'));
-    }
+        $user   = Auth::user();
+        $skema  = Skema_Pembayaran::where('user_id', $user->id)->latest()->first();
 
-    public function create()
-    {
-        return view('skema_pembayaran.create');
+        return view('skema_pembayaran.index', compact('user', 'skema'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'namaSkema' => 'required',
-            'jumlahCicilan' => 'required|integer',
-            'jumlahPembayaran' => 'required|numeric',
-            'tanggalJatuhTempo' => 'required|date',
+            'jenis_skema' => 'required|in:FULL PAYMENT,TERMIN',
         ]);
 
-        Skema_Pembayaran::create($request->all());
+        $user = Auth::user();
+
+        Skema_Pembayaran::updateOrCreate(
+            ['user_id' => $user->id],
+            ['jenis_skema' => $request->jenis_skema]
+        );
 
         return redirect()->route('skema_pembayaran.index')
-                         ->with('success', 'Skema Pembayaran berhasil ditambahkan.');
+            ->with('success', 'Skema pembayaran berhasil dipilih.');
     }
 }
