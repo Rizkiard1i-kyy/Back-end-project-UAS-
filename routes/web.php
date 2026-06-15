@@ -68,10 +68,10 @@ Route::resource('surat_permohonan', SuratPermohonanController::class);
 Route::resource('rps', RpsController::class)
     ->middleware('auth');
 
-Route::resource('ukm', RpsController::class)
+Route::resource('ukm', UkmController::class)
     ->middleware('auth');
 
-Route::resource('skpi', UkmController::class)
+Route::resource('skpi', SkpiController::class)
     ->middleware('auth');
 
 Route::resource('skema_pembayaran', SkemaPembayaranController::class)
