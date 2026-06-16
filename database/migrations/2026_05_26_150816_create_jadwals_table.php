@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
+            $table->string('tahun_akademik');
             $table->string('kodeMK');
             $table->string('namaMK');
             $table->integer('sks');

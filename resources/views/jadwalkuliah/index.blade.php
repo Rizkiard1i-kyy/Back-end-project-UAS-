@@ -15,6 +15,20 @@
     <br><br>
 @endif
 
+<form action="{{ route('jadwal.index') }}" method="GET" style="margin-bottom: 20px;">
+    <label for="tahun"><strong>Pilih Tahun akademik :</strong></label>
+    <select name="tahun" id="tahun" onchange="this.form.submit()">
+        <option value="">-- Semua Jadwal --</option>
+        @if(isset($pilihanTahun))
+            @foreach($pilihanTahun as $tahun)
+                <option value="{{ $tahun }}" {{ request('tahun') == $tahun ? 'selected' : '' }}>
+                    {{ $tahun }}
+                </option>
+            @endforeach
+        @endif
+    </select>
+</form>
+
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>

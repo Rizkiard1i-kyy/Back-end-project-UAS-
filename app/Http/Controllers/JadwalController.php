@@ -7,10 +7,20 @@ use Illuminate\Http\Request;
 
 class JadwalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jadwals = Jadwal::all();
-        return view('jadwalkuliah.index', compact('jadwals'));
+        $query = Jadwal::query();
+
+        if ($request->has('tahun') && $request->tahun != '') {
+            $query->where('tahun_akademik', $request->tahun);
+        }
+
+        $jadwals = $query->get();
+        $pilihanTahun = Jadwal::select('tahun_akademik')
+                                ->whereNotNull('tahun_akademik') 
+                                ->distinct()
+                                ->pluck('tahun_akademik');
+        return view('jadwalkuliah.index', compact('jadwals', 'pilihanTahun'));
     }
 
     public function create()
@@ -31,6 +41,7 @@ class JadwalController extends Controller
             abort(403, 'Akses Ditolak! Mahasiswa tidak bisa menambahkan jadwal.');
         }
         $request->validate([
+            'tahun_akademik' => 'required',
             'kodeMK' => 'required',
             'namaMK' => 'required',
             'sks' => 'required|numeric',
@@ -39,7 +50,7 @@ class JadwalController extends Controller
             'ruangDanWaktu' => 'required',
             'emailDosen' => 'required|email'
         ]);
-        Jadwal::create($request->only('kodeMK', 'namaMK', 'sks', 'kelas', 'dosenPengajar', 'ruangDanWaktu', 'kodeMSteams', 'emailDosen'));
+        Jadwal::create($request->only('tahun_akademik', 'kodeMK', 'namaMK', 'sks', 'kelas', 'dosenPengajar', 'ruangDanWaktu', 'kodeMSteams', 'emailDosen'));
         return redirect()->route('jadwal.index')->with('success', 'Data Jadwal berhasil ditambahkan.');
     }
 
@@ -64,6 +75,7 @@ class JadwalController extends Controller
             abort(403, 'Akses Ditolak! Mahasiswa tidak bisa mengedit jadwal.');
         }
         $request->validate([
+            'tahun_akademik' => 'required',
             'kodeMK' => 'required',
             'namaMK' => 'required',
             'sks' => 'required|numeric',
@@ -72,7 +84,7 @@ class JadwalController extends Controller
             'ruangDanWaktu' => 'required',
             'emailDosen' => 'required|email'
         ]);
-        $jadwal->update($request->only('kodeMK', 'namaMK', 'sks', 'kelas', 'dosenPengajar', 'ruangDanWaktu', 'kodeMSteams', 'emailDosen'));
+        $jadwal->update($request->only('tahun_akademik', 'kodeMK', 'namaMK', 'sks', 'kelas', 'dosenPengajar', 'ruangDanWaktu', 'kodeMSteams', 'emailDosen'));
         
         return redirect()->route('jadwal.index')->with('success', 'Data Jadwal berhasil diperbarui.');
     }
