@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class HistoriNilaiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
         $akses = historiNilai::with(['mahasiswa','dosen','mataKuliah']);
@@ -19,6 +19,10 @@ class HistoriNilaiController extends Controller
             $akses->where('nim', $user->id);
         } elseif ($user->isDosen()) {
             $akses->where('namaDosen', $user->id);
+        }
+
+        if ($request->filled('tahunAkademik')) {
+            $akses->where('tahunAkademik', $request->tahunAkademik);
         }
 
         $historiNilai = $akses->get();

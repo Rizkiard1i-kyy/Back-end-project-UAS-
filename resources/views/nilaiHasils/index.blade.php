@@ -23,7 +23,10 @@
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>
-            <th style="width: 50px">No</th>           
+            <th style="width: 50px">No</th>
+            @if(!auth()->user()->isMahasiswa())
+                <th style="width: 50px">NIM</th>
+            @endif        
             <th style="width: 100px">KODE MK</th>
             <th style="width: 150px">NAMA MATA KULIAH</th>
             <th style="width: 70px">STATUS</th>
@@ -39,6 +42,11 @@
         @foreach($nilaiHasil as $nilaiHasil)
             <tr>
                 <td style="text-align: center">{{ $loop->iteration }}</td>
+                @if(!auth()->user()->isMahasiswa())
+                    <td>
+                        <a> {{ $nilaiHasil->mahasiswa->nim }}</a>
+                    </td>
+                @endif
                 <td>
                     <a> {{ $nilaiHasil->mataKuliah->kodeMatkul }}</a>
                 </td>
@@ -70,7 +78,7 @@
         @endforeach
     </tbody>
 </table>
-@if(!auth()->user()->isAdmin())
+@if(auth()->user()->isMahasiswa())
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>

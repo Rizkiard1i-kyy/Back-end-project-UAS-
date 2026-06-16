@@ -5,6 +5,17 @@
     <br><br>
 @endif
 
+<form action="{{ route('historiNilai.index') }}" method="GET">
+    <label for="tahunAkademik">Tahun akademik :</label>
+    
+    <select name="tahunAkademik" required>
+        <option value="">-- Semua Semester --</option>
+        <option value="20251">Gasal 2025</option>
+        <option value="20252">Genap 2025</option>
+    </select>
+    <button type="submit">Cek</button>
+</form>
+
 @if ($historiNilai->isEmpty())
     <p>Belum ada data histori nilai yang tersimpan.</p>
 @else
@@ -12,6 +23,9 @@
     <thead>
         <tr>
             <th style="width: 50px">No</th>
+            @if(!auth()->user()->isMahasiswa())
+                <th style="width: 50px">NIM</th>
+            @endif
             <th style="width: 100px">TH.AKAD</th>            
             <th style="width: 100px">KODE</th>
             <th style="width: 150px">MATA KULIAH</th>
@@ -19,12 +33,18 @@
             <th style="width: 50px">NILAI</th>
             <th style="width: 50px">BOBOT</th>
             <th style="width: 120px">AKSI</th>
+            
         </tr>
     </thead>
     <tbody>
         @foreach($historiNilai as $historiNilai)
             <tr>
                 <td style="text-align: center">{{ $loop->iteration }}</td>
+                @if(!auth()->user()->isMahasiswa())
+                    <td>
+                        <a> {{ $historiNilai->mahasiswa->nim }}</a>
+                    </td>
+                @endif
                 <td>
                     <a> {{ $historiNilai->tahunAkademik }}</a>
                 </td>
