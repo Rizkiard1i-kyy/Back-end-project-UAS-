@@ -8,7 +8,7 @@ class Kehadiran extends Model
 {
     protected $fillable = [
         'matkul', 
-        'semester',
+        'tahunAkademik',
         'namaDosen',
         'nim',
         'kelas',
