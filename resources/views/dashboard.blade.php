@@ -71,7 +71,7 @@
 <a href="{{ route('skpi.index') }}">SKPI (Penalaran dan Keilmuan)</a>
 <br><br>
 
-<h3>Layanan Mahasiswa</h3>
+<h3>Lainnya</h3>
 <a href="{{ route('chatbot.index') }}">Lintar bot</a>
 <br><br>
 <a href="{{ route('Pengumuman.index') }}">Pengumuman</a>
