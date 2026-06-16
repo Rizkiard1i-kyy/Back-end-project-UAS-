@@ -21,4 +21,8 @@ class Skpi extends Model
         'validasi',
         'point'
 ];
+public function pengguna()
+    {
+        return $this->belongsTo(Pengguna::class, 'user_id');
+    }
 }
