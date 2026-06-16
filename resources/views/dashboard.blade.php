@@ -220,9 +220,18 @@
             <div class="card-icon bg-red">
                 <img src="{{ asset('images/icons/admin.png') }}" alt="" onerror="this.style.display='none'">
             </div>
-            <h4 class="card-title">Admin Dashboard</h4>
+            <h4 class="card-title">Pengelolaan Akun</h4>
             <p class="card-desc">Kelola data pengguna, konten, dan pengaturan aplikasi melalui panel admin.</p>
             <a href="{{ route('pengguna.index') }}" class="card-link">Click Here</a>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon bg-red">
+                <img src="{{ asset('images/icons/admin.png') }}" alt="" onerror="this.style.display='none'">
+            </div>
+            <h4 class="card-title">Pengelolahan Matkul</h4>
+            <p class="card-desc">Kelola data mata kuliah, jadwal, dan informasi akademik lainnya melalui panel admin.</p>
+            <a href="{{ route('mataKuliah.index') }}" class="card-link">Click Here</a>
         </div>
     </div>
 </div>
