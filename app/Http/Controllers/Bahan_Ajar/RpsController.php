@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bahan_Ajar;
 use App\Models\Rps;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RpsController extends Controller
 {
@@ -19,7 +20,7 @@ class RpsController extends Controller
         if ($user->isMahasiswa()) {
             abort(403, 'Akses Ditolak! Mahasiswa tidak bisa menambahkan RPS.');
         }
-        
+        $daftar_mk = \App\Models\MataKuliah::all();
         return view('rps.create');
     }
 
@@ -80,7 +81,7 @@ class RpsController extends Controller
         return redirect()->route('rps.index')->with('success', 'Data RPS berhasil diperbarui.');
     }
 
-    public function destroy(Rps $id)
+    public function destroy($id)
     {
         $user = auth()->user();
         
