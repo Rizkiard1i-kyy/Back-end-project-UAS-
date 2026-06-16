@@ -8,13 +8,18 @@ class Jadwal extends Model
 {
     protected $fillable = [
         'tahun_akademik',
-        'kodeMK', 
-        'namaMK', 
-        'sks', 
+        'matkul', 
         'kelas', 
         'dosenPengajar', 
         'ruangDanWaktu',  
         'kodeMSteams', 
-        'emailDosen'
     ];
+
+    public function dosen() {
+        return $this->belongsTo(Pengguna::class, 'dosenPengajar', 'id');
+    }
+    
+    public function mataKuliah() {
+        return $this->belongsTo(MataKuliah::class, 'matkul', 'id');
+    }
 }

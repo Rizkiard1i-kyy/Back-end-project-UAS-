@@ -46,11 +46,11 @@
         @foreach($jadwals as $jadwal)
         <tr>
             <td>{{ $loop->iteration }}</td> 
-            <td>{{ $jadwal->kodeMK }}</td>
-            <td>{{ $jadwal->namaMK }}</td>
-            <td>{{ $jadwal->sks }}</td>
+            <td>{{ $jadwal->mataKuliah->kodeMatkul }}</td>
+            <td>{{ $jadwal->mataKuliah->namaMatkul }}</td>
+            <td>{{ $jadwal->mataKuliah->sks }}</td>
             <td>{{ $jadwal->kelas }}</td>
-            <td>{{ $jadwal->dosenPengajar }}</td>
+            <td>{{ $jadwal->dosen->nama }}</td>
             <td>{{ $jadwal->ruangDanWaktu }}</td>
             <td>
                 <a href="{{ route('jadwal.show', $jadwal->id) }}">Detail</a>

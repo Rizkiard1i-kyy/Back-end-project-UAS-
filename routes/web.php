@@ -76,10 +76,6 @@ Route::namespace('App\Http\Controllers\SKPI')->middleware(['auth'])->group(funct
     Route::resource('skpi', 'SkpiController');
 });
 
-Route::namespace('App\Http\Controllers\Administrasi')->middleware(['auth'])->group(function () {
-    Route::resource('skpi', 'SkpiController');
-});
-
 Route::resource('Pengumuman', PengumumanController::class)
     ->middleware('auth');
 

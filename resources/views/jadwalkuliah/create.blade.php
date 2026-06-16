@@ -7,23 +7,15 @@
     <input name="tahun_akademik" required>
     <br><br>
 
-    Kode MK:
+    Mata Kuliah:
     <br>
-    <input name="kodeMK" required>
-    <br>
-    <br>
-    
-    Nama MK:
-    <br>
-    <input name="namaMK" required>
-    <br>
-    <br>
-    
-    SKS:
-    <br>
-    <input type="number" name="sks" required>
-    <br>
-    <br>
+    <select name="matkul" required>
+        <option value = "">-Pilih Mata Kuliah-</option>
+        @foreach($matkuls as $matkul)
+            <option value = "{{ $matkul->id }}">{{ $matkul->kodeMatkul }} - {{ $matkul->namaMatkul }}</option>
+        @endforeach
+    </select>
+    <br><br>
     
     Kelas:
     <br>
@@ -33,9 +25,13 @@
     
     Dosen Pengajar:
     <br>
-    <input name="dosenPengajar" required>
-    <br>
-    <br>
+    <select name="dosenPengajar" required>
+        <option value = "">-Pilih Dosen-</option>
+        @foreach($dosens as $dosen)
+            <option value = "{{ $dosen->id }}">{{ $dosen->nama }}</option>
+        @endforeach
+    </select>   
+    <br><br>
     
     Ruang & Waktu:
     <br>
@@ -46,12 +42,6 @@
     Kode Join Teams:
     <br>
     <input name="kodeMSteams">
-    <br>
-    <br>
-    
-    Email Dosen:
-    <br>
-    <input type="email" name="emailDosen" required>
     <br>
     <br>
     

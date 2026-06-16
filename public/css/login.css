@@ -5,7 +5,7 @@
 
 :root {
   --untar-bg: #FAF6F0;
-  --untar-red: linear-gradient(135deg, #8c2534, #661a25);
+  --untar-red: #E62A00;
   --untar-blue: #C2ECF8;
 }
 
@@ -70,7 +70,7 @@ body {
   background-color: var(--untar-red);
   background-image: 
     linear-gradient(135deg, rgba(230, 42, 0, 0.9) 0%, rgba(180, 20, 0, 0.95) 100%),
-    url('/loginuntar.jpg'); /* Menggunakan gambar Anda */
+    url('/loginuntar.jpg');
   background-size: cover;
   background-position: bottom center;
   background-repeat: no-repeat;
