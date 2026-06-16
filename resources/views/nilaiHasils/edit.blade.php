@@ -1,6 +1,6 @@
 <h1>Buat Data Nilai KHS Baru</h1>
-<form method="POST" action="{{ route('nilaiKHS.store') }}">
-    @csrf
+<form method="POST" action="{{ route('nilaiHasil.update', $nilaiHasil) }}">
+    @csrf @method('PUT')
     NIM:
     <br>
     <select name= "nim" required>
@@ -56,4 +56,4 @@
 </form>
 
 <br><br>
-<a href="{{ route('nilaiKHS.index') }}">Kembali</a>
+<a href="{{ route('nilaiHasil.index') }}">Kembali</a>

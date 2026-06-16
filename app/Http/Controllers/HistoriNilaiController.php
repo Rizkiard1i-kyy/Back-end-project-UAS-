@@ -113,7 +113,7 @@ class HistoriNilaiController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->isMahasiswa() || $user->isDosen() && $historiNilai->namaDosen !== $user->id ) {
+        if ($user->isMahasiswa() || $user->isDosen() && (int)$historiNilai->namaDosen !== $user->id ) {
             abort(403, 'Anda tidak boleh mengubah data histori nilai ini.');
         }
 
@@ -152,7 +152,7 @@ class HistoriNilaiController extends Controller
             $request['nilai'] = 'E';
         }
 
-    $historiNilai->update($request->only(
+        $historiNilai->update($request->only(
             'nim',
             'namaDosen',
             'tahunAkademik',

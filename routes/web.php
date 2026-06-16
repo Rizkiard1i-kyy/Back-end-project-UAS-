@@ -8,7 +8,7 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KalenderAkademikController;
 use App\Http\Controllers\KsmController;
 use App\Http\Controllers\KehadiranController;
-use App\Http\Controllers\NilaiKHSController;
+use App\Http\Controllers\NilaiHasilController;
 use App\Http\Controllers\KonsultasiController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SuratPermohonanController;
@@ -56,7 +56,7 @@ Route::resource('ksm', KsmController::class)
 Route::resource('kehadiran', KehadiranController::class)
     ->middleware('auth');
 
-Route::resource('nilaiKHS', NilaiKHSController::class)
+Route::resource('nilaiHasil', NilaiHasilController::class)
     ->middleware('auth');
     
 Route::resource('konsultasi', KonsultasiController::class)

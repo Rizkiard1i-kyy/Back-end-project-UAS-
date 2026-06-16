@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('nilai_k_h_s', function (Blueprint $table) {
+        Schema::create('nilai_hasils', function (Blueprint $table) {
             $table->id();
             $table->foreignId('nim')->constrained('users');
             $table->foreignId('namaDosen')->constrained('users');
@@ -36,6 +36,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('nilai_k_h_s');
+        Schema::dropIfExists('nilai_hasils');
     }
 };
