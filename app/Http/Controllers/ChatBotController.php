@@ -128,8 +128,8 @@ class ChatBotController extends Controller
             $followUp = $this->sendRequest([
                 'model'=> env('AZURE_OPENAI_MODEL', 'gpt-5-mini'),
                 'messages'=> $messages,
-                'temperature' => 0.7,
-                'max_tokens'  => 500,
+                'temperature' => 1.0,
+                'max_tokens'  => 5000,
             ]);
 
             return $followUp->json('choices.0.message.content');
