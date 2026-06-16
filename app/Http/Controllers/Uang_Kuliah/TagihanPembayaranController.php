@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Uang_Kuliah;
 
 use App\Models\Tagihan_Pembayaran;
 use Illuminate\Http\Request;

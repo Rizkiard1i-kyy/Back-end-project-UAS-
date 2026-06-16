@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Bahan_Ajar;
 use App\Models\Rps;
 use Illuminate\Http\Request;
 

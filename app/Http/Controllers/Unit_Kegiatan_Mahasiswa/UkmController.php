@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Unit_Kefiatan_Mahasiswa;
 
 use App\Models\ukm;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class UkmController extends Controller
