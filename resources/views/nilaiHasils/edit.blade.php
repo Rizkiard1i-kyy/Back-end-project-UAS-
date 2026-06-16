@@ -1,4 +1,4 @@
-<h1>Buat Data Nilai KHS Baru</h1>
+<h1>Edit Data Nilai KHS Baru</h1>
 <form method="POST" action="{{ route('nilaiHasil.update', $nilaiHasil) }}">
     @csrf @method('PUT')
     NIM:
