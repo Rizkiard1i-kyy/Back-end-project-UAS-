@@ -1,22 +1,62 @@
-<h1>Edit Status Surat</h1>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/aset.css') }}">
+</head>
+<body>
 
-<form action="{{ route('surat_keterangan.update', $suratKeterangan->no) }}" method="POST">
-    @csrf
-    @method('PUT')
+<div class="container">
+    
+    <div class="page-header" style="max-width: 600px; margin: 0 auto 32px auto;">
+        <h1>Edit Status Surat</h1>
+    </div>
+    <div class="form-card">
+        <form action="{{ route('surat_keterangan.update', $suratKeterangan->no) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Jenis Surat Pengajuan</label>
+                <input type="text" class="form-control" value="{{ $suratKeterangan->jenis_surat }}" style="background-color: #f8fafc; color: #64748b;" readonly>
+            </div>
+            <div class="form-group" style="margin-bottom: 28px;">
+                <label>NIM Pengaju</label>
+                <input type="text" class="form-control" value="{{ $suratKeterangan->nim }}" style="background-color: #f8fafc; color: #64748b;" readonly>
+            </div>
+            <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 24px 0;">
+            <div class="form-group">
+                <label>Status Surat</label>
+                <div class="radio-list">
+                    
 
-    <label>Status Surat</label><br><br>
+                    <div class="radio-option">
+                        <input type="radio" name="status" id="status_pending" value="pending"
+                            {{ $suratKeterangan->status == 'pending' ? 'checked' : '' }}>
+                        <label for="status_pending" style="color: #f1c431;">Pending</label>
+                    </div>
 
-    <input type="radio" name="status" value="pending"
-        {{ $suratKeterangan->status == 'pending' ? 'checked' : '' }}>
-    Pending <br>
+                    <div class="radio-option">
+                        <input type="radio" name="status" id="status_accepted" value="accepted"
+                            {{ $suratKeterangan->status == 'accepted' ? 'checked' : '' }}>
+                        <label for="status_accepted" style="color: #065f46;">Accepted</label>
+                    </div>
 
-    <input type="radio" name="status" value="accepted"
-        {{ $suratKeterangan->status == 'accepted' ? 'checked' : '' }}>
-    Accepted <br>
+                    <div class="radio-option">
+                        <input type="radio" name="status" id="status_decline" value="decline"
+                            {{ $suratKeterangan->status == 'decline' ? 'checked' : '' }}>
+                        <label for="status_decline" style="color: #991b1b;">Decline</label>
+                    </div>
+                    
+                </div>
+            </div>
 
-    <input type="radio" name="status" value="decline"
-        {{ $suratKeterangan->status == 'decline' ? 'checked' : '' }}>
-    Decline <br><br>
-
-    <button type="submit">Update Status</button>
-</form>
+            <div class="form-actions" style="border-top: 1px solid #f1f5f9; padding-top: 24px; margin-top: 32px;">
+                <a href="{{ route('surat_keterangan.index') }}" class="btn-secondary">Batal</a>
+                <button type="submit" class="btn-primary btn-submit">Update Status</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
