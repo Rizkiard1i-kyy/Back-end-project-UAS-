@@ -48,5 +48,11 @@ class MataKuliahSeeder extends Seeder
             'namaMatkul'    => 'BACK-END PROGRAMMING',
             'sks'      => '4',
         ]);
+
+        MataKuliah::create([
+            'kodeMatkul'     => 'TK13032',
+            'namaMatkul'    => 'TECHNOLOGY AND ETHICS',
+            'sks'      => '4',
+        ]);
     }
 }
