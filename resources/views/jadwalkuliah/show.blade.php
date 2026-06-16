@@ -1,12 +1,12 @@
-<h1>Detail Jadwal {{ $jadwal->kodeMK }} - {{ $jadwal->namaMK }}:</h1>
+<h1>Detail Jadwal {{ $jadwal->mataKuliah->kodeMatkul }} - {{ $jadwal->mataKuliah->namaMatkul }}:</h1>
 
 <p>Tahun Akademik: {{ $jadwal->tahun_akademik }}</p>
-<p>SKS: {{ $jadwal->sks }}</p>
+<p>SKS: {{ $jadwal->mataKuliah->sks }}</p>
 <p>Kelas: {{ $jadwal->kelas }}</p>
-<p>Dosen Pengajar: {{ $jadwal->dosenPengajar }}</p>
+<p>Dosen Pengajar: {{ $jadwal->dosen->nama }}</p>
 <p>Ruang & Waktu: {{ $jadwal->ruangDanWaktu }}</p>
 <p>Kode Join Teams: {{ $jadwal->kodeMSteams }}</p>
-<p>Email Dosen: {{ $jadwal->emailDosen }}</p>
+<p>Email Dosen: {{ $jadwal->dosen->email }}</p>
 
 <br>
 @if(!auth()->user()->isMahasiswa())

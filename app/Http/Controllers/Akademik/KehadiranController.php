@@ -10,10 +10,19 @@ use Illuminate\Http\Request;
 
 class KehadiranController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
-        $query = Kehadiran::with(['mahasiswa','dosen', 'mataKuliah']);;
+
+        $daftarTahun = Kehadiran::select('tahunAkademik')
+            ->distinct()
+            ->orderBy('tahunAkademik', 'desc')
+            ->pluck('tahunAkademik');
+
+        $tahunDipilih = $request->get('filter', $daftarTahun->first() ?? '2025 Genap');
+
+        $query = Kehadiran::with(['mahasiswa','dosen', 'mataKuliah'])
+            ->where('tahunAkademik', $tahunDipilih);
 
         if ($user->isMahasiswa()) {
             $query->where('nim', $user->id);
@@ -22,7 +31,8 @@ class KehadiranController extends Controller
         }
 
         $kehadiran = $query->get();
-        return view('kehadirans.index', compact('kehadiran'));
+
+        return view('kehadirans.index', compact('kehadiran', 'daftarTahun', 'tahunDipilih'));
     }
 
     public function create()
@@ -46,7 +56,7 @@ class KehadiranController extends Controller
 
         $request->validate([
             'matkul'=>'required|exists:mata_kuliahs,id',
-            'semester'=>'required|string|in:Gasal,Genap',
+            'tahunAkademik'=>'required|string|max:255',
             'namaDosen'=>'required|exists:users,id',
             'nim'=>'required|exists:users,id',
             'kelas'=>'required|string|max:10',
@@ -58,7 +68,7 @@ class KehadiranController extends Controller
 
         Kehadiran::create($request->only(
             'matkul', 
-            'semester', 
+            'tahunAkademik', 
             'namaDosen', 
             'nim', 
             'kelas', 
@@ -109,7 +119,7 @@ class KehadiranController extends Controller
         if ($user->isAdmin()) {
             $request->validate([
                 'matkul'=>'required|exists:mata_kuliahs,id',
-                'semester'=>'required|string|in:Gasal,Genap',
+                'tahunAkademik'=>'required|string|max:255',
                 'namaDosen'=>'required|exists:users,id',
                 'nim'=>'required|exists:users,id',
                 'kelas'=>'required|string|max:10',
@@ -127,7 +137,7 @@ class KehadiranController extends Controller
 
         $kehadiran->update($request->only(
             'matkul', 
-            'semester', 
+            'tahunAkademik', 
             'namaDosen', 
             'nim', 
             'kelas', 

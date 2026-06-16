@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kehadirans', function (Blueprint $table) {
             $table->id();
             $table->string('matkul')->constrained('mata_kuliahs');
-            $table->string('semester');
+            $table->string('tahunAkademik');
             $table->foreignId('namaDosen')->constrained('users');
             $table->foreignId('nim')->constrained('users');
             $table->string('kelas');

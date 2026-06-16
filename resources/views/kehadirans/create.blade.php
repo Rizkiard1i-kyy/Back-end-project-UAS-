@@ -13,10 +13,10 @@
     <br>
     Semester:
     <br>
-    <select name="semester" required>
-        <option value = "">-Pilih Semester-</option>
-        <option value="Gasal">Gasal</option>
-        <option value="Genap">Genap</option>
+    <select name="tahunAkademik" required>
+        <option value = "2026 Ganjil">2026 Ganjil</option>
+        <option value="2025 Genap">2025 Genap</option>
+        <option value="2025 Ganjil">2025 Ganjil</option>
     </select>
     <br>
     <br>

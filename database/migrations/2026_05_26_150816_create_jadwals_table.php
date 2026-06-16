@@ -11,14 +11,11 @@ return new class extends Migration
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
             $table->string('tahun_akademik');
-            $table->string('kodeMK');
-            $table->string('namaMK');
-            $table->integer('sks');
+            $table->string('matkul')->constrained('mata_kuliahs');
+            $table->foreignId('dosenPengajar')->constrained('users');
             $table->string('kelas');
-            $table->string('dosenPengajar');
             $table->string('ruangDanWaktu');
             $table->string('kodeMSteams')->nullable();
-            $table->string('emailDosen');
             $table->timestamps();
         });
     }

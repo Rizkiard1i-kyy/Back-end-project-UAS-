@@ -8,6 +8,14 @@
 @if ($kehadiran->isEmpty())
     <p>Belum ada data kehadiran yang tersimpan.</p>
 @else
+<form action="{{ route('kehadiran.index') }}" method="GET">
+    <select name="filter" id="filter" onchange="this.form.submit()">
+        @foreach($daftarTahun as $tahun)
+            <option value="{{ $tahun }}" {{ $tahunDipilih == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
+        @endforeach
+    </select>
+</form>
+
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>

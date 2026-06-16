@@ -8,19 +8,14 @@
     <input name="tahun_akademik" value="{{ $jadwal->tahun_akademik }}" required>
     <br><br>
     
-    Kode MK:
+    Mata Kuliah:
     <br>
-    <input name="kodeMK" value="{{ $jadwal->kodeMK }}" required>
-    <br><br>
-
-    Nama MK:
-    <br>
-    <input name="namaMK" value="{{ $jadwal->namaMK }}" required>
-    <br><br>
-
-    SKS:
-    <br>
-    <input type="number" name="sks" value="{{ $jadwal->sks }}" required>
+    <select name="matkul" required>
+        <option value = "">-Pilih Mata Kuliah-</option>
+        @foreach($matkuls as $matkul)
+            <option value = "{{ $matkul->id }}">{{ $matkul->kodeMatkul }} - {{ $matkul->namaMatkul }}</option>
+        @endforeach
+    </select>
     <br><br>
 
     Kelas:
@@ -30,7 +25,12 @@
 
     Dosen Pengajar:
     <br>
-    <input name="dosenPengajar" value="{{ $jadwal->dosenPengajar }}" required>
+    <select name="dosenPengajar" required>
+        <option value = "">-Pilih Dosen-</option>
+        @foreach($dosens as $dosen)
+            <option value = "{{ $dosen->id }}">{{ $dosen->nama }}</option>
+        @endforeach
+    </select>   
     <br><br>
 
     Ruang & Waktu:
@@ -41,11 +41,6 @@
     Kode Join Teams:
     <br>
     <input name="kodeMSteams" value="{{ $jadwal->kodeMSteams }}">
-    <br><br>
-
-    Email Dosen:
-    <br>
-    <input type="email" name="emailDosen" value="{{ $jadwal->emailDosen }}" required>
     <br><br>
 
     <button type="submit">Simpan Perubahan</button>
