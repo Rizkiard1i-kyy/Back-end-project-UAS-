@@ -108,6 +108,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             MataKuliahSeeder::class,
             KalenderAkademikSeeder::class,
+            KonsultasiSeeder::class,
         ]);
 
         $this->command->info('Seeder selesai');
