@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --untar-bg: #FAF6F0;
+  --untar-red: #E62A00;
+  --untar-blue: #C2ECF8;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.untar-body {
+  background-color: var(--untar-bg) !important;
+  font-family: 'Outfit', sans-serif !important;
+  margin: 0;
+  padding: 0;
+}
+
+.untar-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.untar-header {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.untar-header .subtitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #1A1A1A;
+  text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+}
+
+.untar-header .title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #1A1A1A;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+}
+
+.untar-banner {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--untar-red);
+  background-image: 
+    linear-gradient(135deg, rgba(230, 42, 0, 0.9) 0%, rgba(180, 20, 0, 0.95) 100%),
+    url('/loginuntar.jpg'); /* Menggunakan gambar Anda */
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  padding: 2.5rem 1.5rem;
+  box-shadow: inset 0 10px 20px rgba(0,0,0,0.1), inset 0 -10px 20px rgba(0,0,0,0.1);
+}
+
+.untar-banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.25) 100%);
+  pointer-events: none;
+}
+
+.untar-card {
+  position: relative;
+  background-color: var(--untar-blue);
+  border-radius: 20px;
+  padding: 2.8rem 3rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  z-index: 2;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.untar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.25),
+    0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.untar-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.untar-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.untar-input-group label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2C3E50;
+  text-align: center;
+  letter-spacing: 0.02em;
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+}
+
+.untar-input-group input {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  background-color: #FFFFFF;
+  color: #1A1A1A;
+  text-align: center;
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-family: 'Outfit', sans-serif;
+}
+
+.untar-input-group input:focus {
+  border-color: rgba(230, 42, 0, 0.4);
+  box-shadow: 
+    0 0 0 4px rgba(230, 42, 0, 0.12),
+    inset 0 2px 4px rgba(0,0,0,0.02);
+  transform: scale(1.01);
+}
+
+.untar-input-group input::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+}
+
+.untar-footer {
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.untar-btn-login {
+  background-color: #C5C6C6;
+  color: #1A1A1A;
+  border: none;
+  padding: 0.9rem 4.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-family: 'Outfit', sans-serif;
+}
+
+.untar-btn-login:hover {
+  background-color: #1A1A1A;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.15),
+    0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.untar-btn-login:active {
+  transform: translateY(0);
+}
+
+.untar-alert-error {
+  background-color: #FED7D7;
+  border: 1px solid #F56565;
+  color: #C53030;
+  padding: 0.8rem;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.untar-demo-info {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #718096;
+  text-align: center;
+  max-width: 500px;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .untar-header {
+    padding: 2rem 1rem;
+  }
+  .untar-header .title {
+    font-size: 1.6rem;
+  }
+  .untar-header .subtitle {
+    font-size: 1.1rem;
+  }
+  .untar-banner {
+    min-height: 350px;
+    padding: 2rem 1rem;
+  }
+  .untar-card {
+    padding: 2rem 1.8rem;
+    border-radius: 16px;
+  }
+  .untar-footer {
+    padding: 2.5rem 1rem;
+  }
+  .untar-btn-login {
+    width: 100%;
+    max-width: 280px;
+    padding: 0.9rem 0;
+  }
+}
