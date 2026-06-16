@@ -9,7 +9,11 @@ class SkpiController extends Controller
 {
     public function index()
     {
-        $skpis = Skpi::all();
+        if (auth()->user() && !in_array(auth()->user()->role, ['mahasiswa'])) {
+            $skpis = Skpi::all();
+        } else {
+            $skpis = Skpi::where('user_id', auth()->user()->id)->get();
+        }
         $totalPoint = $skpis->where('validasi', 'Valid')->sum('point');
         return view('skpi.index', compact('skpis', 'totalPoint'));
     }

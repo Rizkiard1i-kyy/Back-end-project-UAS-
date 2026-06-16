@@ -111,6 +111,7 @@ class DatabaseSeeder extends Seeder
             KonsultasiSeeder::class,
             JadwalSeeder::class,
             RpsSeeder::class,
+            SkpiSeeder::class,
         ]);
 
         $this->command->info('Seeder selesai');
