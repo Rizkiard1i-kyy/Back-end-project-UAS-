@@ -19,6 +19,9 @@
     <thead>
         <tr>
             <th>No</th>
+            @if(auth()->user() && !in_array(auth()->user()->role, ['mahasiswa']))
+                <th>Nama Mahasiswa</th>
+            @endif
             <th>Nama Kegiatan</th>
             <th>Jenis</th>
             <th>Klasifikasi</th>
@@ -31,6 +34,9 @@
         @foreach($skpis as $skpi)
         <tr>
             <td>{{ $loop->iteration }}</td>
+            @if(auth()->user() && !in_array(auth()->user()->role, ['mahasiswa']))
+                <td>{{ $skpi->pengguna->nama ?? 'Tidak Diketahui' }}</td>
+            @endif
             <td>{{ $skpi->kegiatan }}</td>
             <td>{{ $skpi->jenis }}</td>
             <td>{{ $skpi->klasifikasi }}</td>
@@ -42,7 +48,7 @@
         </tr>
         @endforeach
         <tr>
-            <td colspan="5">
+            <td colspan="{{ (auth()->user() && !in_array(auth()->user()->role, ['mahasiswa'])) ? 6 : 5 }}">
                 <b>Total Point Terkumpul (Tervalidasi)</b>
             </td>
             <td>
