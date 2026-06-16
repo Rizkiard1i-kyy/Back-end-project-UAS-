@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">
+            <img src="{{ asset('images/logo-untar.png') }}" alt="Logo UNTAR">
+        </div>
+        <h1>Halo! Selamat datang di Lintar X!</h1>
+    </div>
+</header>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

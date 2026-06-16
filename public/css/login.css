@@ -5,7 +5,7 @@
 
 :root {
   --untar-bg: #FAF6F0;
-  --untar-red: #E62A00;
+  --untar-red: linear-gradient(135deg, #8c2534, #661a25);
   --untar-blue: #C2ECF8;
 }
 
