@@ -8,10 +8,20 @@ use Illuminate\Http\Request;
 
 class KalenderAkademikController extends Controller
 {  
-    public function index()
+    public function index(Request $request)
     {
-        $kalenderAkademik = KalenderAkademik::orderBy('tanggalMulai', 'asc')->get();
-        return view('kalenderAkademiks.index', compact('kalenderAkademik'));
+        $daftarTahun = KalenderAkademik::select('tahunAkademik')
+        ->distinct()
+        ->orderBy('tahunAkademik', 'desc')
+        ->pluck('tahunAkademik');
+
+        $tahunDipilih = $request->get('filter', $daftarTahun->first());
+
+        $kalenderAkademik = KalenderAkademik::where('tahunAkademik', $tahunDipilih)
+        ->orderBy('tanggalMulai', 'asc')
+        ->get();
+
+        return view('kalenderAkademiks.index', compact('kalenderAkademik', 'daftarTahun', 'tahunDipilih'));
     }
 
     public function create()
@@ -33,12 +43,14 @@ class KalenderAkademikController extends Controller
             'tanggalMulai'=>'required|date',
             'tanggalSelesai'=>'required|date|after_or_equal:tanggalMulai',
             'namaKegiatan'=>'required|string|max:255',
+            'tahunAkademik'=>'required|string|max:255',
         ]);
 
          KalenderAkademik::create($request->only(
             'tanggalMulai', 
             'tanggalSelesai', 
-            'namaKegiatan'));
+            'namaKegiatan',
+            'tahunAkademik'));
 
         return redirect()->route('kalenderAkademik.index')->with('success', 'Data kalender akademik baru dibuat.');
     }
@@ -67,9 +79,10 @@ class KalenderAkademikController extends Controller
             'tanggalMulai'=>'required|date',
             'tanggalSelesai'=>'required|date|after_or_equal:tanggalMulai',
             'namaKegiatan'=>'required|string|max:255',
+            'tahunAkademik'=>'required|string|max:255'
         ]);
 
-        $kalenderAkademik->update($request->only('tanggalMulai', 'tanggalSelesai', 'namaKegiatan'));
+        $kalenderAkademik->update($request->only('tanggalMulai', 'tanggalSelesai', 'namaKegiatan','tahunAkademik'));
 
         return redirect()->route('kalenderAkademik.index')->with('success', 'Data kalender akademik diperbarui.');
     }

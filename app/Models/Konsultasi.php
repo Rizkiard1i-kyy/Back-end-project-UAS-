@@ -15,9 +15,14 @@ class Konsultasi extends Model
         'topik',
         'status',
         'catatan',
+        'dosen_id',
     ];
 
     protected $casts = [
         'tanggal' => 'date',
     ];
+    public function dosen()
+    {
+        return $this->belongsTo(Pengguna::class, 'dosen_id');
+    }
 }

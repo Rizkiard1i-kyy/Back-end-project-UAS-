@@ -3,11 +3,38 @@
     @csrf
     NIM:
     <br>
-    <input name="nim" required>
+    <select name= "nim" required>
+        <option value = "">-Pilih NIM Mahasiswa-</option>
+        @foreach($mahasiswas as $mhs)
+            <option value = "{{ $mhs->id }}">{{ $mhs->nim }} - {{ $mhs->nama }}</option>
+        @endforeach
+    </select>
+    <br><br>
+    NAMA DOSEN:
+    <br>
+    <select name="namaDosen" required>
+        <option value = "">-Pilih Dosen-</option>
+        @foreach($dosens as $dosen)
+            <option value = "{{ $dosen->id }}">{{ $dosen->nama }}</option>
+        @endforeach
+    </select>   
     <br><br>
     TAHUN AKADEMIK:
     <br>
-    <input name="tahunAkademik" required>
+    <select name="tahunAkademik" required>
+        <option value = "">-Pilih Mata Kuliah-</option>
+        <option value = "20251">Gasal 2025</option>
+        <option value = "20252">Genap 2025</option>
+     </select>   
+    <br><br>
+    NAMA MATA KULIAH:
+    <br>
+    <select name="namaMataKuliah" required>
+        <option value = "">-Pilih Mata Kuliah-</option>
+        @foreach($namaMataKuliahs as $namaMataKuliah)
+            <option value = "{{ $namaMataKuliah->id }}">{{ $namaMataKuliah->kodeMatkul }} - {{ $namaMataKuliah->namaMatkul }}</option>
+        @endforeach
+    </select>
     <br><br>
     NILAI TUGAS:
     <br>
@@ -21,28 +48,12 @@
     <br>
     <input name="uas" required>
     <br><br>
-    KODE MATA KULIAH:
-    <br>
-    <input name="kodeMK" required>
-    <br><br>
-    NAMA MATA KULIAH:
-    <br>
-    <input name="namaMataKuliah" required>
-    <br><br>
     STATUS:
     <br>
     <input name="status" required>
-    <br><br>
-    SKS:
-    <br>
-    <input name="sks" required>
-    <br><br>
-    KETERANGAN:
-    <br>
-    <input name="keterangan" required>
     <br><br>
     <button type="submit">Simpan</button>
 </form>
 
 <br><br>
-<a href="{{ route('kehadiran.index') }}">Kembali</a>
+<a href="{{ route('nilaiKHS.index') }}">Kembali</a>

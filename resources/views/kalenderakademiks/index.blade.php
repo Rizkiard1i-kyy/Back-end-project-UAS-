@@ -1,9 +1,17 @@
-<h1>Kalender Akademik</h1>
+<h1>Kalender Akademik {{ $tahunDipilih }}</h1>
 
 @if(auth()->user()->isAdmin())
     <a href="{{ route('kalenderAkademik.create') }}">Buat Data Kalender Akademik Baru</a>
     <br><br>
 @endif
+
+<form action="{{ route('kalenderAkademik.index') }}" method="GET">
+    <select name="filter" id="filter" onchange="this.form.submit()">
+        @foreach($daftarTahun as $tahun)
+            <option value="{{ $tahun }}" {{ $tahunDipilih == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
+        @endforeach
+    </select>
+</form>
 
 @if ($kalenderAkademik->isEmpty())
     <p>Belum ada data kalender akademik yang tersimpan.</p>

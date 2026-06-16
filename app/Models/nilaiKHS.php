@@ -8,24 +8,36 @@ class nilaiKHS extends Model
 {
     protected $fillable = [
         'nim',
+        'namaDosen',
         'tahunAkademik',
         'tugas',
         'uts',
         'uas',
 
-        'kodeMK',
         'namaMataKuliah',
         'status',
-        'sks',
         'nilaiHuruf',
         'nilaiAngka',
         'bobotKualitas',
         'keterangan',
         
-        'jumlahSKS',
+        'sks',
+        'sksSemester',
         'ips',
         'kreditDiambil',
         'kreditPeroleh',
         'ipk',
     ];
+
+    public function mahasiswa() {
+        return $this->belongsTo(Pengguna::class, 'nim', 'id');
+    }
+
+    public function dosen() {
+        return $this->belongsTo(Pengguna::class, 'namaDosen', 'id');
+    }
+
+    public function mataKuliah() {
+        return $this->belongsTo(MataKuliah::class, 'namaMataKuliah', 'id');
+    }
 }
