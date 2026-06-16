@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class nilaiKHS extends Model
+class nilaiHasil extends Model
 {
     protected $fillable = [
         'nim',
@@ -13,14 +13,12 @@ class nilaiKHS extends Model
         'tugas',
         'uts',
         'uas',
-
         'namaMataKuliah',
         'status',
         'nilaiHuruf',
         'nilaiAngka',
         'bobotKualitas',
         'keterangan',
-        
         'sks',
         'sksSemester',
         'ips',

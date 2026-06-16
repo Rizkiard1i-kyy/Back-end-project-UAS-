@@ -42,7 +42,7 @@
 <br><br>
 <a href="{{ route('kehadiran.index') }}">Kehadiran</a>
 <br><br>
-<a href="{{ route('nilaiKHS.index') }}">Nilai KHS</a>
+<a href="{{ route('nilaiHasil.index') }}">Nilai KHS</a>
 <br><br>
 
 <h3>Layanan Mahasiswa</h3>

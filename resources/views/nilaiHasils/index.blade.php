@@ -1,12 +1,12 @@
 <h1>Daftar Nilai KHS</h1>
 
 @if(auth()->user()->isAdmin())
-    <a href="{{ route('nilaiKHS.create') }}">Buat Data Nilai KHS Baru</a>
+    <a href="{{ route('nilaiHasil.create') }}">Buat Data Nilai KHS Baru</a>
     <br><br>
 @endif
 
 <h2>KARTU HASIL STUDI</h2>
-<form action="{{ route('nilaiKHS.index') }}" method="GET">
+<form action="{{ route('nilaiHasil.index') }}" method="GET">
     <label for="tahunAkademik">Tahun akademik :</label>
     
     <select name="tahunAkademik" required>
@@ -17,7 +17,7 @@
     <button type="submit">Cek</button>
 </form>
 
-@if ($nilaiKHS->isEmpty())
+@if ($nilaiHasil->isEmpty())
     <p>Belum ada data nilai KHS yang tersimpan.</p>
 @else
 <table border="1" cellpadding="5" cellspacing="0">
@@ -36,35 +36,35 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($nilaiKHS as $nilaiKHS)
+        @foreach($nilaiHasil as $nilaiHasil)
             <tr>
                 <td style="text-align: center">{{ $loop->iteration }}</td>
                 <td>
-                    <a> {{ $nilaiKHS->mataKuliah->kodeMatkul }}</a>
+                    <a> {{ $nilaiHasil->mataKuliah->kodeMatkul }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->mataKuliah->namaMatkul }}</a>
+                    <a> {{ $nilaiHasil->mataKuliah->namaMatkul }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->status }}</a>
+                    <a> {{ $nilaiHasil->status }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->sks }}</a>
+                    <a> {{ $nilaiHasil->sks }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->nilaiHuruf }}</a>
+                    <a> {{ $nilaiHasil->nilaiHuruf }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->bobotKualitas }}</a>
+                    <a> {{ $nilaiHasil->bobotKualitas }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->bobotKualitas * $nilaiKHS->sks}}</a>
+                    <a> {{ $nilaiHasil->bobotKualitas * $nilaiHasil->sks}}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->keterangan }}</a>
+                    <a> {{ $nilaiHasil->keterangan }}</a>
                 </td>
                 <td style="text-align: center">
-                    <a href="{{ route('nilaiKHS.show', $nilaiKHS) }}">Detail</a>
+                    <a href="{{ route('nilaiHasil.show', $nilaiHasil) }}">Detail</a>
                 </td>
             </tr>
         @endforeach
@@ -84,19 +84,19 @@
     <tbody>
             <tr>
                 <td>
-                    <a> {{ $nilaiKHS->sksSemester }}</a>
+                    <a> {{ $nilaiHasil->sksSemester }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->ips }}</a>
+                    <a> {{ $nilaiHasil->ips }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->kreditDiambil }}</a>
+                    <a> {{ $nilaiHasil->kreditDiambil }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->kreditPeroleh }}</a>
+                    <a> {{ $nilaiHasil->kreditPeroleh }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiKHS->ipk }}</a>
+                    <a> {{ $nilaiHasil->ipk }}</a>
                 </td>
             </tr>
     </tbody>
