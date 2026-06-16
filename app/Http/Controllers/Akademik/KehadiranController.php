@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Akademik;
 
 use App\Models\Kehadiran;
 use App\Models\Pengguna;

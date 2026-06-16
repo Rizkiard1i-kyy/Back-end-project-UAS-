@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Layanan_Mahasiswa;
 
 use App\Models\SuratPermohonan;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class SuratPermohonanController extends Controller

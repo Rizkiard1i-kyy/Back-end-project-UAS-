@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Uang_Kuliah;
 
 use App\Models\Skema_Pembayaran;
 use App\Http\Controllers\Controller;

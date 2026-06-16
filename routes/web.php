@@ -3,24 +3,23 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenggunaController;
-use App\Http\Controllers\HistoriNilaiController;
-use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\KalenderAkademikController;
-use App\Http\Controllers\KsmController;
-use App\Http\Controllers\KehadiranController;
-use App\Http\Controllers\NilaiHasilController;
-use App\Http\Controllers\KonsultasiController;
-use App\Http\Controllers\SuratKeteranganController;
-use App\Http\Controllers\SuratPermohonanController;
-use App\Http\Controllers\RpsController;
-use App\Http\Controllers\UkmController;
-use App\Http\Controllers\SkpiController;
-use App\Http\Controllers\SkemaPembayaranController;
 use App\Http\Controllers\MataKuliahController;
-use App\Http\Controllers\ChatBotController;
+use App\Http\Controllers\Akademik\HistoriNilaiController;
+use App\Http\Controllers\Akademik\JadwalController;
+use App\Http\Controllers\Akademik\KalenderAkademikController;
+use App\Http\Controllers\Akademik\KsmController;
+use App\Http\Controllers\Akademik\KehadiranController;
+use App\Http\Controllers\Akademik\NilaiHasilController;
+use App\Http\Controllers\Layanan_Mahasiswa\KonsultasiController;
+use App\Http\Controllers\Layanan_Mahasiswa\SuratKeteranganController;
+use App\Http\Controllers\Layanan_Mahasiswa\SuratPermohonanController;
+use App\Http\Controllers\Bahan_Ajar\RpsController;
+use App\Http\Controllers\Unit_Kegiatan_Mahasiswa\UkmController;
+use App\Http\Controllers\SKPI\SkpiController;
+use App\Http\Controllers\Uang_Kuliah\SkemaPembayaranController;
+use App\Http\Controllers\Uang_Kuliah\TagihanPembayaranController;
 use App\Http\Controllers\PengumumanController;
-use App\Http\Controllers\TagihanPembayaranController;
-
+use App\Http\Controllers\ChatBotController;
 Route::get('/', function () {
     return view('/login');
 });
@@ -41,49 +40,47 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware('auth');
 
-Route::resource('historiNilai', HistoriNilaiController::class)
-    ->middleware('auth');
-
-Route::resource('jadwal', JadwalController::class)
-    ->middleware('auth');
-
-Route::resource('kalenderAkademik', KalenderAkademikController::class)
-    ->middleware('auth');
-
-Route::resource('ksm', KsmController::class)
-    ->middleware('auth');
-
-Route::resource('kehadiran', KehadiranController::class)
-    ->middleware('auth');
-
-Route::resource('nilaiHasil', NilaiHasilController::class)
-    ->middleware('auth');
-    
-Route::resource('konsultasi', KonsultasiController::class)
-    ->middleware('auth');
-
-Route::resource('surat_keterangan', SuratKeteranganController::class);
-
-Route::resource('surat_permohonan', SuratPermohonanController::class);
-
-Route::resource('rps', RpsController::class)
-    ->middleware('auth');
-
-Route::resource('ukm', UkmController::class)
-    ->middleware('auth');
-
-Route::resource('skpi', SkpiController::class)
-    ->middleware('auth');
-
-Route::get('skema_pembayaran', [SkemaPembayaranController::class, 'index'])->name('skema_pembayaran.index')
-    ->middleware('auth');
-Route::post('skema_pembayaran', [SkemaPembayaranController::class, 'store'])->name('skema_pembayaran.store')
-    ->middleware('auth');
-
-Route::get('tagihan_pembayaran',       [TagihanPembayaranController::class, 'index'])->name('tagihan_pembayaran.index')
-    ->middleware('auth');
-
 Route::resource('mataKuliah', MataKuliahController::class)
+    ->middleware('auth');
+
+Route::namespace('App\Http\Controllers\Akademik')->middleware(['auth'])->group(function () {
+    Route::resource('historiNilai', 'HistoriNilaiController');
+    Route::resource('jadwal', 'JadwalController');
+    Route::resource('kalenderAkademik', 'KalenderAkademikController');
+    Route::resource('ksm', 'KsmController');
+    Route::resource('kehadiran', 'KehadiranController');
+    Route::resource('nilaiHasil', 'NilaiHasilController');
+});
+    
+Route::namespace('App\Http\Controllers\Layanan_Mahasiswa')->middleware(['auth'])->group(function () {
+    Route::resource('konsultasi', 'KonsultasiController');
+    Route::resource('surat_keterangan', 'SuratKeteranganController');
+    Route::resource('surat_permohonan', 'SuratPermohonanController');
+});
+
+Route::namespace('App\Http\Controllers\Bahan_Ajar')->middleware(['auth'])->group(function () {
+    Route::resource('rps', 'RpsController');
+});
+
+Route::namespace('App\Http\Controllers\Unit_Kegiatan_Mahasiswa')->middleware(['auth'])->group(function () {
+    Route::resource('ukm', 'UkmController');
+});
+
+Route::namespace('App\Http\Controllers\Uang_Kuliah')->middleware(['auth'])->group(function () {
+    Route::get('skema_pembayaran', 'SkemaPembayaranController@index')->name('skema_pembayaran.index');
+    Route::post('skema_pembayaran', 'SkemaPembayaranController@store')->name('skema_pembayaran.store');
+    Route::get('tagihan_pembayaran', 'TagihanPembayaranController@index')->name('tagihan_pembayaran.index');
+});
+
+Route::namespace('App\Http\Controllers\SKPI')->middleware(['auth'])->group(function () {
+    Route::resource('skpi', 'SkpiController');
+});
+
+Route::namespace('App\Http\Controllers\Administrasi')->middleware(['auth'])->group(function () {
+    Route::resource('skpi', 'SkpiController');
+});
+
+Route::resource('Pengumuman', PengumumanController::class)
     ->middleware('auth');
 
 Route::middleware('auth')->prefix('chatbot')->name('chatbot.')->group(function () {
@@ -93,5 +90,3 @@ Route::middleware('auth')->prefix('chatbot')->name('chatbot.')->group(function (
     Route::delete('/', [ChatBotController::class, 'destroy'])->name('destroy');
 });
 
-Route::resource('Pengumuman', PengumumanController::class)
-    ->middleware('auth');
