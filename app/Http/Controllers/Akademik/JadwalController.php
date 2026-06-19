@@ -76,7 +76,7 @@ class JadwalController extends Controller
         $dosens = Pengguna::where('role', 'dosen')->get();
         $matkuls = MataKuliah::all();
         
-        return view('jadwalkuliah.edit', compact('dosens', 'matkuls'));    }
+        return view('jadwalkuliah.edit', compact('jadwal', 'dosens', 'matkuls'));    }
 
     public function update(Request $request, Jadwal $jadwal)
     {
