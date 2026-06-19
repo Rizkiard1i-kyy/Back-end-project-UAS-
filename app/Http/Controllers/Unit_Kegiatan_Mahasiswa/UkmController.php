@@ -1,43 +1,63 @@
 <?php
 
-namespace App\Http\Controllers\Unit_Kefiatan_Mahasiswa;
+namespace App\Http\Controllers\Unit_Kegiatan_Mahasiswa;
 
 use App\Models\ukm;
+use App\Models\Pengguna;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class UkmController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $user = auth()->user();
+        $akses = ukm::with(['mahasiswa','dosen']);
+
+        if ($user->isMahasiswa()) {
+            $akses->where('nim', $user->id);
+        } elseif ($user->isDosen()) {
+            $akses->where('namaDosen', $user->id);
+        }
+
+        $ukm = $akses->get();
+        return view('ukms.index', compact('ukm'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh membuat UKM baru.');
+        }
+
+        $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
+
+        return view('ukms.create', compact('mahasiswas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'=>'required|string|min:1',
+            'ketua'=>'required|exists:users,id',
+            'anggota'=>'required|integer|min:1',
+            'detail'=>'required|string|min:1',
+        ]);
+
+        ukm::create($request->only(
+            'nama',
+            'ketua',
+            'anggota',
+            'detail',
+        ));
+        return redirect()->route('ukm.index')->with('success', 'UKM baru dibuat.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(ukm $ukm)
     {
-        //
+        $user = auth()->user();
+
+        return view('ukms.show', compact('ukm'));
     }
 
     /**
@@ -45,7 +65,15 @@ class UkmController extends Controller
      */
     public function edit(ukm $ukm)
     {
-        //
+        $user = auth()->user();
+
+        if (!$user->isAdmin()) {
+            abort(403, 'Anda tidak boleh mengubah UKM.');
+        }
+
+        $mahasiswas = Pengguna::where('role', 'mahasiswa')->get();
+
+        return view('ukms.edit', compact('ukm','mahasiswas'));
     }
 
     /**
@@ -53,7 +81,28 @@ class UkmController extends Controller
      */
     public function update(Request $request, ukm $ukm)
     {
-        //
+        $user = auth()->user();
+
+        if (!$user->isAdmin()) {
+            abort(403, 'Anda tidak boleh mengubah UKM.');
+        } else{}
+
+        if ($user->isAdmin()) {
+            $request->validate([
+                'nama'=>'required|string|min:1',
+                'ketua'=>'required|exists:users,id',
+                'anggota'=>'required|integer|min:1',
+                'detail'=>'required|string|min:1',
+            ]);
+        }
+
+        $ukm->update($request->only(
+            'nama',
+            'ketua',
+            'anggota',
+            'detail',
+        ));
+        return redirect()->route('ukm.index')->with('success', 'UKM diperbarui.');
     }
 
     /**
@@ -61,6 +110,10 @@ class UkmController extends Controller
      */
     public function destroy(ukm $ukm)
     {
-        //
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Anda tidak boleh menghapus UKM.');
+        }
+        $ukm->delete();
+        return redirect()->route('ukm.index')->with('success', 'UKM dihapus.');
     }
 }
