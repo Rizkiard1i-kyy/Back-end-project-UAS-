@@ -109,8 +109,10 @@ class PenggunaController extends Controller
     public function destroy(Pengguna $pengguna)
     {
         DB::table('jadwals')->where('dosenPengajar', $pengguna->id)->delete();
-        DB::table('histori_nilais')->where('namaDosen', $pengguna->id)->delete();
-        DB::table('kehadirans')->where('namaDosen', $pengguna->id)->delete();
+        DB::table('histori_nilais')->where('namaDosen', $pengguna->id)->orWhere('nim', $pengguna->id)->delete();
+        DB::table('kehadirans')->where('namaDosen', $pengguna->id)->orWhere('nim', $pengguna->id)->delete();
+        DB::table('nilai_hasils')->where('namaDosen', $pengguna->id)->orWhere('nim', $pengguna->id)->delete();
+        DB::table('skpis')->where('user_id', $pengguna->id)->delete();
         $pengguna->delete();
 
         return redirect()->route('pengguna.index')->with('success', 'Pengguna beserta jadwal terkait berhasil dihapus.');
