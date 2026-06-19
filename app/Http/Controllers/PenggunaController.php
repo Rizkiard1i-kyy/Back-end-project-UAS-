@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class PenggunaController extends Controller
 {
@@ -58,8 +59,6 @@ class PenggunaController extends Controller
     {
         $me = $request->user();
 
-        $me = $request->user();
-
         if (!$me->isAdmin() && $me->id !== $pengguna->id) {
             abort(403, 'Akses ditolak.');
         }
@@ -109,8 +108,11 @@ class PenggunaController extends Controller
 
     public function destroy(Pengguna $pengguna)
     {
+        DB::table('jadwals')->where('dosenPengajar', $pengguna->id)->delete();
+        DB::table('histori_nilais')->where('namaDosen', $pengguna->id)->delete();
+        DB::table('kehadirans')->where('namaDosen', $pengguna->id)->delete();
         $pengguna->delete();
 
-        return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil dihapus.');
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna beserta jadwal terkait berhasil dihapus.');
     }
 }
