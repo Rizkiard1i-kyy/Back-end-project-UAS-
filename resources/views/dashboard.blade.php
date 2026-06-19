@@ -192,8 +192,8 @@
         <h3 class="section-title">Lainnya</h3>
         <div class="bubble-container">
             <div class="card-item">
-                <div class="card-icon bg-green">
-                    <img src="{{ asset('images/icons/chatbot.png') }}" alt="" onerror="this.style.display='none'">
+                <div class="card-icon bg-slate">
+                    <img src="{{ asset('images/Ai-Bot.png') }}" alt="" onerror="this.style.display='none'">
                 </div>
                 <h4 class="card-title">Chatbot</h4>
                 <p class="card-desc">Ajukan pertanyaan kepada chatbot kami untuk mendapatkan bantuan.</p>
