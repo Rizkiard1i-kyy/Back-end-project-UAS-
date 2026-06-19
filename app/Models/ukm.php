@@ -12,4 +12,12 @@ class ukm extends Model
         'anggota',
         'detail',
     ];
+
+    public function mahasiswa() {
+        return $this->belongsTo(Pengguna::class, 'ketua', 'id');
+    }
+
+    public function dosen() {
+        return $this->belongsTo(Pengguna::class, 'namaDosen', 'id');
+    }
 }

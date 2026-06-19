@@ -1,36 +1,36 @@
-<h1>Daftar Kehadiran</h1>
+<h1>Daftar UKM</h1>
 
-<a href="{{ route('kehadiran.create') }}">Buat Data Kehadiran Baru</a>
+<a href="{{ route('ukm.create') }}">Buat UKM Baru</a>
 <br><br>
 
-@if ($kehadiran->isEmpty())
-    <p>Belum ada data kehadiran yang tersimpan.</p>
+@if ($ukm->isEmpty())
+    <p>Belum ada UKM yang tersimpan.</p>
 @else
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>
             <th style="width: 50px">No</th>
-            <th style="width: 150px">Kode</th>            
-            <th style="width: 300px">Mata Kuliah</th>
-            <th style="width: 300px">Nama Mahasiswa</th>
-            <th style="width: 120px">Aksi</th>
+            <th style="width: 300px">Nama UKM</th>            
+            <th style="width: 150px">Ketua</th>
+            <th style="width: 50px">Jumlah Anggota</th>
+            <th style="width: 50px">detail</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($kehadiran as $kehadiran)
+        @foreach($ukm as $ukm)
             <tr>
                 <td style="text-align: center">{{ $loop->iteration }}</td>
                 <td>
-                    <a> {{ $kehadiran->kodeMatkul }}</a>
+                    <a> {{ $ukm->nama }}</a>
                 </td>
                 <td>
-                    <a> {{ $kehadiran->namaMatkul }}</a>
+                    <a> {{ $ukm->mahasiswa->nama }}</a>
                 </td>
                 <td>
-                    <a> {{ $kehadiran->namaMahasiswa }}</a>
+                    <a> {{ $ukm->anggota }}</a>
                 </td>
                 <td style="text-align: center">
-                    <a href="{{ route('kehadiran.show', $kehadiran) }}">Detail</a>
+                    <a href="{{ route('ukm.show', $ukm) }}">Detail</a>
                 </td>
             </tr>
         @endforeach
