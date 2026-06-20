@@ -46,9 +46,8 @@
 
                 <div class="form-group">
                     <label for="namaKegiatan">Nama Kegiatan</label>
-                    <input name="namaKegiatan" value="{{ $kalenderAkademik-> namaKegiatan }}" class="form-control" required>
+                    <input name="namaKegiatan" value="{{ old('namaKegiatan', $kalenderAkademik->namaKegiatan) }}" class="form-control" required>
                 </div>
-                <br>
                 
                 <div class="form-actions">
                     <a href="{{ route('kalenderAkademik.index') }}" class="btn-secondary">Batal</a>
