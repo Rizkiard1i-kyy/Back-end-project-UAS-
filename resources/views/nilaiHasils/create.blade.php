@@ -22,7 +22,7 @@
     TAHUN AKADEMIK:
     <br>
     <select name="tahunAkademik" required>
-        <option value = "">-Pilih Mata Kuliah-</option>
+        <option value = "">-Pilih Tahun Akademik-</option>
         <option value = "20251">Gasal 2025</option>
         <option value = "20252">Genap 2025</option>
      </select>   
