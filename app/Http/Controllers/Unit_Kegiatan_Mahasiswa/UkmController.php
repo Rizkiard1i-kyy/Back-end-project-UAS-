@@ -12,12 +12,10 @@ class UkmController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $akses = ukm::with(['mahasiswa','dosen']);
+        $akses = ukm::with(['mahasiswa']);
 
         if ($user->isMahasiswa()) {
             $akses->where('nim', $user->id);
-        } elseif ($user->isDosen()) {
-            $akses->where('namaDosen', $user->id);
         }
 
         $ukm = $akses->get();
@@ -39,14 +37,14 @@ class UkmController extends Controller
     {
         $request->validate([
             'nama'=>'required|string|min:1',
-            'ketua'=>'required|exists:users,id',
+            'nim'=>'required|exists:users,id',
             'anggota'=>'required|integer|min:1',
             'detail'=>'required|string|min:1',
         ]);
 
         ukm::create($request->only(
             'nama',
-            'ketua',
+            'nim',
             'anggota',
             'detail',
         ));
@@ -90,7 +88,7 @@ class UkmController extends Controller
         if ($user->isAdmin()) {
             $request->validate([
                 'nama'=>'required|string|min:1',
-                'ketua'=>'required|exists:users,id',
+                'nim'=>'required|exists:users,id',
                 'anggota'=>'required|integer|min:1',
                 'detail'=>'required|string|min:1',
             ]);
@@ -98,7 +96,7 @@ class UkmController extends Controller
 
         $ukm->update($request->only(
             'nama',
-            'ketua',
+            'nim',
             'anggota',
             'detail',
         ));

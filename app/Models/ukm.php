@@ -8,16 +8,12 @@ class ukm extends Model
 {
     protected $fillable = [
         'nama',
-        'ketua',
+        'nim',
         'anggota',
         'detail',
     ];
 
     public function mahasiswa() {
-        return $this->belongsTo(Pengguna::class, 'ketua', 'id');
-    }
-
-    public function dosen() {
-        return $this->belongsTo(Pengguna::class, 'namaDosen', 'id');
+        return $this->belongsTo(Pengguna::class, 'nim', 'id');
     }
 }

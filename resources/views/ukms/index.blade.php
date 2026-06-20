@@ -1,7 +1,9 @@
 <h1>Daftar UKM</h1>
 
-<a href="{{ route('ukm.create') }}">Buat UKM Baru</a>
-<br><br>
+@if(auth()->user()->isAdmin())
+    <a href="{{ route('ukm.create') }}">Buat UKM Baru</a>
+    <br><br>
+@endif
 
 @if ($ukm->isEmpty())
     <p>Belum ada UKM yang tersimpan.</p>

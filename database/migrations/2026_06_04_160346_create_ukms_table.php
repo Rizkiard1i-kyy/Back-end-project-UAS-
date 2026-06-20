@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ukms', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->foreignId('ketua')->constrained('users');
+            $table->foreignId('nim')->constrained('users');
             $table->integer('anggota');
             $table->string('detail');
             $table->timestamps();

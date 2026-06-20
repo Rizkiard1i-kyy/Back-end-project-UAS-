@@ -7,7 +7,7 @@
     <br><br>
     NAMA KETUA:
     <br>
-    <select name= "ketua" required>
+    <select name= "nim" required>
         <option value = "">-Pilih NIM Mahasiswa-</option>
         @foreach($mahasiswas as $mhs)
             <option value = "{{ $mhs->id }}">{{ $mhs->nim }} - {{ $mhs->nama }}</option>
