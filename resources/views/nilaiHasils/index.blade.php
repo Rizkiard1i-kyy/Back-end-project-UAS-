@@ -98,13 +98,13 @@
                     <a> {{ $nilaiHasil->ips }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiHasil->kreditDiambil }}</a>
+                    <a> {{ $nilaiKumulatif->kreditDiambil }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiHasil->kreditPeroleh }}</a>
+                    <a> {{ $nilaiKumulatif->kreditPeroleh }}</a>
                 </td>
                 <td>
-                    <a> {{ $nilaiHasil->ipk }}</a>
+                    <a> {{ $nilaiKumulatif->ipk }}</a>
                 </td>
             </tr>
     </tbody>
