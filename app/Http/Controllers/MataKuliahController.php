@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MataKuliah;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MataKuliahController extends Controller
 {
@@ -105,7 +106,10 @@ class MataKuliahController extends Controller
         if (!auth()->user()->isAdmin()) {   
             abort(403, 'Anda tidak boleh mengakses halaman ini.');
         }
-
+        DB::table('jadwals')->where('matkul', $mataKuliah->id)->delete();
+        DB::table('kehadirans')->where('matkul', $mataKuliah->id)->delete();
+        DB::table('histori_nilais')->where('namaMataKuliah', $mataKuliah->id)->delete();
+        DB::table('nilai_hasils')->where('namaMataKuliah', $mataKuliah->id)->delete();
         $mataKuliah->delete();
 
         return redirect()->route('mataKuliah.index')->with('success', 'Data mata kuliah dihapus.');

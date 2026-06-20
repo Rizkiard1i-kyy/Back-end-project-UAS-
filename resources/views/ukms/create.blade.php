@@ -1,33 +1,29 @@
-<h1>Buat Data Kehadiran Baru</h1>
-<form method="POST" action="{{ route('historiNilai.store') }}">
+<h1>Buat UKM Baru</h1>
+<form method="POST" action="{{ route('ukm.store') }}">
     @csrf
-    NIM:
+    NAMA UKM:
     <br>
-    <input name="nim" required>
+    <input name="nama" required>
     <br><br>
-    TAHUN AKADEMIK:
+    NAMA KETUA:
     <br>
-    <input name="tahunAkademik" required>
+    <select name= "ketua" required>
+        <option value = "">-Pilih NIM Mahasiswa-</option>
+        @foreach($mahasiswas as $mhs)
+            <option value = "{{ $mhs->id }}">{{ $mhs->nim }} - {{ $mhs->nama }}</option>
+        @endforeach
+    </select>
     <br><br>
-    KODE:
+    JUMLAH ANGGOTA:
     <br>
-    <input name="kode" required>
+    <input type="number" name="anggota" required>
     <br><br>
-    MATA KULIAH:
+    DETAIL:
     <br>
-    <input name="mataKuliah" required>
-    <br><br>
-    SKS:
-    <br>
-    <input type="number" name="sks" required>
-    <br><br>
-    NILAI:
-    <br>
-    <input name="nilai" required>
-    <br><br>
-    BOBOT:
-    <br>
-    <input type="number" name="bobot" required>
+    <input name="detail" required>
     <br><br>
     <button type="submit">Simpan</button>
 </form>
+
+<br><br>
+<a href="{{ route('ukm.index') }}">Kembali</a>

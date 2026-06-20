@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
             $table->string('tahun_akademik');
-            $table->string('matkul')->constrained('mata_kuliahs');
+            $table->foreignId('matkul')->constrained('mata_kuliahs');
             $table->foreignId('dosenPengajar')->constrained('users');
             $table->string('kelas');
             $table->string('ruangDanWaktu');
