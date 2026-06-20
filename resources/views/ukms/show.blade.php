@@ -1,6 +1,6 @@
 <h1>Detail UKM {{ $ukm->nama }}:</h1>
 
-<p>Detail: {{ $ukm->detail }}</p>
+<h2>{{ $ukm->detail }}</h2>
 
 @if(auth()->user()->isAdmin())
     <a href="{{ route('ukm.edit', $ukm) }}">Ubah Data</a>
