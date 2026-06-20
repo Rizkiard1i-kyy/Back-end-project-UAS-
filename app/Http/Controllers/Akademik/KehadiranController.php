@@ -14,8 +14,16 @@ class KehadiranController extends Controller
     {
         $user = auth()->user();
 
-        $daftarTahun = Kehadiran::select('tahunAkademik')
-            ->distinct()
+        $queryTahun = Kehadiran::select('tahunAkademik')
+            ->distinct();
+
+        if($user->isMahasiswa()) {
+                $queryTahun->where('nim', $user->id);
+        } elseif ($user->isDosen()) {
+            $queryTahun->where('namaDosen', $user->id);
+        }
+
+        $daftarTahun = $queryTahun
             ->orderBy('tahunAkademik', 'desc')
             ->pluck('tahunAkademik');
 
