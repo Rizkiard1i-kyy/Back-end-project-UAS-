@@ -26,7 +26,20 @@ class NilaiHasilController extends Controller
         }
 
         $nilaiHasil = $akses->get();
-        return view('nilaiHasils.index', compact('nilaiHasil'));
+        $nilaiKumulatif = null;
+        if ($nilaiHasil->isNotEmpty()) {
+            $nimMahasiswa = $nilaiHasil->first()->nim;
+            $seluruhRiwayat = nilaiHasil::where('nim', $nimMahasiswa)->get();
+            if ($seluruhRiwayat->isNotEmpty()) {
+                $dataTerakhirAsli = $seluruhRiwayat->sortBy('id')->last();
+                $nilaiKumulatif = (object)[
+                    'kreditDiambil' => $dataTerakhirAsli->kreditDiambil,
+                    'kreditPeroleh' => $dataTerakhirAsli->kreditPeroleh,
+                    'ipk'           => $dataTerakhirAsli->ipk,
+                ];
+            }
+        }
+        return view('nilaiHasils.index', compact('nilaiHasil', 'nilaiKumulatif'));
     }
 
     public function create()
@@ -92,31 +105,32 @@ class NilaiHasilController extends Controller
             $request['keterangan'] = 'Tidak Lulus';
         }
 
-        $semuaDataLama = nilaiHasil::where('nim', $request->nim)->get();
-        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
         $sksMatkul = MataKuliah::where('id', $request->namaMataKuliah)->value('sks');
         $request['sks'] = $sksMatkul;
+
+        $semuaDataLama = nilaiHasil::where('nim', $request->nim)->get();
+        $dataSemesterIni = $semuaDataLama->where('tahunAkademik', $request->tahunAkademik);
         
         $sksLama = $semuaDataLama->where('nim', $request->nim)->sum('sks');
         $jumlahSKS = $sksLama + $request->sks;
-        $jumlahSKSSemester = $dataSemesterIni->sum('sks') + $request->sks;;
+        $jumlahSKSSemester = $dataSemesterIni->sum('sks') + $request->sks;
         $kreditPerolehanLama = $semuaDataLama->whereNotIn('nilaiHuruf', ['D', 'E'])->sum('sks');
-        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'D' && $request['nilaiHuruf'] !== 'E' ) ? $request->sks : 0;
+        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'D' && $request['nilaiHuruf'] !== 'E' ) ? $sksMatkul : 0;
         $kreditPeroleh = $kreditPerolehanLama + $kreditPerolehanBaru;
 
         $request['sksSemester'] = $jumlahSKSSemester;
         $request['kreditDiambil'] = $jumlahSKS;
         $request['kreditPeroleh'] = $kreditPeroleh;
-        
+
         $totalMutuSemester = $dataSemesterIni->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
-        }) + ($request['bobotKualitas'] * $request->sks);
+        }) + ($request['bobotKualitas'] * $sksMatkul);
         
         $request['ips'] = $jumlahSKSSemester > 0 ? round($totalMutuSemester / $jumlahSKSSemester, 2) : 0.00;
 
         $totalMutuKumulatif = $semuaDataLama->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
-        }) + ($request['bobotKualitas'] * $request->sks);
+        }) + ($request['bobotKualitas'] * $sksMatkul);
 
         $request['ipk'] = $request->kreditDiambil > 0 ? round($totalMutuKumulatif / $request->kreditDiambil, 2) : 0.00;
         
@@ -251,7 +265,7 @@ class NilaiHasilController extends Controller
         $jumlahSKS = $sksLama + $request->sks;
         $jumlahSKSSemester = $dataSemesterIni->sum('sks') + $request->sks;
         $kreditPerolehanLama = $semuaDataLama->whereNotIn('nilaiHuruf', ['D', 'E'])->sum('sks');
-        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'D' && $request['nilaiHuruf'] !== 'E' ) ? $request->sks : 0;
+        $kreditPerolehanBaru = ($request['nilaiHuruf'] !== 'D' && $request['nilaiHuruf'] !== 'E' ) ? $sksMatkul : 0;
         $kreditPeroleh = $kreditPerolehanLama + $kreditPerolehanBaru;
 
         $request['sksSemester'] = $jumlahSKSSemester;
@@ -260,13 +274,13 @@ class NilaiHasilController extends Controller
 
         $totalMutuSemester = $dataSemesterIni->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
-        }) + ($request['bobotKualitas'] * $request->sks);
+        }) + ($request['bobotKualitas'] * $sksMatkul);
         
         $request['ips'] = $jumlahSKSSemester > 0 ? round($totalMutuSemester / $jumlahSKSSemester, 2) : 0.00;
 
         $totalMutuKumulatif = $semuaDataLama->sum(function($item) {
             return $item->bobotKualitas * $item->sks;
-        }) + ($request['bobotKualitas'] * $request->sks);
+        }) + ($request['bobotKualitas'] * $sksMatkul);
 
         $request['ipk'] = $request->kreditDiambil > 0 ? round($totalMutuKumulatif / $request->kreditDiambil, 2) : 0.00;
         
@@ -298,7 +312,28 @@ class NilaiHasilController extends Controller
         if (!auth()->user()->isAdmin()) {
             abort(403, 'Anda tidak boleh menghapus data nilai KHS.');
         }
+        $nimMahasiswa = $nilaiHasil->nim;
         $nilaiHasil->delete();
+
+        $dataTersisa = nilaiHasil::where('nim', $nimMahasiswa)->get();
+        $sksKumulatif = 0;
+        $kreditPerolehKumulatif = 0;
+        $totalMutuKumulatif = 0;
+
+        foreach ($dataTersisa as $data) {
+            $sksMatkul = $data->sks;
+            $sksKumulatif += $sksMatkul;
+            if (!in_array($data->nilaiHuruf, ['D', 'E'])) {
+                $kreditPerolehKumulatif += $sksMatkul;
+            }
+            $totalMutuKumulatif += ($data->bobotKualitas * $sksMatkul);
+            $ipkBaru = $sksKumulatif > 0 ? round($totalMutuKumulatif / $sksKumulatif, 2) : 0.00;
+            $data->update([
+                'kreditDiambil' => $sksKumulatif,
+                'kreditPeroleh' => $kreditPerolehKumulatif,
+                'ipk'           => $ipkBaru
+            ]);
+        }
         return redirect()->route('nilaiHasil.index')->with('success', 'Data nilai KHS dihapus.');
     }
 }

@@ -14,15 +14,7 @@ class HistoriNilaiSeeder extends Seeder
     {
         $dosen = Pengguna::where('role', 'dosen')->get();
 
-        if ($dosen->count() < 3) {
-            return;
-        }
-
         $mahasiswa = Pengguna::where('role', 'mahasiswa')->get();
-
-        if ($mahasiswa->count() < 5) {
-            return;
-        }
 
         $mataKuliah = MataKuliah::get();
 
