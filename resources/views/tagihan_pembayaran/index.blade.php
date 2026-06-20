@@ -12,6 +12,10 @@
         <span>Lihat tagihan per tahun akademik di bawah ini.</span>
     </div>
 
+    @if(session('success'))
+        <div>{{ session('success') }}</div>
+    @endif
+    
     @if($tagihanGrouped->isEmpty())
         <div>Belum ada data tagihan pembayaran.</div>
     @else
