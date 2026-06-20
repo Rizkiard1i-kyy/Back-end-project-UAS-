@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('uts');
             $table->integer('uas');
 
-            $table->string('namaMataKuliah')->constrained('mata_kuliahs');
+            $table->foreignId('namaMataKuliah')->constrained('mata_kuliahs');
             $table->string('status');
             $table->string('nilaiHuruf');
             $table->decimal('nilaiAngka');
