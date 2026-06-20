@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('nim')->constrained('users');
             $table->foreignId('namaDosen')->constrained('users');
             $table->string('tahunAkademik');
-            $table->string('namaMataKuliah')->constrained('mata_kuliahs');
+            $table->foreignId('namaMataKuliah')->constrained('mata_kuliahs');
             $table->string('nilai');
             $table->decimal('bobot');
             $table->timestamps();
