@@ -52,6 +52,11 @@
                 <div class="detail-value">{{ $kehadiran->jumlahKehadiran }}</div>
             </div>
 
+            <div class="detail-row">
+                <div class="detail-label">Persentase</div>
+                <div class="detail-value">{{ $kehadiran->persentase }}%</div>
+            </div>
+
             @if(auth()->user()->isDosen())
                 <div>
                     <h3>Ubah Data Kehadiran</h3>
