@@ -734,6 +734,8 @@ body {
     --tag-bg: #f1f5f9;
     --tag-text: #475569;
 }
+}
+
 body {
     margin: 0;
     font-family: 'Josefin Sans', 'Inter', system-ui, -apple-system, sans-serif;
@@ -839,6 +841,7 @@ body {
     padding: 6px 12px;
     border-radius: 20px;
     cursor: pointer;
+    -webkit-user-select: none;
     user-select: none;
 }
 .admin-switch-container input {
