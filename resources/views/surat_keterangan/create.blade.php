@@ -55,9 +55,9 @@
                 <input type="text" name="nim" id="nim" class="form-control" value="{{ auth()->user()->nim }}" readonly>
             </div>
 
-            <div class="form-actions">
+            <div class="form-actions" style="border-top: 1px solid #f1f5f9; padding-top: 24px; margin-top: 32px;">
                 <a href="{{ route('surat_keterangan.index') }}" class="btn-secondary">Batal</a>
-                <button type="submit" class="btn-primary btn-submit">Ajukan Surat</button>
+                <button type="submit" class="btn-primary btn-submit">Simpan</b utton>
             </div>
         </form>
     </div>
