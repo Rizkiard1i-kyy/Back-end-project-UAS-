@@ -702,3 +702,23 @@ body {
         justify-content: center;
     }
 }
+
+.alert {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.alert-danger {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #f87171;
+}
+
+.alert-success {
+    background-color: #dcfce3;
+    color: #15803d;
+    border: 1px solid #4ade80;
+}
