@@ -1,58 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head><title>edit pengguna</title></head>
+<head>
+<title>edit pengguna</title>
+<link rel="stylesheet" href="{{ asset('css/aset.css') }}">
+</head>
 <body>
 
-<h1>Edit engguna: {{ $pengguna->nama }}</h1>
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">
+            <img src="{{ asset('images/logo-untar.png') }}" alt="Logo UNTAR">
+        </div>
+        <h1>halo! selamat datang {{ auth()->user()->nama ?? 'admin' }} di lintar x!</h1>
+    </div>
+</header>
+
+<div class="container">
+
+<div class="page-header">
+    <h1>edit pengguna: {{ $pengguna->nama }}</h1>
+</div>
 
 @if($errors->any())
-    <ul>
-        @foreach($errors->all() as $e)
-        <li>{{ $e }}</li>
-        @endforeach
-    </ul>
+<p class="badge badge-rejected">
+    @foreach($errors->all() as $e)
+    {{ $e }}<br>
+    @endforeach
+</p>
 @endif
 
+<div class="form-card">
 <form method="POST" action="{{ route('pengguna.update', $pengguna) }}">
     @csrf @method('PUT')
 
-    Nama:
-    <br>
-    <input type="text" name="nama" value="{{ old('nama', $pengguna->nama) }}" required>
-    <br><br>
+    <div class="form-group">
+        <label>nama</label>
+        <input type="text" name="nama" class="form-control" value="{{ old('nama', $pengguna->nama) }}" required>
+    </div>
 
-    Email:
-    <br>
-    <input type="email" name="email" value="{{ old('email', $pengguna->email) }}" required>
-    <br><br>
+    <div class="form-group">
+        <label>email</label>
+        <input type="email" name="email" class="form-control" value="{{ old('email', $pengguna->email) }}" required>
+    </div>
 
-    NIM <small>(kosongin aja klo bukan mahasiswa)</small>:
-    <br>
-    <input type="text" name="nim" value="{{ old('nim', $pengguna->nim) }}">
-    <br><br>
+    <div class="form-group">
+        <label>nim <small>(kosongin aja klo bukan mahasiswa)</small></label>
+        <input type="text" name="nim" class="form-control" value="{{ old('nim', $pengguna->nim) }}">
+    </div>
 
-    Password Baru <small>(kosongin aja klo g di ganti)</small>:
-    <br>
-    <input type="password" name="password">
-    <br><br>
+    <div class="form-group">
+        <label>password baru <small>(kosongin aja klo g di ganti)</small></label>
+        <input type="password" name="password" class="form-control">
+    </div>
 
-    Konfirmasi Password Baru:
-    <br>
-    <input type="password" name="password_confirmation">
-    <br><br>
+    <div class="form-group">
+        <label>konfirmasi password baru</label>
+        <input type="password" name="password_confirmation" class="form-control">
+    </div>
 
-    Role:
-    <br>
-    <select name="role" required>
-        <option value="mahasiswa"@if(old('role', $pengguna->role) == 'mahasiswa') selected @endif>mahasiswa</option>
-        <option value="dosen"@if(old('role', $pengguna->role) == 'dosen') selected @endif>dosen</option>
-        <option value="admin"@if(old('role', $pengguna->role) == 'admin') selected @endif>admin</option>
-    </select>
-    <br><br>
+    <div class="form-group">
+        <label>role</label>
+        <select name="role" class="form-control" required>
+            <option value="mahasiswa" @if(old('role', $pengguna->role) == 'mahasiswa') selected @endif>mahasiswa</option>
+            <option value="dosen" @if(old('role', $pengguna->role) == 'dosen') selected @endif>dosen</option>
+            <option value="admin" @if(old('role', $pengguna->role) == 'admin') selected @endif>admin</option>
+        </select>
+    </div>
 
-    <button>simpan perubahan</button>
-    <a href="{{ route('pengguna.index') }}">batal</a>
+    <div class="form-actions">
+        <a href="{{ route('pengguna.index') }}" class="btn-secondary">batal</a>
+        <button class="btn-primary btn-submit">simpan perubahan</button>
+    </div>
 </form>
+</div>
 
+</div>
 </body>
 </html>
