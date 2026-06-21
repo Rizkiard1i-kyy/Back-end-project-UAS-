@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head><title>manajemen pengguna</title></head>
+<head>
+<title>manajemen pengguna</title>
+<link rel="stylesheet" href="{{ asset('css/aset.css') }}">
+</head>
 <body>
 
-<h1>manajemen pengguna</h1>
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">
+            <img src="{{ asset('images/logo-untar.png') }}" alt="Logo UNTAR">
+        </div>
+        <h1>halo! selamat datang {{ auth()->user()->nama ?? 'admin' }} di lintar x!</h1>
+    </div>
+</header>
 
-<p{{ session('success') }}</p>
+<div class="container">
 
-<a href="{{ route('pengguna.create') }}"> tambah pengguna</a>
-<br><br>
+@if(session('success'))
+<p class="badge badge-approved">{{ session('success') }}</p>
+@endif
+
+<div class="page-header">
+    <h1>manajemen pengguna</h1>
+    <a href="{{ route('pengguna.create') }}" class="btn-primary">tambah pengguna</a>
+</div>
 
 @if($pengguna->isEmpty())
 <p>belum ada pengguna.</p>
 @else
-<table border="1" cellpadding="5" cellspacing="0">
+<div class="table-container">
+<table class="modern-table">
     <thead>
         <tr>
-            <th style="width:50px">no</th>
-            <th style="width:200px">nama</th>
-            <th style="width:250px">email</th>
-            <th style="width:120px">nIM</th>
-            <th style="width:100px">role</th>
-            <th style="width:120px">aksi</th>
+            <th>no</th>
+            <th>nama</th>
+            <th>email</th>
+            <th>nim</th>
+            <th>role</th>
+            <th>aksi</th>
         </tr>
     </thead>
     <tbody>
@@ -33,20 +50,26 @@
             <td>{{ $p->nim ?? '-' }}</td>
             <td>{{ ucfirst($p->role) }}</td>
             <td>
-                <a href="{{ route('pengguna.show', $p) }}">detail</a>
-                <a href="{{ route('pengguna.edit', $p) }}">edit</a>
-                <form action="{{ route('pengguna.destroy', $p) }}" method="POST"
+                <a href="{{ route('pengguna.show', $p) }}" class="btn-action btn-detail">detail</a>
+                <a href="{{ route('pengguna.edit', $p) }}" class="btn-action btn-edit">edit</a>
+                @if($p->id !== auth()->id())
+                <form action="{{ route('pengguna.destroy', $p) }}" method="POST" style="display:inline"
                     onsubmit="return confirm('Hapus pengguna {{ $p->nama }}?')">
                     @csrf @method('DELETE')
-                    <button>hapus</button>
+                    <button class="btn-action">hapus</button>
                 </form>
+                @endif
             </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+</div>
 @endif
-<br><br>
-<a href="/dashboard">kembali ke dashboard</a>
+
+<br>
+<a href="/dashboard" class="btn-back">kembali ke dashboard</a>
+</div>
+
 </body>
 </html>

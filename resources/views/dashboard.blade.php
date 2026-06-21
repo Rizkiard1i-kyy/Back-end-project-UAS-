@@ -22,9 +22,11 @@
     <h1>Dashboard</h1>
 
     <div class="profile-info">
-        <h3>Profil Login</h3>
+        <h3>Profil Login</h3>   
         <p><strong>Email:</strong> {{ $user->email }}</p>
+        @if(auth()->user()->ismahasiswa())
         <p><strong>NIM:</strong> {{ $user->nim }}</p>
+        @endif
         <p><strong>Status:</strong> {{ $user->role }}</p>
     </div>
 
