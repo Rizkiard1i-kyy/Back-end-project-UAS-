@@ -21,9 +21,10 @@
     <div>
         <div>FULL PAYMENT</div>
         <div>
-            <div >
+            <div>
                 <strong>NO VA BPP bayar FULL :</strong><br>
-                1888853525014610 &nbsp; Rp.9,000,000 &nbsp; rentang bayar 08 Juni s.d. 09 Juli 2026
+                18888{{ Auth::user()->nim }}10 Rp.9,000,000 rentang bayar {{ \Carbon\Carbon::parse($rentang['full_mulai'])->translatedFormat('d F') }} s.d. 
+                {{ \Carbon\Carbon::parse($rentang['full_batas'])->translatedFormat('d F Y') }}
             </div>
             @if(!$skema)
                 <form method="POST" action="{{ route('skema_pembayaran.store') }}">
@@ -46,8 +47,8 @@
         <div>
             <div>
                 <strong>NO VA BPP bayar TERMIN:</strong><br>
-                Termin 1: 1888853525014611 &nbsp; Rp. 5,535,000 &nbsp; rentang bayar 08 Juni s.d. 09 Juli 2026<br>
-                Termin 2: 1888853525014612 &nbsp; Rp. 3,690,000 &nbsp; rentang bayar 28 Juli s.d. 23 Agustus 2026<br>
+                Termin 1: 18888{{ Auth::user()->nim }}11 Rp. 5,535,000 rentang bayar {{ \Carbon\Carbon::parse($rentang['termin1_batas'])->format('d M Y') }}<br>
+                Termin 2: 18888{{ Auth::user()->nim }}12 Rp. 3,690,000 rentang bayar {{ \Carbon\Carbon::parse($rentang['termin2_batas'])->format('d M Y') }}<br>
                 Total tagihan skema TERMIN: Rp. 9,225,000
             </div>
             @if(!$skema)

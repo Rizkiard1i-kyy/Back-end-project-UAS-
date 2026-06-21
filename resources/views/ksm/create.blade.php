@@ -11,11 +11,10 @@
     <div class="card-body">
 
         @if ($errors->any())
-            <ul class="error" style="margin-bottom:12px; padding-left:16px;">
+            <div class="error" style="margin-bottom:12px; color: red;">
                 @foreach ($errors->all() as $e)
-                    <li>{{ $e }}</li>
-                @endforeach
-            </ul>
+                    <div>{{ $e }}</div> @endforeach
+            </div>
         @endif
 
         <form method="POST" action="{{ route('ksm.store') }}">
@@ -25,34 +24,13 @@
             <div class="grid-2">
                 <div>
                     <label>Nama</label>
-                    <select name="nama" required>
-                        <option value="">-- Pilih Mahasiswa --</option>
-                        @foreach ($mahasiswas as $mahasiswa)
-                            <option value="{{ $mahasiswa->id }}" {{ old('nama') === $mahasiswa->id ? 'selected' : '' }}>
-                                {{ $mahasiswa->name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <input type="text" name="nama" value="{{ old('nama') }}" required>
 
                     <label>No. Pokok Mahasiswa (NIM)</label>
-                    <select name="nim" required>
-                        <option value="">-- Pilih NIM --</option>
-                        @foreach ($mahasiswas as $mahasiswa)
-                            <option value="{{ $mahasiswa->id }}" {{ old('nim') === $mahasiswa->id ? 'selected' : '' }}>
-                                {{ $mahasiswa->nim }}
-                            </option>
-                        @endforeach
-                    </select>
-
+                    <input type="text" name="nim" value="{{ old('nim') }}" required>
+                    
                     <label>Program Studi</label>
-                    <select name="prodi" required>
-                        <option value="">-- Pilih Program Studi --</option>
-                        @foreach ($prodis as $prodi)
-                            <option value="{{ $prodi->id }}" {{ old('prodi') === $prodi->id ? 'selected' : '' }}>
-                                {{ $prodi->name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <input type="text" name="prodi" value="{{ old('prodi') }}" required>
                 </div>
                 <div>
                     <label>Semester</label>
@@ -93,7 +71,6 @@
                             <td>
                                 <select name="mataKuliahs[{{ $i }}][status]" required>
                                     <option value="B"  {{ ($mk['status'] ?? '') === 'B'  ? 'selected' : '' }}>B</option>
-                                    <option value="P"  {{ ($mk['status'] ?? '') === 'P'  ? 'selected' : '' }}>P</option>
                                     <option value="U"  {{ ($mk['status'] ?? '') === 'U'  ? 'selected' : '' }}>U</option>
                                 </select>
                             </td>
@@ -124,7 +101,6 @@
 
             <br>
             <button type="submit" class="btn-submit">Simpan KSM</button>
-            &nbsp;
             <a href="{{ route('ksm.index') }}" style="font-size:12px; color:#2d6a9f;">Batal</a>
         </form>
     </div>

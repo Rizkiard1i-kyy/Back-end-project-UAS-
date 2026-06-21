@@ -48,7 +48,7 @@
                             <td>{{ $t->jenis }}</td>
                             <td>{{ $t->no_virtual_account ?? '-' }}</td>
                             <td>
-                                {{ $t->tgl_batas_bayar ? $t->tgl_batas_bayar->format('d F Y') : '-' }}
+                                {{ $t->tgl_batas_bayar ? $t->tgl_batas_bayar->format('d M Y') : '-' }}
                             </td>
                             <td>
                                 {{ number_format($t->jumlah_tagihan, 0, ',', '.') }}
@@ -56,7 +56,7 @@
                             <td>{{ $t->rincian ?? '-' }}</td>
                             <td>{{ $t->bank ?? '-' }}</td>
                             <td>
-                                {{ $t->tgl_pembayaran ? $t->tgl_pembayaran->format('d F Y') : '-' }}
+                                {{ $t->tgl_pembayaran ? $t->tgl_pembayaran->format('d M Y') : '-' }}
                             </td>
                             <td>
                                 {{ number_format($t->nominal_bayar, 0, ',', '.') }}
@@ -83,7 +83,6 @@
 
 <br>
 <a href="{{ route('skema_pembayaran.index') }}" style="font-size:12px;">Kembali ke Skema Pembayaran</a>
-&nbsp;&nbsp;
 <a href="/dashboard" style="font-size:12px;">Dashboard</a>
 
 </body>
