@@ -24,7 +24,7 @@
         <h1>Buat Surat Permohonan</h1>
     </div>
  
-    <div class="form-card">
+    <div class="form-card">     
         <form action="{{ route('surat_permohonan.store') }}" method="POST">
             @csrf
 
@@ -56,7 +56,7 @@
 
             <div class="form-actions" style="border-top: 1px solid #f1f5f9; padding-top: 24px; margin-top: 32px;">
                 <a href="{{ route('surat_permohonan.index') }}" class="btn-secondary">Batal</a>
-                <button type="submit" class="btn-primary btn-submit">Simpan</button>
+                <button type="submit" class="btn-primary btn-submit">Simpan</b utton>
             </div>
         </form>
     </div>
