@@ -24,7 +24,9 @@ class SkpiController extends Controller
         if (auth()->user() && !in_array(auth()->user()->role, ['mahasiswa'])) {
             return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa buat daftar skpi baru');
         }
-        return view('skpi.create');
+        $kegiatans = Skpi::select('kegiatan')->whereNotNull('kegiatan')->distinct()->pluck('kegiatan');
+        $jenises = Skpi::select('jenis')->whereNotNull('jenis')->distinct()->pluck('jenis');
+        return view('skpi.create', compact('kegiatans', 'jenises'));
     }
 
     public function store(Request $request)
@@ -63,20 +65,38 @@ class SkpiController extends Controller
         if (auth()->user() && !in_array(auth()->user()->role, ['mahasiswa'])) {
             return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa mengedit skpi');
         }
-        return view('skpi.edit', compact('skpi'));
+        $kegiatans = Skpi::select('kegiatan')->whereNotNull('kegiatan')->distinct()->pluck('kegiatan');
+        $jenises = Skpi::select('jenis')->whereNotNull('jenis')->distinct()->pluck('jenis');
+
+        return view('skpi.edit', compact('skpi', 'kegiatans', 'jenises'));
     }
 
     public function update(Request $request, Skpi $skpi)
     {
-        if (auth()->user() && !in_array(auth()->user()->role, ['mahasiswa'])) {
-            return redirect()->route('skpi.index')->with('error', 'Hanya mahasiswa yang bisa mengedit skpi.');
+        $user = auth()->user();
+        if (!$user->isMahasiswa()) {
+            
+            $request->validate([
+                'validasi' => 'required',
+                'point' => 'required|numeric'
+            ]);
+
+            $skpi->update([
+                'validasi' => $request->validasi,
+                'point' => $request->point,
+            ]);
+
+            return redirect()->route('skpi.index')->with('success', 'Data SKPI berhasil divalidasi dan poin terupdate.');
         }
-        $request->validate([
-            'kegiatan' => 'required',
-            'jenis' => 'required',
-            'klasifikasi' => 'required',
-            'bukti' => 'required|url',
-        ]);
+
+        if ($user->isMahasiswa()) {
+            
+            $request->validate([
+                'kegiatan' => 'required',
+                'jenis' => 'required',
+                'klasifikasi' => 'required',
+                'bukti' => 'required|url',
+            ]);
 
         $poinOtomatis = 0;
         if ($request->klasifikasi == 'Peserta') {
@@ -91,11 +111,15 @@ class SkpiController extends Controller
             'jenis' => $request->jenis,
             'klasifikasi' => $request->klasifikasi,
             'bukti' => $request->bukti,
+            'validasi' => 'Belum',
             'point' => $poinOtomatis
         ]);
 
         return redirect()->route('skpi.index')->with('success', 'Data SKPI berhasil diperbarui.');
-    }
+        }
+            return redirect()->route('skpi.index')->with('error', 'Akses ditolak.');
+        }
+
 
     public function destroy(Skpi $skpi)
     {

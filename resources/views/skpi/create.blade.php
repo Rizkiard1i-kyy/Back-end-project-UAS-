@@ -1,31 +1,72 @@
-<h1>Tambah Data Kegiatan SKPI</h1>
-<form method="POST" action="{{ route('skpi.store') }}">
-    @csrf
-    Nama Kegiatan:
-    <br>
-    <input type="text" name="kegiatan" required>
-    <br>
-    <br>
-    Jenis Kegiatan:
-    <br>
-    <input type="text" name="jenis" required>
-    <br>
-    <br>
-    Klasifikasi (Peran):
-    <br>
-    <select name="klasifikasi" required>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Data kegiatan SKPI</title>
+    <link rel="stylesheet" href="{{ asset('css/aset.css') }}">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">
+            <img src="{{ asset('images/logo-untar.png') }}" alt="Logo UNTAR">
+        </div>
+        <h1>Halo! Selamat datang {{ auth()->user()->nama ?? 'User' }} di Lintar X!</h1>
+    </div>
+</header>
+
+<div class="container" style="display: block;">
+    <div class="page-header">
+        <h1>Tambah Data Kegiatan SKPI</h1>
+    </div>
+
+    @if($errors->any())
+        <div class="alert alert-danger" style="padding: 12px; margin-bottom: 20px;">
+        @foreach($errors->all() as $error)
+            <div style="margin-bottom: 4px;">{{ $error }}</div>
+        @endforeach
+    </div>
+    @endif
+
+    <div class="form-group">
+            <label>Nama Kegiatan</label>
+            <select name="kegiatan" class="form-control" required>
+                <option value="">Pilih Nama Kegiatan</option>
+                @foreach($kegiatans as $kegiatan)
+                    <option value="{{ $kegiatan }}">{{ $kegiatan }}</option>
+                @endforeach
+            </select>
+        </div>
+ 
+        <div class="form-group">
+            <label>Jenis Kegiatan</label>
+            <select name="jenis" class="form-control" required>
+                <option value="">Pilih Jenis Kegiatan</option>
+                @foreach($jenises as $jenis)
+                    <option value="{{ $jenis }}">{{ $jenis }}</option>
+                @endforeach
+            </select>
+        </div>
+
+    <div class="form-group">
+    <label>Klasifikasi (Peran)</label>
+    <select name="klasifikasi" class="form-control" required>
         <option value="Peserta">Peserta</option>
         <option value="Panitia">Panitia</option>
         <option value="Ketua Umum">Ketua Umum</option>
     </select>
-    <br>
-    <br>
-    Link Bukti Sertifikat (Google Drive):
-    <br>
-    <input type="url" name="bukti" required>
-    <br>
-    <br>
-    <button type="submit">Simpan</button>
+    </div>
+    <div class="form-group">
+    <label>Link Bukti Sertifikat (Google Drive)</label>
+    <input type="url" name="bukti" class="form-control" required>
+    </div>
+    <div class="form-actions">
+                <a href="{{ route('skpi.index') }}" class="btn-secondary">Kembali</a>
+    <button type="submit" class="btn-primary">Simpan</button>
+    </div>
 </form>
-<br><br>
-<a href="{{ route('skpi.index') }}">Kembali</a>
+</div>
+</body>
+</html>
