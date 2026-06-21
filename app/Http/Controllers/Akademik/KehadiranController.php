@@ -68,7 +68,7 @@ class KehadiranController extends Controller
             'namaDosen'=>'required|exists:users,id',
             'nim'=>'required|exists:users,id',
             'kelas'=>'required|string|max:10',
-            'jumlahPertemuan'=>'required|integer|min:1',
+            'jumlahPertemuan'=>'required|integer|min:1|max:16',
             'jumlahKehadiran'=>'required|integer|min:0|lte:jumlahPertemuan',
         ]);
 
@@ -131,7 +131,7 @@ class KehadiranController extends Controller
                 'namaDosen'=>'required|exists:users,id',
                 'nim'=>'required|exists:users,id',
                 'kelas'=>'required|string|max:10',
-                'jumlahPertemuan'=>'required|integer|min:1',
+                'jumlahPertemuan'=>'required|integer|min:1|max:16',
                 'jumlahKehadiran'=>'required|integer|min:0|lte:jumlahPertemuan',
             ]);
         } else {
