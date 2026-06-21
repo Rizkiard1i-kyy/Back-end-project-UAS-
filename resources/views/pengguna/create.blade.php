@@ -1,59 +1,80 @@
 <!DOCTYPE html>
 <html>
-<head><title>tambah pengguna</title></head>
+<head>
+<title>tambah pengguna</title>
+<link rel="stylesheet" href="{{ asset('css/aset.css') }}">
+</head>
 <body>
 
-<h1>tambah pengguna baru</h1>
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">
+            <img src="{{ asset('images/logo-untar.png') }}" alt="Logo UNTAR">
+        </div>
+        <h1>halo! selamat datang {{ auth()->user()->nama ?? 'admin' }} di lintar x!</h1>
+    </div>
+</header>
+
+<div class="container">
+
+<div class="page-header">
+    <h1>tambah pengguna baru</h1>
+</div>
 
 @if($errors->any())
-    <ul style="color:red">
-        @foreach($errors->all() as $e)
-        <li>{{ $e }}</li>
-        @endforeach
-    </ul>
+<p class="badge badge-rejected">
+    @foreach($errors->all() as $e)
+    {{ $e }}<br>
+    @endforeach
+</p>
 @endif
 
+<div class="form-card">
 <form method="POST" action="{{ route('pengguna.store') }}">
     @csrf
 
-    Nama:
-    <br>
-    <input type="text" name="nama" value="{{ old('nama') }}" required>
-    <br><br>
+    <div class="form-group">
+        <label>nama</label>
+        <input type="text" name="nama" class="form-control" value="{{ old('nama') }}" required>
+    </div>
 
-    Email:
-    <br>
-    <input type="email" name="email" value="{{ old('email') }}" required>
-    <br><br>
+    <div class="form-group">
+        <label>email</label>
+        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+    </div>
 
-    NIM <small>(kosongin aja klo bukan mahasiswa )</small>:
-    <br>
-    <input type="text" name="nim" value="{{ old('nim') }}">
-    <br><br>
+    <div class="form-group">
+        <label>nim <small>(kosongin aja klo bukan mahasiswa)</small></label>
+        <input type="text" name="nim" class="form-control" value="{{ old('nim') }}">
+    </div>
 
-    Password:
-    <br>
-    <input type="password" name="password" required>
-    <br><br>
+    <div class="form-group">
+        <label>password</label>
+        <input type="password" name="password" class="form-control" required>
+    </div>
 
-    Konfirmasi Password:
-    <br>
-    <input type="password" name="password_confirmation" required>
-    <br><br>
+    <div class="form-group">
+        <label>konfirmasi password</label>
+        <input type="password" name="password_confirmation" class="form-control" required>
+    </div>
 
-    Role:
-    <br>
-    <select name="role" required>
-        <option value="">-- pilih Role --</option>
-        <option value="mahasiswa"@selected(old('role')=='mahasiswa')>mahasiswa</option>
-        <option value="dosen"@selected(old('role')=='dosen')>dosen</option>
-        <option value="admin"@selected(old('role')=='admin')>admin</option>
-    </select>
-    <br><br>
+    <div class="form-group">
+        <label>role</label>
+        <select name="role" class="form-control" required>
+            <option value="">-- pilih role --</option>
+            <option value="mahasiswa" @selected(old('role')=='mahasiswa')>mahasiswa</option>
+            <option value="dosen" @selected(old('role')=='dosen')>dosen</option>
+            <option value="admin" @selected(old('role')=='admin')>admin</option>
+        </select>
+    </div>
 
-    <button>Simpan</button>
-    <a href="{{ route('pengguna.index') }}">Batal</a>
+    <div class="form-actions">
+        <a href="{{ route('pengguna.index') }}" class="btn-secondary">batal</a>
+        <button class="btn-primary btn-submit">simpan</button>
+    </div>
 </form>
+</div>
 
+</div>
 </body>
 </html>
