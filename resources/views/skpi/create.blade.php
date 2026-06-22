@@ -30,25 +30,19 @@
     </div>
     @endif
 
+<div class="form-card">
+        <form method="POST" action="{{ route('skpi.store') }}">
+            @csrf
+
     <div class="form-group">
-            <label>Nama Kegiatan</label>
-            <select name="kegiatan" class="form-control" required>
-                <option value="">Pilih Nama Kegiatan</option>
-                @foreach($kegiatans as $kegiatan)
-                    <option value="{{ $kegiatan }}">{{ $kegiatan }}</option>
-                @endforeach
-            </select>
-        </div>
- 
-        <div class="form-group">
-            <label>Jenis Kegiatan</label>
-            <select name="jenis" class="form-control" required>
-                <option value="">Pilih Jenis Kegiatan</option>
-                @foreach($jenises as $jenis)
-                    <option value="{{ $jenis }}">{{ $jenis }}</option>
-                @endforeach
-            </select>
-        </div>
+        <label>Nama Kegiatan</label>
+        <input type="text" name="kegiatan" class="form-control" placeholder="Contoh: Welcoming Party 2025" required>
+    </div>
+
+    <div class="form-group">
+        <label>Jenis Kegiatan</label>
+        <input type="text" name="jenis" class="form-control" placeholder="Contoh: Organisasi / Bakat dan Minat / Seminar" required>
+    </div>
 
     <div class="form-group">
     <label>Klasifikasi (Peran)</label>
@@ -67,6 +61,7 @@
     <button type="submit" class="btn-primary">Simpan</button>
     </div>
 </form>
+</div>
 </div>
 </body>
 </html>
