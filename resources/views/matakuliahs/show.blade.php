@@ -45,7 +45,7 @@
                 </a>
                 <form action="{{ route('mataKuliah.destroy', $mataKuliah) }}" method="post" style="display:inline;">
                     @csrf @method('DELETE')
-                    <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data kehadiran ini?')">
+                    <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data mata kuliah ini?')">
                             Hapus Data
                     </button>
                 </form>
