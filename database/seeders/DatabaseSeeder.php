@@ -240,9 +240,6 @@ class DatabaseSeeder extends Seeder
             RpsSeeder::class,
             SkpiSeeder::class,
             HistoriNilaiSeeder::class,
-            KsmSeeder::class,
-            SkemaPembayaranSeeder::class,
-            TagihanPembayaranSeeder::class,
         ]);
 
         $this->command->info('Seeder selesai');
