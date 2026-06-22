@@ -235,6 +235,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             MataKuliahSeeder::class,
             KalenderAkademikSeeder::class,
+            KehadiranSeeder::class,
             KonsultasiSeeder::class,
             JadwalSeeder::class,
             RpsSeeder::class,
