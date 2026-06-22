@@ -84,12 +84,12 @@
                     <a href="{{ route('kehadiran.edit', $kehadiran) }}" class="btn-action btn-edit">
                         Edit Data
                     </a>
-                    <div class="btn-action btn-primary">
-                        <form action="{{ route('kehadiran.destroy', $kehadiran) }}" method="post" style="display:inline;">
-                            @csrf @method('DELETE')
-                            <button type="submit" onclick="return confirm('Anda yakin ingin menghapus data kehadiran ini?')" class="untar-btn-login">Hapus Data</button>
-                        </form>
-                    </div>
+                    <form action="{{ route('kehadiran.destroy', $kehadiran) }}" method="post" style="display:inline;">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data kehadiran ini?')">
+                            Hapus Data
+                        </button>
+                    </form>
                 @endif
             </div>
         </div>
