@@ -58,14 +58,14 @@ class NilaiHasilController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nim'=>'required|exists:users,id',
-            'namaDosen'=>'required|exists:users,id',
-            'tahunAkademik'=>'required|integer|min:19591',
+            'nim'           =>'required|exists:users,id',
+            'namaDosen'     =>'required|exists:users,id',
+            'tahunAkademik' =>'required|integer|min:19591',
             'namaMataKuliah'=>'required|exists:mata_kuliahs,id',
-            'tugas'=>'required|integer|between:0,100',
-            'uts'=>'required|integer|between:0,100',
-            'uas'=>'required|integer|between:0,100',
-            'status'=>'required|string|max:1',
+            'tugas'         =>'required|integer|between:0,100',
+            'uts'           =>'required|integer|between:0,100',
+            'uas'           =>'required|integer|between:0,100',
+            'status'        =>'required|string|max:1',
         ]);
 
         $nilaiAngka = ($request->tugas * 0.4 + $request->uts * 0.3 + $request->uas * 0.3);
