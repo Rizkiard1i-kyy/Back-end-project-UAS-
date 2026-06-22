@@ -43,12 +43,12 @@
                 <a href="{{ route('mataKuliah.edit', $mataKuliah) }}" class="btn-action btn-edit">
                     Edit Data
                 </a>
-                <div class="btn-action btn-primary">
-                    <form action="{{ route('mataKuliah.destroy', $mataKuliah) }}" method="post" style="display:inline;">
-                        @csrf @method('DELETE')
-                        <button type="submit" onclick="return confirm('Anda yakin ingin menghapus data Mata Kuliah ini?')" class="untar-btn-login">Hapus Data</button>
-                    </form>
-                </div>
+                <form action="{{ route('mataKuliah.destroy', $mataKuliah) }}" method="post" style="display:inline;">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data kehadiran ini?')">
+                            Hapus Data
+                    </button>
+                </form>
             </div>
         </div>
     </div>

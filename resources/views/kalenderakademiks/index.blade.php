@@ -69,13 +69,12 @@
                                     <a href="{{ route('kalenderAkademik.edit', $kalenderAkademik) }}" class="btn-action btn-edit">
                                         Ubah
                                     </a>
-                                    <div class="btn-action btn-detail">
-                                        <form action="{{ route('kalenderAkademik.destroy', $kalenderAkademik->id) }}" method="POST"
-                                            onsubmit="return confirm('Hapus data kalender ini?')">
-                                            @csrf @method('DELETE')
-                                        <button type="submit" class="btn-submit">Hapus Data</button>
-                                        </form>
-                                    </div>
+                                    <form action="{{ route('kalenderAkademik.destroy', $kalenderAkademik) }}" method="post" style="display:inline;">
+                                        @csrf @method('DELETE')
+                                            <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data kehadiran ini?')">
+                                                Hapus Data
+                                            </button>
+                                    </form>
                                 </td>
                                 @endif
                             </tr>
