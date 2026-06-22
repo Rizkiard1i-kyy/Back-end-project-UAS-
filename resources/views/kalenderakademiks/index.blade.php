@@ -71,7 +71,7 @@
                                     </a>
                                     <form action="{{ route('kalenderAkademik.destroy', $kalenderAkademik) }}" method="post" style="display:inline;">
                                         @csrf @method('DELETE')
-                                            <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data kalened akademik ini?')">
+                                            <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data kalender akademik ini?')">
                                                 Hapus Data
                                             </button>
                                     </form>
