@@ -6,10 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use App\Models\ChatBot;
-use App\Models\nilaiKHS;
+use App\Models\nilaiHasil;
 use App\Models\Jadwal;
 use App\Models\Kehadiran;
-use App\Models\Ksm;
+use App\Models\SuratKeterangan;
+use App\Models\SuratPermohonan;
+use App\Models\KalenderAkademik;
+use App\Models\ukm;
+use App\Models\Pengumuman;
+use App\Models\historiNilai;
 
 class ChatBotController extends Controller
 {
@@ -41,13 +46,13 @@ class ChatBotController extends Controller
 
         ChatBot::create([
             'user_id' => $user->id,
-            'role'    => 'user',
+            'role' => 'user',
             'message' => $message,
         ]);
 
         $systemText = "Kamu adalah Asisten Akademik Virtual Kampus bernama 'Lintar Bot'. "
-            . "Nama mahasiswa: {$user->nama}, NIM: {$user->nim}. "
-            . "Jawab sopan, ringkas, dalam Bahasa Indonesia. "
+            . "Nama mahasiswa: {$user->nama}, NIM: {$user->nim}, bot tidak perlu menyebut nama dan nim user berkali kali, cukup diperlukan saja "
+            . "Jawab sopan tapi tetap gaul menyesuaikan user, ringkas, dalam Bahasa Indonesia atau melakukan penyesuaian terhadap user. "
             . "Gunakan fungsi yang tersedia untuk data akademik. Jangan mengarang data.";
 
         $chatHistory = ChatBot::where('user_id', $user->id)
@@ -65,10 +70,15 @@ class ChatBotController extends Controller
         );
 
         $tools = [
-            $this->buildTool('ambilDataNilaiKHS', 'Mengambil data nilai KHS mahasiswa.'),
+            $this->buildTool('ambilDataNilaiHasil', 'Mengambil data nilai Hasil mahasiswa.'),
             $this->buildTool('ambilDataJadwalKuliah', 'Mengambil jadwal kuliah.'),
             $this->buildTool('ambilDataKehadiranAbsen', 'Mengambil data kehadiran mahasiswa.'),
-            $this->buildTool('ambilDataKsmSemester', 'Mengambil data KSM semester terbaru.'),
+            $this->buildTool('ambilDataSuratKeterangan', 'Mengambil data pengajuan surat keterangan'),
+            $this->buildTool('ambilDataHistoriNilai', 'Mengambil data histori nilai mahasiswa'),
+            $this->buildTool('ambilDataSuratPermohonan', 'Mengambil data pengajuan surat permohonan'),
+            $this->buildTool('ambilDataPengumuman', 'Mengambil pengumuman'),
+            $this->buildTool('ambilDataUKM', 'Mengambil data UKM (Unit Kegiatan Mahasiswa) yang diikuti oleh mahasiswa.'),
+            $this->buildTool('ambilDataKalenderAkademik', 'Mengambil data agenda atau jadwal kegiatan kalender akademik kampus.')
         ];
 
         try {
@@ -77,7 +87,7 @@ class ChatBotController extends Controller
             Log::error('[ChatBot Error] ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'answer'  => 'Maaf, layanan AI sedang mengalami gangguan.',
+                'answer'  => 'Maaf, layanan AI sedang mengalami gangguan, mungkin tokennya bang.',
             ], 500);
         }
 
@@ -107,7 +117,7 @@ class ChatBotController extends Controller
             'messages' => $messages,
             'tools'=> $tools,
             'temperature'=> 0.7,
-            'max_tokens'=> 500,
+            'max_tokens'=> 5000,
         ];
 
         $response = $this->sendRequest($payload);
@@ -155,9 +165,9 @@ class ChatBotController extends Controller
     private function buildTool(string $name, string $description): array
     {
         return [
-            'type'     => 'function',
+            'type'=> 'function',
             'function' => [
-                'name'        => $name,
+                'name' => $name,
                 'description' => $description,
                 'parameters'  => ['type' => 'object', 'properties' => (object) []],
             ],
@@ -167,9 +177,9 @@ class ChatBotController extends Controller
     private function executeAgentFunction(string $fn, $user): string
     {
         return match ($fn) {
-            'ambilDataNilaiKHS' => ($n = nilaiKHS::where('nim', $user->nim)->get())->isNotEmpty()
+            'ambilDataNilaiHasil' => ($n = nilaiHasil::where('nim', $user->nim)->get())->isNotEmpty()
                 ? $n->map(fn($r) => "- {$r->namaMataKuliah}: {$r->nilaiHuruf}")->join("\n")
-                : 'Data nilai KHS tidak ditemukan.',
+                : 'Data nilai Hasil tidak ditemukan.',
 
             'ambilDataJadwalKuliah' => ($j = Jadwal::all())->isNotEmpty()
                 ? $j->map(fn($r) => "- {$r->namaMK} ({$r->ruangDanWaktu})")->join("\n")
@@ -179,9 +189,29 @@ class ChatBotController extends Controller
                 ? $k->map(fn($r) => "- {$r->namaMatkul}: {$r->persentase}%")->join("\n")
                 : 'Data kehadiran tidak ditemukan.',
 
-            'ambilDataKsmSemester' => ($s = Ksm::where('nim', $user->nim)->latest()->first())
-                ? "Semester {$s->semester}, Tahun Akademik {$s->tahunAkademik}"
-                : 'Data KSM tidak ditemukan.',
+            'ambilDataSuratKeterangan' => ($sk = SuratKeterangan::where('nim', $user->nim)->get())->isNotEmpty()
+                ? "Nim{$sk->nim}, Tipe Surat($sk->jenis_surat), Status surat ($sk->status)"
+                : 'Data pengajuan surat keterangan tidak ditemukan',
+
+            'ambilDataHistoriNilai' => ($hn = HistoriNilai::where('nim', $user->nim)->get())->isNotEmpty()
+                ? "Nim{$hn->nim}, Tipe Surat($hn->namaMataKuliah), Nilai bobot($hn->nilai), Bobot angka($hn->bobot)"
+                : 'Data histori nilai tidak ditemukan',
+
+            'ambilDataSuratPermohonan' => ($sp = SuratPermohonan::where('nim', $user->nim)->get())->isNotEmpty()
+                ? "Nim{$sp->nim}, Tipe Surat($sp->jenis_surat), Status surat ($sp->status)"
+                : 'Data pengajuan surat keterangan tidak ditemukan',
+
+            'ambilDataPengumuman' => ($pe = Pengumuman::all())->isNotEmpty()
+                ? $pe->map(fn($r) => "- Tag: {$r->tags}")->join("\n")
+                : 'Data pengumuman tidak ditemukan',
+
+             'ambilDataUKM' => ($uk = ukm::where('nim', $user->nim)->get())->isNotEmpty()
+                ? $uk->map(fn($r) => "- {$r->nama}: {$r->detail} (Anggota: {$r->anggota})")->join("\n")
+                : 'Data UKM tidak ditemukan.',
+
+             'ambilDataKalenderAkademik' => ($ka = KalenderAkademik::all())->isNotEmpty()
+                ? $ka->map(fn($r) => "- {$r->namaKegiatan} ({$r->tanggalMulai} s/d {$r->tanggalSelesai}) [TA: {$r->tahunAkademik}]")->join("\n")
+                : 'Data kalender akademik tidak ditemukan.',
 
             default => 'Fungsi tidak dikenali.',
         };

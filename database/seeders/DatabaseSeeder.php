@@ -235,14 +235,14 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             MataKuliahSeeder::class,
             KalenderAkademikSeeder::class,
+            KehadiranSeeder::class,
             KonsultasiSeeder::class,
             JadwalSeeder::class,
             RpsSeeder::class,
             SkpiSeeder::class,
             HistoriNilaiSeeder::class,
-            KsmSeeder::class,
-            SkemaPembayaranSeeder::class,
-            TagihanPembayaranSeeder::class,
+            NilaiHasilSeeder::class,
+            UkmSeeder::class,
         ]);
 
         $this->command->info('Seeder selesai');

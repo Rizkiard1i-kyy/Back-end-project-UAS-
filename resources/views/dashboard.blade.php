@@ -64,15 +64,6 @@
 
             <div class="card-item">
                 <div class="card-icon bg-gold">
-                    <img src="{{ asset('images/icons/ksm.png') }}" alt="" onerror="this.style.display='none'">
-                </div>
-                <h4 class="card-title">KSM</h4>
-                <p class="card-desc">Yuk cetak KSM sebelum UAS berjalan!</p>
-                <a href="{{ route('ksm.index') }}" class="card-link">Click Here</a>
-            </div>
-
-            <div class="card-item">
-                <div class="card-icon bg-gold">
                     <img src="{{ asset('images/icons/kehadiran.png') }}" alt="" onerror="this.style.display='none'">
                 </div>
                 <h4 class="card-title">Kehadiran</h4>
@@ -148,29 +139,6 @@
                 <h4 class="card-title">UKM (Unit Kegiatan Mahasiswa)</h4>
                 <p class="card-desc">Jelajahi berbagai UKM yang tersedia di kampus dan temukan yang sesuai dengan minatmu.</p>
                 <a href="{{ route('ukm.index') }}" class="card-link">Click Here</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="menu-section">
-        <h3 class="section-title">Uang Kuliah</h3>
-        <div class="bubble-container">
-            <div class="card-item">
-                <div class="card-icon bg-red">
-                    <img src="{{ asset('images/icons/uang-kuliah.png') }}" alt="" onerror="this.style.display='none'">
-                </div>
-                <h4 class="card-title">Skema Pembayaran</h4>
-                <p class="card-desc">Lihat skema pembayaran uang kuliah untuk setiap jenjang studi dan ketahui tenggat waktu pembayaran.</p>
-                <a href="{{ route('skema_pembayaran.index') }}" class="card-link">Click Here</a>
-            </div>
-
-            <div class="card-item">
-                <div class="card-icon bg-red">
-                    <img src="{{ asset('images/icons/tagihan.png') }}" alt="" onerror="this.style.display='none'">
-                </div>
-                <h4 class="card-title">Tagihan Pembayaran</h4>
-                <p class="card-desc">Cek tagihan pembayaran uang kuliah kamu secara real-time dan pastikan pembayaran tepat waktu.</p>
-                <a href="{{ route('tagihan_pembayaran.index') }}" class="card-link">Click Here</a>
             </div>
         </div>
     </div>
