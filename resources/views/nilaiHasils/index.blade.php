@@ -95,7 +95,7 @@
                             <td>
                                 <a> {{ $nilaiHasil->keterangan }}</a>
                             </td>
-                            < <td style="text-align: center">
+                            <td style="text-align: center">
                                 <a href="{{ route('nilaiHasil.show', $nilaiHasil) }}" class="btn-action btn-detail">
                                     Detail
                                 </a>
