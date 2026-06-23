@@ -33,6 +33,7 @@
             <label for="tahunAkademik">Tahun akademik :</label>
                     
             <select name="tahunAkademik" required>
+                <option value="">-Pilih Tahun-</option>
                 <option value="20251">Gasal 2025</option>
                 <option value="20252">Genap 2025</option>
             </select>

@@ -19,7 +19,7 @@
 
     <div class="container">
         <div class="page-header" style="max-width: 600px; margin: 0 auto 32px auto;">
-            <h1>Edit Data HIstori Nilai</h1>
+            <h1>Edit Data Histori Nilai</h1>
         </div>
 
         <div class="form-card">
