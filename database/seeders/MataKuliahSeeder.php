@@ -54,5 +54,35 @@ class MataKuliahSeeder extends Seeder
             'namaMatkul'    => 'TECHNOLOGY AND ETHICS',
             'sks'      => '4',
         ]);
+
+        MataKuliah::create([
+            'kodeMatkul'     => 'TK13021',
+            'namaMatkul'    => 'DATABASE SYSTEMS',
+            'sks'      => '4',
+        ]);
+
+        MataKuliah::create([
+            'kodeMatkul'     => 'TK13027',
+            'namaMatkul'    => 'ALGORITHMS',
+            'sks'      => '4',
+        ]);
+
+        MataKuliah::create([
+            'kodeMatkul'     => 'TK13028',
+            'namaMatkul'    => 'FUNDAMENTAL PROGRAMMING',
+            'sks'      => '4',
+        ]);
+
+        MataKuliah::create([
+            'kodeMatkul'     => 'TK13036',
+            'namaMatkul'    => 'STATISTICS',
+            'sks'      => '2',
+        ]);
+
+        MataKuliah::create([
+            'kodeMatkul'     => 'TK13037',
+            'namaMatkul'    => 'CALCULUS',
+            'sks'      => '2',
+        ]);
     }
 }
