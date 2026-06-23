@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class MataKuliahController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         if (!auth()->user()->isAdmin()) {
@@ -23,9 +20,6 @@ class MataKuliahController extends Controller
         return view('matakuliahs.index', compact('mataKuliah'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         if (!auth()->user()->isAdmin()) {
@@ -34,9 +28,6 @@ class MataKuliahController extends Controller
         return view('matakuliahs.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         if (!auth()->user()->isAdmin()) {
@@ -54,9 +45,6 @@ class MataKuliahController extends Controller
         return redirect()->route('mataKuliah.index')->with('success', 'Data mata kuliah baru dibuat.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(MataKuliah $mataKuliah)
     {
         if (!auth()->user()->isAdmin()) {
@@ -66,9 +54,6 @@ class MataKuliahController extends Controller
         return view('matakuliahs.show', compact('mataKuliah'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(MataKuliah $mataKuliah)
     {
         if (!auth()->user()->isAdmin()) {
@@ -78,9 +63,6 @@ class MataKuliahController extends Controller
         return view('matakuliahs.edit', compact('mataKuliah'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, MataKuliah $mataKuliah)
     {
         if (!auth()->user()->isAdmin()) {
@@ -98,9 +80,6 @@ class MataKuliahController extends Controller
         return redirect()->route('mataKuliah.index')->with('success', 'Data mata kuliah diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(MataKuliah $mataKuliah)
     {
         if (!auth()->user()->isAdmin()) {   
