@@ -199,7 +199,7 @@
             <div class="card-icon bg-red">
                 <img src="{{ asset('images/icons/admin.png') }}" alt="" onerror="this.style.display='none'">
             </div>
-            <h4 class="card-title">Pengelolahan Matkul</h4>
+            <h4 class="card-title">Pengelolaan Matkul</h4>
             <p class="card-desc">Kelola data mata kuliah, jadwal, dan informasi akademik lainnya melalui panel admin.</p>
             <a href="{{ route('mataKuliah.index') }}" class="card-link">Click Here</a>
         </div>
