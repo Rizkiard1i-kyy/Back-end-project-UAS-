@@ -19,7 +19,7 @@
 
     <div class="container">
         <div class="page-header" style="max-width: 600px; margin: 0 auto 32px auto;">
-<h1>Detail Kegiatan SKPI: {{ $skpi->kegiatan }}</h1>
+    <h1>Detail Kegiatan SKPI: {{ $skpi->kegiatan }}</h1>
         </div>
 
         <div class="detail-card">
@@ -66,43 +66,43 @@
 
         <div class="form-actions">
             <a href="{{ route('skpi.index') }}" class="btn-secondary">Kembali</a>
-@if(auth()->user() && in_array(auth()->user()->role, ['mahasiswa']))
-<a href="{{ route('skpi.edit', $skpi->id) }}" class="btn-action btn-edit" style="text-decoration: none;">Ubah Data</a>
-@endif
+                @if(auth()->user() && in_array(auth()->user()->role, ['mahasiswa']))
+                <a href="{{ route('skpi.edit', $skpi->id) }}" class="btn-action btn-edit" style="text-decoration: none;">Ubah Data</a>
+                @endif
 
-@if(auth()->user())
-<form action="{{ route('skpi.destroy', $skpi->id) }}" method="post" style="display:inline;">
-    @csrf 
-    @method('DELETE')
-    <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus riwayat SKPI ini?')">Hapus Data</button>
-</form>
-@endif
+                @if(auth()->user())
+                <form action="{{ route('skpi.destroy', $skpi->id) }}" method="post" style="display:inline;">
+                    @csrf 
+                    @method('DELETE')
+                    <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus riwayat SKPI ini?')">Hapus Data</button>
+                </form>
+            @endif
         </div>
-        @if(auth()->user() && !auth()->user()->isMahasiswa())
-        <div class="form-card" style="margin-top: 32px; border: 2px dashed #cbd5e1; padding: 20px;">
-            <h3 style="margin-top: 0;">Form Validasi (Khusus Admin/Dosen)</h3>
-            
-            <form action="{{ route('skpi.update', $skpi->id) }}" method="POST">
-                @csrf
-                @method('PUT')
+            @if(auth()->user() && !auth()->user()->isMahasiswa())
+            <div class="form-card" style="margin-top: 32px; border: 2px dashed #cbd5e1; padding: 20px;">
+                <h3 style="margin-top: 0;">Form Validasi (Khusus Admin/Dosen)</h3>
                 
-                <div class="form-group">
-                    <label style="font-weight: bold;">Status Validasi</label>
-                    <select name="validasi" class="form-control" style="margin-bottom: 16px;">
-                        <option value="Belum" {{ $skpi->validasi == 'Belum' ? 'selected' : '' }}>Belum</option>
-                        <option value="Valid" {{ $skpi->validasi == 'Valid' || $skpi->validasi == 'Tervalidasi' ? 'selected' : '' }}>Tervalidasi (Valid)</option>
-                    </select>
-                </div>
+                <form action="{{ route('skpi.update', $skpi->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="form-group">
+                        <label style="font-weight: bold;">Status Validasi</label>
+                        <select name="validasi" class="form-control" style="margin-bottom: 16px;">
+                            <option value="Belum" {{ $skpi->validasi == 'Belum' ? 'selected' : '' }}>Belum</option>
+                            <option value="Valid" {{ $skpi->validasi == 'Valid' || $skpi->validasi == 'Tervalidasi' ? 'selected' : '' }}>Tervalidasi (Valid)</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label style="font-weight: bold;">Poin Disetujui</label>
-                    <input type="number" name="point" class="form-control" value="{{ $skpi->point }}" required>
-                    <small style="color: #64748b; font-size: 0.8rem;">*Sesuaikan poin jika diperlukan sebelum klik simpan.</small>
-                </div>
+                    <div class="form-group">
+                        <label style="font-weight: bold;">Poin Disetujui</label>
+                        <input type="number" name="point" class="form-control" value="{{ $skpi->point }}" required>
+                        <small style="color: #64748b; font-size: 0.8rem;">*Sesuaikan poin jika diperlukan sebelum klik simpan.</small>
+                    </div>
 
-                <button type="submit" class="btn-primary" style="margin-top: 16px;">Simpan Validasi</button>
-            </form>
-        </div>
+                    <button type="submit" class="btn-primary" style="margin-top: 16px;">Simpan Validasi</button>
+                </form>
+            </div>
         @endif
     </div>
 </body>    
