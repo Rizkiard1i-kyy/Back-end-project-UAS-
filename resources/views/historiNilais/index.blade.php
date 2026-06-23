@@ -67,7 +67,7 @@
                             @if(!auth()->user()->isMahasiswa())
                             <td>
                                 <a> {{ $historiNilai->mahasiswa->nim }}</a>
-                            <td>
+                            </td>
                             @endif
                             <td>
                                 <a> {{ $historiNilai->tahunAkademik }}</a>

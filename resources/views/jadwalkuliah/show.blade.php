@@ -73,20 +73,18 @@
             </div>
         </div>
 
-<div class="form-actions">
-    <a href="{{ route('jadwal.index') }}" class="btn-secondary">Kembali</a>
-@if(!auth()->user()->isMahasiswa())
-<a href="{{ route('jadwal.edit', $jadwal->id) }}" class="btn-action btn-edit" style="text-decoration: none;">Ubah Data</a>
-</a>
+        <div class="form-actions">
+            <a href="{{ route('jadwal.index') }}" class="btn-secondary">Kembali</a>
+            @if(!auth()->user()->isMahasiswa())
+                <a href="{{ route('jadwal.edit', $jadwal->id) }}" class="btn-action btn-edit" style="text-decoration: none;">Ubah Data</a>
 
-<form action="{{ route('jadwal.destroy', $jadwal->id) }}" method="post" style="display:inline;">
-    @csrf 
-    @method('DELETE')
-    <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data jadwal ini?')">Hapus Data</button>
-</form>
-@endif
-</div>
-</div> 
-</div> 
+                <form action="{{ route('jadwal.destroy', $jadwal->id) }}" method="post" style="display:inline;">
+                    @csrf 
+                    @method('DELETE')
+                    <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data jadwal ini?')">Hapus Data</button>
+                </form>
+            @endif
+        </div> 
+    </div> 
 </body>
 </html>
