@@ -94,7 +94,7 @@ class KehadiranSeeder extends Seeder
             [
                 'matkul' => $mataKuliah[6]->id,
                 'tahunAkademik'  => '2025 Ganjil',
-                'namaDosen'      => $dosen[2]->id,
+                'namaDosen'      => $dosen[3]->id,
                 'nim'            => $mahasiswa[1]->id,
                 'kelas'          => 'C',
                 'jumlahPertemuan'=> 16,
@@ -139,7 +139,7 @@ class KehadiranSeeder extends Seeder
             [
                 'matkul' => $mataKuliah[6]->id,
                 'tahunAkademik'  => '2025 Ganjil',
-                'namaDosen'      => $dosen[2]->id,
+                'namaDosen'      => $dosen[3]->id,
                 'nim'            => $mahasiswa[2]->id,
                 'kelas'          => 'C',
                 'jumlahPertemuan'=> 16,
