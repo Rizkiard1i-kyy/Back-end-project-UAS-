@@ -21,7 +21,7 @@ class HistoriNilaiSeeder extends Seeder
         historiNilai::create([
             'nim'           => $mahasiswa[0]->id,
             'namaDosen'     => $dosen[0]->id,
-            'tahunAkademik' => '20252',
+            'tahunAkademik' => '20251',
             'namaMataKuliah'=> $mataKuliah[0]->id,
             'nilai'         => 'A',
             'bobot'         => 4.00
@@ -29,7 +29,7 @@ class HistoriNilaiSeeder extends Seeder
         historiNilai::create([
             'nim'           => $mahasiswa[0]->id,
             'namaDosen'     => $dosen[1]->id,
-            'tahunAkademik' => '20252',
+            'tahunAkademik' => '20251',
             'namaMataKuliah'=> $mataKuliah[1]->id,
             'nilai'         => 'B-',
             'bobot'         => 2.80
@@ -43,9 +43,17 @@ class HistoriNilaiSeeder extends Seeder
             'bobot'         => 3.50
         ]);
         historiNilai::create([
+            'nim'           => $mahasiswa[0]->id,
+            'namaDosen'     => $dosen[3]->id,
+            'tahunAkademik' => '20252',
+            'namaMataKuliah'=> $mataKuliah[3]->id,
+            'nilai'         => 'A',
+            'bobot'         => 4.00
+        ]);
+        historiNilai::create([
             'nim'           => $mahasiswa[1]->id,
             'namaDosen'     => $dosen[0]->id,
-            'tahunAkademik' => '20252',
+            'tahunAkademik' => '20251',
             'namaMataKuliah'=> $mataKuliah[0]->id,
             'nilai'         => 'A',
             'bobot'         => 4.00
@@ -53,7 +61,7 @@ class HistoriNilaiSeeder extends Seeder
         historiNilai::create([
             'nim'           => $mahasiswa[1]->id,
             'namaDosen'     => $dosen[1]->id,
-            'tahunAkademik' => '20252',
+            'tahunAkademik' => '20251',
             'namaMataKuliah'=> $mataKuliah[1]->id,
             'nilai'         => 'A-',
             'bobot'         => 3.99
@@ -67,9 +75,17 @@ class HistoriNilaiSeeder extends Seeder
             'bobot'         => 4.00
         ]);
         historiNilai::create([
+            'nim'           => $mahasiswa[1]->id,
+            'namaDosen'     => $dosen[3]->id,
+            'tahunAkademik' => '20252',
+            'namaMataKuliah'=> $mataKuliah[3]->id,
+            'nilai'         => 'A',
+            'bobot'         => 4.00
+        ]);
+        historiNilai::create([
             'nim'           => $mahasiswa[2]->id,
             'namaDosen'     => $dosen[0]->id,
-            'tahunAkademik' => '20252',
+            'tahunAkademik' => '20251',
             'namaMataKuliah'=> $mataKuliah[0]->id,
             'nilai'         => 'C',
             'bobot'         => 2.00
@@ -77,7 +93,7 @@ class HistoriNilaiSeeder extends Seeder
         historiNilai::create([
             'nim'           => $mahasiswa[2]->id,
             'namaDosen'     => $dosen[1]->id,
-            'tahunAkademik' => '20252',
+            'tahunAkademik' => '20251',
             'namaMataKuliah'=> $mataKuliah[1]->id,
             'nilai'         => 'A',
             'bobot'         => 4.00
@@ -89,6 +105,14 @@ class HistoriNilaiSeeder extends Seeder
             'namaMataKuliah'=> $mataKuliah[2]->id,
             'nilai'         => 'A',
             'bobot'         => 4.00
+        ]);
+        historiNilai::create([
+            'nim'           => $mahasiswa[2]->id,
+            'namaDosen'     => $dosen[3]->id,
+            'tahunAkademik' => '20252',
+            'namaMataKuliah'=> $mataKuliah[3]->id,
+            'nilai'         => 'A-',
+            'bobot'         => 3.99
         ]);
     }
 }
