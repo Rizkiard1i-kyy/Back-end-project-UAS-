@@ -19,10 +19,10 @@
 
     <div class="container" style="display: block;">
         <div class="page-header" style="max-width: 600px; margin: 0 auto 32px auto;">     
-<h1>Detail RPS</h1>
+    <h1>Detail RPS</h1>
         </div>
 
-<div class="detail-card" style="margin: 0 auto;">
+        <div class="detail-card" style="margin: 0 auto;">
             <div class="detail-row">
                 <div class="detail-label">Mata Kuliah</div>
                 <div class="detail-value">
@@ -59,15 +59,15 @@
         <div class="form-actions" style="max-width: 600px; margin: 24px auto 0 auto;">
             <a href="{{ route('rps.index') }}" class="btn-secondary">Kembali</a>
 
-@if(!auth()->user()->isMahasiswa())
-<a href="{{ route('rps.edit', $rps->id) }}" class="btn-action btn-edit" style="text-decoration: none;">Ubah Data</a>
+            @if(!auth()->user()->isMahasiswa())
+                <a href="{{ route('rps.edit', $rps->id) }}" class="btn-action btn-edit" style="text-decoration: none;">Ubah Data</a>
 
-<form action="{{ route('rps.destroy', $rps->id) }}" method="post" style="display:inline;">
-    @csrf 
-    @method('DELETE')
-    <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data RPS ini?')">Hapus Data</button>
+                <form action="{{ route('rps.destroy', $rps->id) }}" method="post" style="display:inline;">
+                @csrf 
+                @method('DELETE')
+                    <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data RPS ini?')">Hapus Data</button>
                 </form>
-@endif
+            @endif
         </div>
     </div>  
 </body>
