@@ -62,6 +62,11 @@ Route::namespace('App\Http\Controllers\Unit_Kegiatan_Mahasiswa')->middleware(['a
     Route::resource('ukm', 'UkmController');
 });
 
+Route::namespace('App\Http\Controllers\Uang_Kuliah')->middleware(['auth'])->group(function () {
+    Route::resource('skema_pembayaran', 'SkemaPembayaranController');
+    Route::resource('tagihan_pembayaran', 'TagihanPembayaranController');
+});
+
 Route::namespace('App\Http\Controllers\SKPI')->middleware(['auth'])->group(function () {
     Route::resource('skpi', 'SkpiController');
 });
