@@ -10,9 +10,12 @@ class KsmSeeder extends Seeder
 {
     
     private array $mataKuliahs = [
-        ['kodeMatkul' => 'TK101', 'namaMatkul' => 'Algebra Discrete', 'sks' => 4, 'kelas' => 'C', 'status' => 'B'],
-        ['kodeMatkul' => 'TK102', 'namaMatkul' => 'Data Structures', 'sks' => 4, 'kelas' => 'C', 'status' => 'B'],
-        ['kodeMatkul' => 'TK103', 'namaMatkul' => 'Intro to AI', 'sks' => 2, 'kelas' => 'C', 'status' => 'B'],
+        ['kodeMatkul' => 1, 'sks' => 4, 'kelas' => 'C', 'status' => 'B'],
+        ['kodeMatkul' => 2, 'sks' => 4, 'kelas' => 'C', 'status' => 'B'],
+        ['kodeMatkul' => 3, 'sks' => 2, 'kelas' => 'C', 'status' => 'B'],
+        ['kodeMatkul' => 4, 'sks' => 4, 'kelas' => 'C', 'status' => 'B'],
+        ['kodeMatkul' => 5, 'sks' => 2, 'kelas' => 'C', 'status' => 'B'],
+        ['kodeMatkul' => 6, 'sks' => 4, 'kelas' => 'C', 'status' => 'B'],
     ];
 
     /**
@@ -34,7 +37,7 @@ class KsmSeeder extends Seeder
                 'nama'          => $mhs['nama'],
                 'nim'           => $mhs['nim'],
                 'prodi'         => 'Teknik Informatika',
-                'semester'      => '2',
+                'semester'      => 'Genap',
                 'tahunAkademik' => '2025/2026',
             ]);
  
@@ -42,7 +45,6 @@ class KsmSeeder extends Seeder
                 $ksm->mataKuliahs()->create([
                     'no'         => $index + 1,
                     'kodeMatkul' => $mk['kodeMatkul'],
-                    'namaMatkul' => $mk['namaMatkul'],
                     'sks'        => $mk['sks'],
                     'kelas'      => $mk['kelas'],
                     'status'     => $mk['status'],

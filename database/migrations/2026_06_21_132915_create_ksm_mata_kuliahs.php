@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('ksm_id')->constrained('ksms')->onDelete('cascade');
             $table->integer('no');
-            $table->string('kodeMatkul', 10);
-            $table->string('namaMatkul');
+            $table->foreignId('kodeMatkul')->constrained('mata_kuliahs');
             $table->integer('sks');
             $table->string('kelas', 5);
             $table->string('status', 5);

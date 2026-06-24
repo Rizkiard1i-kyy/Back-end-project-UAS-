@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Edit KSM</title>
     
 </head>
 <body>
 
-<div class="card">
-    <div class="card-header">AKADEMIK - EDIT KARTU STUDI MAHASISWA</div>
-    <div class="card-body">
+<div>
+    <div>AKADEMIK - EDIT KARTU STUDI MAHASISWA</div>
+    <div>
 
         @if ($errors->any())
-            <div class="error" style="margin-bottom:12px; color: red;">
+            <div>
                 @foreach ($errors->all() as $e)
                     <div>{{ $e }}</div> @endforeach
             </div>
@@ -23,7 +21,7 @@
             @method('PUT')
 
             <h3>Identitas Mahasiswa</h3>
-            <div class="grid-2">
+            <div>
                 <div>
                     <label>Nama</label>
                     <input type="text" name="nama" value="{{ old('nama', $ksm->nama) }}" required>
@@ -48,94 +46,152 @@
 
             <h3>Mata Kuliah</h3>
 
-            <table class="mk-table">
+            <table>
                 <thead>
                     <tr>
-                        <th style="width:36px">No</th>
-                        <th style="width:90px">Kode M.K</th>
-                        <th>Nama Mata Kuliah</th>
-                        <th style="width:46px">sks</th>
-                        <th style="width:50px">Kelas</th>
-                        <th style="width:60px">Status</th>
-                        <th style="width:50px">Aksi</th>
+                        <th>No</th>
+                        <th>Mata Kuliah</th>
+                        <th>sks</th>
+                        <th>Kelas</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
-                <tbody id="mk-tbody">
-                    @php $mks = old('mataKuliahs') ? collect(old('mataKuliahs')) : $ksm->mataKuliahs; @endphp
-                    @foreach ($mks as $i => $mk)
-                    @php
-                        $kode   = is_array($mk) ? ($mk['kodeMatkul'] ?? '') : $mk->kodeMatkul;
-                        $nama   = is_array($mk) ? ($mk['namaMatkul']  ?? '') : $mk->namaMatkul;
-                        $sks    = is_array($mk) ? ($mk['sks']         ?? '') : $mk->sks;
-                        $kelas  = is_array($mk) ? ($mk['kelas']       ?? '') : $mk->kelas;
-                        $status = is_array($mk) ? ($mk['status']      ?? 'B') : $mk->status;
-                    @endphp
+                <tbody>
                     <tr>
-                        <td style="text-align:center">{{ $loop->iteration }}</td>
-                        <td><input type="text"   name="mataKuliahs[{{ $i }}][kodeMatkul]" value="{{ $kode }}"  required></td>
-                        <td><input type="text"   name="mataKuliahs[{{ $i }}][namaMatkul]" value="{{ $nama }}"  required></td>
-                        <td><input type="number" name="mataKuliahs[{{ $i }}][sks]"        value="{{ $sks }}"   min="1" required></td>
-                        <td><input type="text"   name="mataKuliahs[{{ $i }}][kelas]"      value="{{ $kelas }}" required></td>
+                        <td>1</td>
                         <td>
-                            <select name="mataKuliahs[{{ $i }}][status]" required>
-                                <option value="B" {{ $status === 'B' ? 'selected' : '' }}>B</option>
-                                <option value="U" {{ $status === 'U' ? 'selected' : '' }}>U</option>
+                            <select name="mataKuliahs[0][kodeMatkul]">
+                                <option value="">-- Pilih Mata Kuliah --</option>
+                                @foreach ($mataKuliahs as $m)
+                                    <option value="{{ $m->id }}" {{ old('mataKuliahs.0.kodeMatkul') == $m->id ? 'selected' : '' }}>
+                                        {{ $m->kodeMatkul }} - {{ $m->namaMatkul }} ({{ $m->sks }} sks)
+                                    </option>
+                                @endforeach
                             </select>
                         </td>
-                        <td style="text-align:center"><button type="button" class="btn-del" onclick="removeRow(this)">Hapus</button></td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
-            <button type="button" class="btn-add" onclick="addRow()">+ Tambah Mata Kuliah</button>
+                        <td><input type="number" name="mataKuliahs[0][sks]" value="{{ old('mataKuliahs.0.sks') }}" min="1"></td>
+                        <td><input type="text" name="mataKuliahs[0][kelas]" value="{{ old('mataKuliahs.0.kelas') }}"></td>
+                        <td>
+                        <select name="mataKuliahs[0][status]">
+                            <option value="B" {{ old('mataKuliahs.0.status') == 'B' ? 'selected' : '' }}>B</option>
+                            <option value="U" {{ old('mataKuliahs.0.status') == 'U' ? 'selected' : '' }}>U</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>
+                        <select name="mataKuliahs[1][kodeMatkul]">
+                            <option value="">-- Pilih Mata Kuliah --</option>
+                            @foreach ($mataKuliahs as $m)
+                                <option value="{{ $m->id }}" {{ old('mataKuliahs.1.kodeMatkul') == $m->id ? 'selected' : '' }}>
+                                    {{ $m->kodeMatkul }} - {{ $m->namaMatkul }} ({{ $m->sks }} sks)
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="number" name="mataKuliahs[1][sks]" value="{{ old('mataKuliahs.1.sks') }}" min="1"></td>
+                    <td><input type="text" name="mataKuliahs[1][kelas]" value="{{ old('mataKuliahs.1.kelas') }}"></td>
+                    <td>
+                        <select name="mataKuliahs[1][status]">
+                            <option value="B" {{ old('mataKuliahs.1.status') == 'B' ? 'selected' : '' }}>B</option>
+                            <option value="U" {{ old('mataKuliahs.1.status') == 'U' ? 'selected' : '' }}>U</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>
+                        <select name="mataKuliahs[2][kodeMatkul]">
+                            <option value="">-- Pilih Mata Kuliah --</option>
+                            @foreach ($mataKuliahs as $m)
+                                <option value="{{ $m->id }}" {{ old('mataKuliahs.2.kodeMatkul') == $m->id ? 'selected' : '' }}>
+                                    {{ $m->kodeMatkul }} - {{ $m->namaMatkul }} ({{ $m->sks }} sks)
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="number" name="mataKuliahs[2][sks]" value="{{ old('mataKuliahs.2.sks') }}" min="1"></td>
+                    <td><input type="text" name="mataKuliahs[2][kelas]" value="{{ old('mataKuliahs.2.kelas') }}"></td>
+                    <td>
+                        <select name="mataKuliahs[2][status]">
+                            <option value="B" {{ old('mataKuliahs.2.status') == 'B' ? 'selected' : '' }}>B</option>
+                            <option value="U" {{ old('mataKuliahs.2.status') == 'U' ? 'selected' : '' }}>U</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>
+                        <select name="mataKuliahs[3][kodeMatkul]">
+                            <option value="">-- Pilih Mata Kuliah --</option>
+                            @foreach ($mataKuliahs as $m)
+                                <option value="{{ $m->id }}" {{ old('mataKuliahs.3.kodeMatkul') == $m->id ? 'selected' : '' }}>
+                                    {{ $m->kodeMatkul }} - {{ $m->namaMatkul }} ({{ $m->sks }} sks)
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="number" name="mataKuliahs[3][sks]" value="{{ old('mataKuliahs.3.sks') }}" min="1"></td>
+                    <td><input type="text" name="mataKuliahs[3][kelas]" value="{{ old('mataKuliahs.3.kelas') }}"></td>
+                    <td>
+                        <select name="mataKuliahs[3][status]">
+                            <option value="B" {{ old('mataKuliahs.3.status') == 'B' ? 'selected' : '' }}>B</option>
+                            <option value="U" {{ old('mataKuliahs.3.status') == 'U' ? 'selected' : '' }}>U</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>
+                        <select name="mataKuliahs[4][kodeMatkul]">
+                            <option value="">-- Pilih Mata Kuliah --</option>
+                            @foreach ($mataKuliahs as $m)
+                                <option value="{{ $m->id }}" {{ old('mataKuliahs.4.kodeMatkul') == $m->id ? 'selected' : '' }}>
+                                    {{ $m->kodeMatkul }} - {{ $m->namaMatkul }} ({{ $m->sks }} sks)
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="number" name="mataKuliahs[4][sks]" value="{{ old('mataKuliahs.4.sks') }}" min="1"></td>
+                    <td><input type="text" name="mataKuliahs[4][kelas]" value="{{ old('mataKuliahs.4.kelas') }}"></td>
+                    <td>
+                        <select name="mataKuliahs[4][status]">
+                            <option value="B" {{ old('mataKuliahs.4.status') == 'B' ? 'selected' : '' }}>B</option>
+                            <option value="U" {{ old('mataKuliahs.4.status') == 'U' ? 'selected' : '' }}>U</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>
+                        <select name="mataKuliahs[5][kodeMatkul]">
+                            <option value="">-- Pilih Mata Kuliah --</option>
+                            @foreach ($mataKuliahs as $m)
+                                <option value="{{ $m->id }}" {{ old('mataKuliahs.5.kodeMatkul') == $m->id ? 'selected' : '' }}>
+                                    {{ $m->kodeMatkul }} - {{ $m->namaMatkul }} ({{ $m->sks }} sks)
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="number" name="mataKuliahs[5][sks]" value="{{ old('mataKuliahs.5.sks') }}" min="1"></td>
+                    <td><input type="text" name="mataKuliahs[5][kelas]" value="{{ old('mataKuliahs.5.kelas') }}"></td>
+                    <td>
+                        <select name="mataKuliahs[5][status]">
+                            <option value="B" {{ old('mataKuliahs.5.status') == 'B' ? 'selected' : '' }}>B</option>
+                            <option value="U" {{ old('mataKuliahs.5.status') == 'U' ? 'selected' : '' }}>U</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
             <br>
-            <button type="submit" class="btn-submit">Perbarui KSM</button>
-            <a href="{{ route('ksm.show', $ksm) }}" style="font-size:12px; color:#2d6a9f;">Batal</a>
+            <button>Perbarui KSM</button>
+            <a href="{{ route('ksm.show', $ksm) }}">Batal</a>
         </form>
     </div>
 </div>
 
-<script>
-let rowCount = document.getElementById('mk-tbody').rows.length;
-
-function addRow() {
-    const tbody = document.getElementById('mk-tbody');
-    const i     = rowCount++;
-    const no    = tbody.rows.length + 1;
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-        <td style="text-align:center">${no}</td>
-        <td><input type="text"   name="mataKuliahs[${i}][kodeMatkul]" required></td>
-        <td><input type="text"   name="mataKuliahs[${i}][namaMatkul]" required></td>
-        <td><input type="number" name="mataKuliahs[${i}][sks]" min="1" required></td>
-        <td><input type="text"   name="mataKuliahs[${i}][kelas]" required></td>
-        <td>
-            <select name="mataKuliahs[${i}][status]" required>
-                <option value="B">B</option>
-                <option value="U">U</option>
-            </select>
-        </td>
-        <td style="text-align:center"><button type="button" class="btn-del" onclick="removeRow(this)">Hapus</button></td>
-    `;
-    tbody.appendChild(tr);
-    renumberRows();
-}
-
-function removeRow(btn) {
-    const tbody = document.getElementById('mk-tbody');
-    if (tbody.rows.length <= 1) return;
-    btn.closest('tr').remove();
-    renumberRows();
-}
-
-function renumberRows() {
-    document.querySelectorAll('#mk-tbody tr').forEach((tr, idx) => {
-        tr.cells[0].textContent = idx + 1;
-    });
-}
-</script>
 </body>
 </html>

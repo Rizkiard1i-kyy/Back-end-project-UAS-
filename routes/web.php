@@ -67,9 +67,8 @@ Route::namespace('App\Http\Controllers\Unit_Kegiatan_Mahasiswa')->middleware(['a
 });
 
 Route::namespace('App\Http\Controllers\Uang_Kuliah')->middleware(['auth'])->group(function () {
-    Route::get('skema_pembayaran', 'SkemaPembayaranController@index')->name('skema_pembayaran.index');
-    Route::post('skema_pembayaran', 'SkemaPembayaranController@store')->name('skema_pembayaran.store');
-    Route::get('tagihan_pembayaran', 'TagihanPembayaranController@index')->name('tagihan_pembayaran.index');
+    Route::resource('skema_pembayaran', 'SkemaPembayaranController');
+    Route::resource('tagihan_pembayaran', 'TagihanPembayaranController');
 });
 
 Route::namespace('App\Http\Controllers\SKPI')->middleware(['auth'])->group(function () {

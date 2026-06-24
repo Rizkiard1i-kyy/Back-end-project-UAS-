@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <title>Tagihan Pembayaran</title>
@@ -8,8 +7,13 @@
 <div>
 
     <div>
-        Data Uang Kuliah: {{ strtoupper($user->nama) }} ({{ $user->nim }})<br>
-        <span>Lihat tagihan per tahun akademik di bawah ini.</span>
+        @if($user->isAdmin())
+            Data Tagihan Pembayaran Seluruh Mahasiswa<br>
+            <span>Sebagai admin, kamu bisa melihat tagihan semua mahasiswa dan mengedit tanggal/statusnya.</span>
+        @else
+            Data Uang Kuliah: {{ strtoupper($user->nama) }} ({{ $user->nim }})<br>
+            <span>Lihat tagihan per tahun akademik di bawah ini.</span>
+        @endif
     </div>
 
     @if(session('success'))
@@ -26,14 +30,20 @@
                 <table>
                     <thead>
                         <tr>
-                            <th rowspan="2" style="width:36px">No</th>
-                            <th rowspan="2" style="width:130px">Jenis</th>
-                            <th rowspan="2" style="width:160px">No. Virtual Account</th>
-                            <th rowspan="2" style="width:110px">Tgl. Batas Bayar</th>
-                            <th rowspan="2" style="width:110px">Jumlah Tagihan</th>
-                            <th rowspan="2">Rincian</th>
-                            <th colspan="3">Pembayaran</th>
-                            <th rowspan="2" style="width:100px">STATUS</th>
+                            <th  style="width:36px">No</th>
+                            @if($user->isAdmin())
+                                <th  style="width:160px">Mahasiswa</th>
+                            @endif
+                            <th  style="width:130px">Jenis</th>
+                            <th  style="width:160px">No. Virtual Account</th>
+                            <th  style="width:110px">Tgl. Batas Bayar</th>
+                            <th  style="width:110px">Jumlah Tagihan</th>
+                            <th>Rincian</th>
+                            <th>Pembayaran</th>
+                            <th  style="width:100px">STATUS</th>
+                            @if($user->isAdmin())
+                                <th style="width:80px">Aksi</th>
+                            @endif
                         </tr>
                         <tr>
                             <th style="width:80px">Bank</th>
@@ -45,6 +55,12 @@
                         @foreach($rows as $t)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            @if($user->isAdmin())
+                                <td>
+                                    {{ $t->user->nama ?? '-' }}<br>
+                                    {{ $t->user->nim ?? '-' }}
+                                </td>
+                            @endif
                             <td>{{ $t->jenis }}</td>
                             <td>{{ $t->no_virtual_account ?? '-' }}</td>
                             <td>
@@ -62,7 +78,7 @@
                                 {{ number_format($t->nominal_bayar, 0, ',', '.') }}
                             </td>
                             <td>
-                                @if($t->status === 'LUNAS')
+                                @if($t->status == 'LUNAS')
                                     <span>LUNAS</span>
                                 @else
                                     <span>
@@ -71,6 +87,11 @@
                                     </span>
                                 @endif
                             </td>
+                            @if($user->isAdmin())
+                                <td>
+                                    <a href="{{ route('tagihan_pembayaran.edit', $t->id) }}">Edit</a>
+                                </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
@@ -82,8 +103,8 @@
 </div>
 
 <br>
-<a href="{{ route('skema_pembayaran.index') }}" style="font-size:12px;">Kembali ke Skema Pembayaran</a>
-<a href="/dashboard" style="font-size:12px;">Dashboard</a>
+<a href="{{ route('skema_pembayaran.index') }}">Kembali ke Skema Pembayaran</a>
+<a href="/dashboard">Dashboard</a>
 
 </body>
 </html>
