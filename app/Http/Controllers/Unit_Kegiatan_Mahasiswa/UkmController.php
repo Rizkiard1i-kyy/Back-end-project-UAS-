@@ -11,14 +11,8 @@ class UkmController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
-        $akses = ukm::with(['mahasiswa']);
-
-        if ($user->isMahasiswa()) {
-            $akses->where('nim', $user->id);
-        }
-
-        $ukm = $akses->get();
+        $ukm = ukm::all();
+        
         return view('ukms.index', compact('ukm'));
     }
 

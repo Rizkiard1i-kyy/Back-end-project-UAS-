@@ -58,14 +58,14 @@ class NilaiHasilController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nim'=>'required|exists:users,id',
-            'namaDosen'=>'required|exists:users,id',
-            'tahunAkademik'=>'required|integer|min:19591',
+            'nim'           =>'required|exists:users,id',
+            'namaDosen'     =>'required|exists:users,id',
+            'tahunAkademik' =>'required|integer|min:19591',
             'namaMataKuliah'=>'required|exists:mata_kuliahs,id',
-            'tugas'=>'required|integer|between:0,100',
-            'uts'=>'required|integer|between:0,100',
-            'uas'=>'required|integer|between:0,100',
-            'status'=>'required|string|max:1',
+            'tugas'         =>'required|integer|between:0,100',
+            'uts'           =>'required|integer|between:0,100',
+            'uas'           =>'required|integer|between:0,100',
+            'status'        =>'required|string|max:1',
         ]);
 
         $nilaiAngka = ($request->tugas * 0.4 + $request->uts * 0.3 + $request->uas * 0.3);
@@ -75,25 +75,25 @@ class NilaiHasilController extends Controller
             $request['bobotKualitas'] = 4.00;
         } elseif ($nilaiAngka >= 77) {
             $request['nilaiHuruf'] = 'A-';
-            $request['bobotKualitas'] = 3.70 + ($request->nilaiAngka - 77) * 0.145;
+            $request['bobotKualitas'] = 3.70 + ($request->nilaiAngka - 77) * 0.1;
         } elseif ($nilaiAngka >= 74) {
             $request['nilaiHuruf'] = 'B+';
-            $request['bobotKualitas'] = 3.40 + ($request->nilaiAngka - 74) * 0.145;
+            $request['bobotKualitas'] = 3.40 + ($request->nilaiAngka - 74) * 0.1;
         } elseif ($nilaiAngka >= 70) {
             $request['nilaiHuruf'] = 'B';
-            $request['bobotKualitas'] = 3.00 + ($request->nilaiAngka - 70) * 0.13;
+            $request['bobotKualitas'] = 3.00 + ($request->nilaiAngka - 70) * 0.1;
         } elseif ($nilaiAngka >= 65) {
             $request['nilaiHuruf'] = 'B-';
-            $request['bobotKualitas'] = 2.64 + ($request->nilaiAngka - 65) * 0.0875;
+            $request['bobotKualitas'] = 2.64 + ($request->nilaiAngka - 65) * 0.072;
         } elseif ($nilaiAngka >= 61) {
             $request['nilaiHuruf'] = 'C+';
-            $request['bobotKualitas'] = 2.35 + ($request->nilaiAngka - 61) * 0.0934;
+            $request['bobotKualitas'] = 2.35 + ($request->nilaiAngka - 61) * 0.0725;
         } elseif ($nilaiAngka >= 56) {
             $request['nilaiHuruf'] = 'C';
-            $request['bobotKualitas'] = 2.00 + ($request->nilaiAngka - 56) * 0.085;
+            $request['bobotKualitas'] = 2.00 + ($request->nilaiAngka - 56) * 0.07;
         } elseif ($nilaiAngka >= 45) {
             $request['nilaiHuruf'] = 'D';
-            $request['bobotKualitas'] = 1.00 + ($request->nilaiAngka - 45) * 0.099;
+            $request['bobotKualitas'] = 1.00 + ($request->nilaiAngka - 45) * 0.090909;
         } else {
             $request['nilaiHuruf'] = 'E';
             $request['bobotKualitas'] = 0.00;
@@ -221,25 +221,25 @@ class NilaiHasilController extends Controller
             $request['bobotKualitas'] = 4.00;
         } elseif ($nilaiAngka >= 77) {
             $request['nilaiHuruf'] = 'A-';
-            $request['bobotKualitas'] = 3.70 + ($request->nilaiAngka - 77) * 0.145;
+            $request['bobotKualitas'] = 3.70 + ($request->nilaiAngka - 77) * 0.1;
         } elseif ($nilaiAngka >= 74) {
             $request['nilaiHuruf'] = 'B+';
-            $request['bobotKualitas'] = 3.40 + ($request->nilaiAngka - 74) * 0.145;
+            $request['bobotKualitas'] = 3.40 + ($request->nilaiAngka - 74) * 0.1;
         } elseif ($nilaiAngka >= 70) {
             $request['nilaiHuruf'] = 'B';
-            $request['bobotKualitas'] = 3.00 + ($request->nilaiAngka - 70) * 0.13;
+            $request['bobotKualitas'] = 3.00 + ($request->nilaiAngka - 70) * 0.1;
         } elseif ($nilaiAngka >= 65) {
             $request['nilaiHuruf'] = 'B-';
-            $request['bobotKualitas'] = 2.64 + ($request->nilaiAngka - 65) * 0.0875;
+            $request['bobotKualitas'] = 2.64 + ($request->nilaiAngka - 65) * 0.072;
         } elseif ($nilaiAngka >= 61) {
             $request['nilaiHuruf'] = 'C+';
-            $request['bobotKualitas'] = 2.35 + ($request->nilaiAngka - 61) * 0.0934;
+            $request['bobotKualitas'] = 2.35 + ($request->nilaiAngka - 61) * 0.0725;
         } elseif ($nilaiAngka >= 56) {
             $request['nilaiHuruf'] = 'C';
-            $request['bobotKualitas'] = 2.00 + ($request->nilaiAngka - 56) * 0.085;
+            $request['bobotKualitas'] = 2.00 + ($request->nilaiAngka - 56) * 0.07;
         } elseif ($nilaiAngka >= 45) {
             $request['nilaiHuruf'] = 'D';
-            $request['bobotKualitas'] = 1.00 + ($request->nilaiAngka - 45) * 0.099;
+            $request['bobotKualitas'] = 1.00 + ($request->nilaiAngka - 45) * 0.090909;
         } else {
             $request['nilaiHuruf'] = 'E';
             $request['bobotKualitas'] = 0.00;

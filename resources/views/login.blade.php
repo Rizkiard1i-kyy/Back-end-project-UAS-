@@ -58,8 +58,8 @@
             </button>
 
             <div class="untar-demo-info">
-                Akun Demo: admin@untar.ac.id dengan password 12345678<br>
-                Lakukan <code>php artisan migrate:fresh --seed</code> untuk menginisialisasi.
+                <br>Akun Demo: admin@untar.ac.id dengan password 12345678<br>
+                <br>Akun akun dosen dan mahasiswa yang terdaftar bisa dilihat di panel management pengguna<br>
             </div>
         </footer>
 

@@ -56,27 +56,26 @@
                     </thead>
                     <tbody>
                         @foreach($kalenderAkademik as $kalenderAkademik)
-                        <tr>
-                            <td style="text-align: center">{{ $loop->iteration }}</td>
-                            <td>
-                                <a> {{ $kalenderAkademik->tanggalMulai->format('d M Y') }} s/d {{ $kalenderAkademik->tanggalSelesai->format('d M Y') }}</a>
-                            </td>
-                            <td>
-                                <a> {{ $kalenderAkademik->namaKegiatan }}</a>
-                            </td>
-                            @if(auth()->user()->isAdmin())
+                            <tr>
+                                <td style="text-align: center">{{ $loop->iteration }}</td>
                                 <td>
-                                    <a href="{{ route('kalenderAkademik.edit', $kalenderAkademik) }}" class="btn-action btn-edit">
-                                        Ubah
-                                    </a>
-                                    <div class="btn-action btn-detail">
-                                        <form action="{{ route('kalenderAkademik.destroy', $kalenderAkademik->id) }}" method="POST"
-                                            onsubmit="return confirm('Hapus data kalender ini?')">
-                                            @csrf @method('DELETE')
-                                        <button type="submit" class="btn-submit">Hapus Data</button>
-                                        </form>
-                                    </div>
+                                    <a> {{ $kalenderAkademik->tanggalMulai->format('d M Y') }} s/d {{ $kalenderAkademik->tanggalSelesai->format('d M Y') }}</a>
                                 </td>
+                                <td>
+                                    <a> {{ $kalenderAkademik->namaKegiatan }}</a>
+                                </td>
+                                @if(auth()->user()->isAdmin())
+                                    <td>
+                                        <a href="{{ route('kalenderAkademik.edit', $kalenderAkademik) }}" class="btn-action btn-edit">
+                                            Ubah
+                                        </a>
+                                        <form action="{{ route('kalenderAkademik.destroy', $kalenderAkademik) }}" method="post" style="display:inline;">
+                                            @csrf @method('DELETE')
+                                                <button type="submit" class="btn-action btn-clear-chat" onclick="return confirm('Anda yakin ingin menghapus data kalender akademik ini?')">
+                                                    Hapus Data
+                                                </button>
+                                        </form>
+                                    </td>
                                 @endif
                             </tr>
                         @endforeach

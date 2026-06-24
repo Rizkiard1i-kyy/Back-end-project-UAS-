@@ -703,6 +703,24 @@ body {
     }
 }
 
+.alert {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.alert-danger {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #f87171;
+}
+
+.alert-success {
+    background-color: #dcfce3;
+    color: #15803d;
+    border: 1px solid #4ade80;
 :root {
     --bg-color: #FAF6F0;
     --text-color: #1e293b;
@@ -716,6 +734,8 @@ body {
     --tag-bg: #f1f5f9;
     --tag-text: #475569;
 }
+}
+
 body {
     margin: 0;
     font-family: 'Josefin Sans', 'Inter', system-ui, -apple-system, sans-serif;
@@ -821,6 +841,7 @@ body {
     padding: 6px 12px;
     border-radius: 20px;
     cursor: pointer;
+    -webkit-user-select: none;
     user-select: none;
 }
 .admin-switch-container input {
